@@ -14,3 +14,5 @@ __pycache__/
 .pycache_local/
 logs/
 Archaios OS/logs/
+
+!client/index.html
