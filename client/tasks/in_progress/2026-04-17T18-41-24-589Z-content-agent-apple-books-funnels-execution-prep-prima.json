@@ -1,0 +1,11 @@
+{
+  "id": "2026-04-17T18-41-24-589Z-content-agent-apple-books-funnels-execution-prep-prima",
+  "cycleId": "2026-04-17T18-41-24-589Z",
+  "createdAt": "2026-04-17T18:41:24.621Z",
+  "priority": "high",
+  "agent": "content-agent",
+  "task": "Apple Books funnels execution prep: primary=Content Agent support=Revenue Agent readiness=high deliverable=campaign + CTA routing pack.",
+  "source": "tasks/agent-task-queue.json",
+  "status": "in_progress",
+  "startedAt": "2026-04-17T18:41:24.621Z"
+}

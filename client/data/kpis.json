@@ -1,0 +1,12 @@
+{
+  "annualRevenueTarget": 100000,
+  "averageBookRoyalty": 4.2,
+  "monthlyTrafficTarget": 12000,
+  "baselineCtr": 0.034,
+  "baselineConversionRate": 0.018,
+  "contentCreatedThisWeek": 0,
+  "clicksGenerated": 0,
+  "conversionScore": 41,
+  "estimatedMonthlyRevenue": 1428,
+  "projectionNote": "Projection model only. This estimates trajectory from content volume, consistency, CTR, landing engagement, and conversion assumptions. It is not guaranteed sales."
+}

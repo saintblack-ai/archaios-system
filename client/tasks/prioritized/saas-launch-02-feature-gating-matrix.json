@@ -1,0 +1,11 @@
+{
+  "taskId": "saas-launch-02",
+  "system": "SaaS launch",
+  "workstream": "feature-gating",
+  "primaryAgent": "product-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Tier feature matrix and lock-state behavior map",
+  "createdAt": "2026-04-17T19:25:00Z"
+}

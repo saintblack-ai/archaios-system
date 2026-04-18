@@ -1,0 +1,16 @@
+client/ARCHAIOS_INFRASTRUCTURE/
+client/**/chatgpt_export_*/
+*.html
+node_modules/
+.next/
+dist/
+build/
+.vercel/
+.env
+.env.*
+.DS_Store
+__pycache__/
+*.pyc
+.pycache_local/
+logs/
+Archaios OS/logs/

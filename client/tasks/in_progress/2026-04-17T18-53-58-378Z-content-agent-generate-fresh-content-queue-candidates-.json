@@ -1,0 +1,11 @@
+{
+  "id": "2026-04-17T18-53-58-378Z-content-agent-generate-fresh-content-queue-candidates-",
+  "cycleId": "2026-04-17T18-53-58-378Z",
+  "createdAt": "2026-04-17T18:53:58.472Z",
+  "priority": "medium",
+  "agent": "content-agent",
+  "task": "Generate fresh content queue candidates from updated category files.",
+  "source": "tasks/agent-task-queue.json",
+  "status": "in_progress",
+  "startedAt": "2026-04-17T18:53:58.472Z"
+}

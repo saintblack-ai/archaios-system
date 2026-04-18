@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-04-17T16:47:51.920Z",
+  "source": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/client/ARCHAIOS_INFRASTRUCTURE/inbox/chatgpt_export_2026-04-16",
+  "totals": {
+    "files": 25,
+    "conversations": 631,
+    "records": 656
+  },
+  "categories": [
+    {
+      "id": "ai-infrastructure",
+      "label": "AI Infrastructure",
+      "count": 81
+    },
+    {
+      "id": "saas-systems",
+      "label": "SaaS Systems",
+      "count": 218
+    },
+    {
+      "id": "music-saint-black",
+      "label": "Music (Saint Black)",
+      "count": 111
+    },
+    {
+      "id": "books-apple-books",
+      "label": "Books (Apple Books)",
+      "count": 29
+    },
+    {
+      "id": "game-development",
+      "label": "Game Development",
+      "count": 45
+    },
+    {
+      "id": "crypto-finance",
+      "label": "Crypto / Finance",
+      "count": 26
+    },
+    {
+      "id": "spiritual-research",
+      "label": "Spiritual / Research",
+      "count": 83
+    },
+    {
+      "id": "automation-systems",
+      "label": "Automation Systems",
+      "count": 63
+    }
+  ]
+}

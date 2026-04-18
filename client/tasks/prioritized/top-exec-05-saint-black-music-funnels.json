@@ -1,0 +1,12 @@
+{
+  "taskId": "top-exec-05",
+  "system": "Saint Black music funnels",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "readiness": "medium",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Music release campaign cadence and conversion handoff path",
+  "createdAt": "2026-04-17T18:45:00Z"
+}
+

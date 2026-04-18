@@ -1,0 +1,11 @@
+{
+  "agent": "Infra Agent",
+  "mission": "Monitor infrastructure state, route health, and deployment readiness.",
+  "task": "Validate route availability and worker health after knowledge refresh.",
+  "outputs": [
+    "infrastructure health reports",
+    "route fix task proposals",
+    "runtime status logs"
+  ],
+  "generatedAt": "2026-04-17T19:42:33.307Z"
+}

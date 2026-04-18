@@ -1,0 +1,21 @@
+{
+  "agent": "research-agent",
+  "lastExecution": "2026-04-17T19:42:33.433Z",
+  "tasksCompleted": 1,
+  "tasksBlocked": 0,
+  "currentTask": "Re-cluster conversations into AI/SaaS, books, music, game/OS, crypto, spiritual, and automation research domains.",
+  "status": "Running",
+  "allowedActions": [
+    "knowledge-clustering",
+    "topic-gap-analysis",
+    "archive-index-expansion",
+    "research-summary-generation"
+  ],
+  "blockedActions": [
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ],
+  "outputDestination": "projects/research-agent"
+}

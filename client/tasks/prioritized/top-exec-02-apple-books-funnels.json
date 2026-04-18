@@ -1,0 +1,12 @@
+{
+  "taskId": "top-exec-02",
+  "system": "Apple Books funnels",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "readiness": "high",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Book campaign + CTA routing pack with conversion placeholders",
+  "createdAt": "2026-04-17T18:45:00Z"
+}
+

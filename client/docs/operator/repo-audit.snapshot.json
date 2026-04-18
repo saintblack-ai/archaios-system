@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-04-16T17:55:25.783Z",
+  "repos": [
+    {
+      "name": "ai-assassins-client",
+      "path": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/client",
+      "exists": true,
+      "hasGit": true,
+      "hasPackageJson": true,
+      "hasWorkerPackageJson": false,
+      "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "worker:dev": "wrangler dev --test-scheduled",
+        "worker:check": "wrangler check",
+        "worker:deploy": "wrangler deploy"
+      },
+      "workerScripts": {},
+      "importantFiles": [
+        "worker/index.js",
+        "wrangler.jsonc",
+        "vercel.json",
+        "supabase",
+        "docs"
+      ]
+    },
+    {
+      "name": "Ai-Assassins",
+      "path": "/Users/quandrixblackburn/projects/Ai-Assassins",
+      "exists": true,
+      "hasGit": true,
+      "hasPackageJson": true,
+      "hasWorkerPackageJson": true,
+      "scripts": {
+        "build": "npm --prefix docs run build",
+        "sitrep:dev": "node src/sitrep-server.js",
+        "sitrep:send-test": "node scripts/sitrep-send-test.js",
+        "sitrep:test-auth": "node scripts/test-sitrep-auth.js",
+        "supabase:secrets": "node ./scripts/worker-put-secrets.mjs",
+        "worker:deploy": "node ./scripts/worker-deploy.mjs",
+        "pages:deploy": "node ./scripts/pages-deploy.mjs",
+        "mobile:sync": "npm run build && npm --prefix mobile run sync",
+        "mobile:prepare:ios": "npm run mobile:sync && npm --prefix mobile run ios:add && npm --prefix mobile run ios:open",
+        "mobile:prepare:android": "npm run mobile:sync && npm --prefix mobile run android:add && npm --prefix mobile run android:open",
+        "mobile:release:prep": "bash ./scripts/mobile-release.sh"
+      },
+      "workerScripts": {
+        "deploy": "wrangler deploy",
+        "dev": "wrangler dev"
+      },
+      "importantFiles": [
+        "README.md",
+        "worker/src/index.ts",
+        "supabase",
+        "docs"
+      ]
+    },
+    {
+      "name": "saintblack-ai.github.io",
+      "path": "/Users/quandrixblackburn/saintblack-ai.github.io",
+      "exists": true,
+      "hasGit": true,
+      "hasPackageJson": false,
+      "hasWorkerPackageJson": false,
+      "scripts": {},
+      "workerScripts": {},
+      "importantFiles": [
+        "docs"
+      ]
+    },
+    {
+      "name": "Archaios OS",
+      "path": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/Archaios OS",
+      "exists": true,
+      "hasGit": true,
+      "hasPackageJson": false,
+      "hasWorkerPackageJson": false,
+      "scripts": {},
+      "workerScripts": {},
+      "importantFiles": [
+        "README.md",
+        "docs"
+      ]
+    }
+  ]
+}

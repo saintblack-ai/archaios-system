@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-04",
+  "system": "Digital bundle products",
+  "primaryAgent": "revenue-agent",
+  "supportAgent": "content-agent",
+  "priority": "high",
+  "readiness": "medium",
+  "status": "in_progress",
+  "currentTask": "Define bundle stack and attach upsell sequence copy.",
+  "updatedAt": "2026-04-17T19:20:00Z"
+}

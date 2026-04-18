@@ -1,0 +1,10 @@
+{
+  "id": "2026-04-17T19-42-33-277Z-infra-agent-validate-route-availability-and-worker-h",
+  "cycleId": "2026-04-17T19-42-33-277Z",
+  "createdAt": "2026-04-17T19:42:33.280Z",
+  "priority": "high",
+  "agent": "infra-agent",
+  "task": "Validate route availability and worker health after knowledge refresh.",
+  "source": "tasks/agent-task-queue.json",
+  "status": "intake"
+}

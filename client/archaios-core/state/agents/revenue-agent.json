@@ -1,0 +1,21 @@
+{
+  "agent": "revenue-agent",
+  "lastExecution": "2026-04-17T19:42:33.372Z",
+  "tasksCompleted": 1,
+  "tasksBlocked": 0,
+  "currentTask": "Re-evaluate monetization docs and Stripe prep artifacts from latest export insights.",
+  "status": "Running",
+  "allowedActions": [
+    "pricing-structure-prep",
+    "funnel-readiness-mapping",
+    "stripe-test-planning",
+    "revenue-opportunity-indexing"
+  ],
+  "blockedActions": [
+    "activate-live-billing",
+    "deploy",
+    "dns-change",
+    "secret-mutation"
+  ],
+  "outputDestination": "projects/revenue-agent"
+}

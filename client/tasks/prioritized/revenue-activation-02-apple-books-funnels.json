@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-02",
+  "system": "Apple Books funnels",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "readiness": "high",
+  "status": "queued",
+  "deliverable": "3 funnel variants + source-tagged CTA routing drafts",
+  "createdAt": "2026-04-17T19:20:00Z"
+}

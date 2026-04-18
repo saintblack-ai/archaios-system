@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-01",
+  "system": "SaaS tier system",
+  "primaryAgent": "revenue-agent",
+  "supportAgent": "product-agent",
+  "priority": "high",
+  "readiness": "high",
+  "status": "queued",
+  "deliverable": "Entitlement matrix + Free/Pro/Elite upgrade copy and lock-state mapping",
+  "createdAt": "2026-04-17T19:20:00Z"
+}

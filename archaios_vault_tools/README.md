@@ -1,0 +1,90 @@
+# ARCHAIOS Vault Tools
+
+Phase B + C implementation for the ARCHAIOS Deep Research Capture Workflow.
+
+## Features
+- `archaios_init`: bootstrap vault folders.
+- `archaios_capture`: create structured markdown + metadata JSON + optional PDF with versioning + archive rollover.
+- `archaios_watch`: watch active research folder and auto-index new markdown files.
+- `archaios_dashboard`: Streamlit dashboard for browsing/searching/filtering entries.
+
+## Vault structure
+Default vault root is `~/ARCHAIOS_VAULT` (override via `.env` or `--vault-root`).
+
+Created folders:
+- `01_ACTIVE_RESEARCH`
+- `02_DOCTRINE`
+- `03_BOOK_MANUSCRIPTS`
+- `04_QX_TECH`
+- `05_ARCHIVED_VERSIONS`
+- `metadata`
+- `logs`
+
+## Setup
+```bash
+cd archaios_vault_tools
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev,watch]
+```
+
+## Quick start
+```bash
+archaios_init
+archaios_capture --title "Test" --project_code "QX-01" --tier Research --tags "demo,phase-b" --content "Initial analysis text"
+archaios_dashboard
+```
+
+## Commands
+### Initialize vault
+```bash
+archaios_init [--vault-root /custom/path]
+```
+
+### Capture research
+```bash
+archaios_capture \
+  --title "North Corridor Assessment" \
+  --project_code "OP-12" \
+  --tier Research \
+  --tags "logistics,geopolitical" \
+  --source_notes "Internal brief + open source" \
+  --input_file ./raw_notes.txt
+```
+
+Supported inputs:
+- `--input_file PATH`
+- `--content "..."`
+- interactive prompts if omitted.
+
+### Watch for unindexed markdown
+```bash
+archaios_watch --interval 3
+```
+
+### Dashboard
+```bash
+archaios_dashboard
+```
+
+## PDF generation behavior (macOS)
+PDF generation is best-effort:
+1. Uses `pandoc` if available.
+2. Falls back to `wkhtmltopdf` if available.
+3. If neither exists, markdown and metadata are still created with a warning.
+
+Install options:
+```bash
+brew install pandoc
+# or
+brew install wkhtmltopdf
+```
+
+## Testing
+```bash
+pytest -q
+```
+
+## Notes
+- Master index log is maintained at `INDEX_MASTER_LOG.md` in vault root.
+- On new versions, previous `.md`, `.pdf`, `.json` files are moved to `05_ARCHIVED_VERSIONS/<slug>/`.

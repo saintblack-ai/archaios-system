@@ -1,0 +1,30 @@
+name: Supabase heartbeat
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork != true }}
+    env:
+      WORKER_HEALTH_URL: https://archaios-saas-worker.quandrix357.workers.dev/api/health
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+    steps:
+      - name: Print target URL
+        run: echo "Pinging ${WORKER_HEALTH_URL}"
+
+      - name: Ping Cloudflare Worker
+        shell: bash
+        run: |
+          if [[ -n "${AUTH_TOKEN}" ]]; then
+            curl -f -sS -L --connect-timeout 10 --max-time 30 --retry 3 --retry-all-errors --retry-delay 2 \
+              -H "Authorization: Bearer ${AUTH_TOKEN}" \
+              "${WORKER_HEALTH_URL}"
+          else
+            curl -f -sS -L --connect-timeout 10 --max-time 30 --retry 3 --retry-all-errors --retry-delay 2 \
+              "${WORKER_HEALTH_URL}"
+          fi

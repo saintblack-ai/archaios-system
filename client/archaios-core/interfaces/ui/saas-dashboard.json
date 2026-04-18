@@ -1,0 +1,10 @@
+{
+  "tiers": [
+    { "name": "Free", "price": 0, "status": "active" },
+    { "name": "Pro", "price": 49, "status": "active" },
+    { "name": "Elite", "price": 99, "status": "active" }
+  ],
+  "mode": "test",
+  "checkout": "simulated",
+  "funnel": "connected"
+}

@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-04-17T19:20:00Z",
+  "mode": "local-prep-only",
+  "constraints": {
+    "deploy": false,
+    "dnsChanges": false,
+    "secretChanges": false,
+    "billingActivation": false,
+    "liveStripe": false
+  },
+  "systems": [
+    {
+      "id": "saas-tier-system",
+      "name": "SaaS tier system (Free / Pro / Elite)",
+      "offer": "Tiered intelligence SaaS access with gated controls and upgrade flow.",
+      "audience": "Operators needing intelligence dashboard access from trial to premium execution.",
+      "deliveryPath": "Landing -> Pricing -> Checkout intent -> Tier-gated dashboard",
+      "dependencies": [
+        "Auth tier resolver",
+        "Entitlement matrix",
+        "Checkout config placeholders",
+        "Upgrade lock-state messaging"
+      ],
+      "readinessState": "high",
+      "nextLocalAction": "Finalize entitlement matrix in client gating logic and map plan labels to UI states.",
+      "primaryAgent": "revenue-agent",
+      "supportAgent": "product-agent"
+    },
+    {
+      "id": "apple-books-funnels",
+      "name": "Apple Books funnels",
+      "offer": "Book-specific funnel messaging and CTA routing into Apple Books listings.",
+      "audience": "Spiritual research readers, doctrine-focused readers, and narrative mystery audience segments.",
+      "deliveryPath": "Content snippets -> themed funnel blocks -> Apple Books links",
+      "dependencies": [
+        "Final destination links",
+        "Attribution tags",
+        "Channel-specific copy sets"
+      ],
+      "readinessState": "high",
+      "nextLocalAction": "Publish 3 funnel variants with source tags and conversion placeholders.",
+      "primaryAgent": "content-agent",
+      "supportAgent": "revenue-agent"
+    },
+    {
+      "id": "intelligence-report-products",
+      "name": "Intelligence report products",
+      "offer": "Recurring report SKUs with free teaser and paid depth access.",
+      "audience": "Users who need condensed strategic signals and action-oriented report formats.",
+      "deliveryPath": "Dashboard teaser -> product panel -> tier-gated report views",
+      "dependencies": [
+        "Report SKU model",
+        "Preview/paywall split",
+        "Release cadence definition"
+      ],
+      "readinessState": "medium",
+      "nextLocalAction": "Draft product packaging and map each report class to Free/Pro/Elite visibility.",
+      "primaryAgent": "product-agent",
+      "supportAgent": "revenue-agent"
+    },
+    {
+      "id": "digital-bundle-products",
+      "name": "Digital bundle products",
+      "offer": "Bundled assets combining reports, guides, and templates into higher-value packages.",
+      "audience": "Buyers seeking complete implementation kits instead of standalone resources.",
+      "deliveryPath": "Pricing upsell -> bundle detail panel -> checkout-ready placeholders",
+      "dependencies": [
+        "Bundle taxonomy",
+        "Upsell placement rules",
+        "Cross-sell copy"
+      ],
+      "readinessState": "medium",
+      "nextLocalAction": "Define initial 3 bundles and attach upsell messaging by user tier.",
+      "primaryAgent": "revenue-agent",
+      "supportAgent": "content-agent"
+    },
+    {
+      "id": "saint-black-music-funnels",
+      "name": "Saint Black music funnels",
+      "offer": "Narrative-led music promotion flows driving listeners to streaming/store destinations.",
+      "audience": "Brand-following listeners and discovery audiences from story-based promotion.",
+      "deliveryPath": "Story hooks -> artist funnel panel -> streaming/store CTA",
+      "dependencies": [
+        "Release calendar",
+        "Asset index",
+        "Destination routing map"
+      ],
+      "readinessState": "medium",
+      "nextLocalAction": "Create 14-day campaign sequence with CTA path variants and tracking tags.",
+      "primaryAgent": "content-agent",
+      "supportAgent": "revenue-agent"
+    }
+  ]
+}

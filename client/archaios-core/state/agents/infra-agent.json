@@ -1,0 +1,21 @@
+{
+  "agent": "infra-agent",
+  "lastExecution": "2026-04-17T19:42:33.311Z",
+  "tasksCompleted": 1,
+  "tasksBlocked": 0,
+  "currentTask": "Validate route availability and worker health after knowledge refresh.",
+  "status": "Running",
+  "allowedActions": [
+    "route-health-check",
+    "task-routing-diagnostics",
+    "orchestrator-state-update",
+    "infrastructure-reporting"
+  ],
+  "blockedActions": [
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ],
+  "outputDestination": "projects/infra-agent"
+}

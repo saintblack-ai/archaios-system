@@ -1,0 +1,24 @@
+{
+  "key": "infra-agent",
+  "name": "Infra Agent",
+  "mission": "Monitor and stabilize route, runtime, and service health for ARCHAIOS infrastructure.",
+  "taskIntakeRules": [
+    "accept infrastructure and routing tasks",
+    "prioritize high-severity route failures first",
+    "write findings to logs and runtime state"
+  ],
+  "outputDestination": "projects/infra-agent",
+  "statusFile": "archaios-core/state/agents/infra-agent.json",
+  "allowedActions": [
+    "route-health-check",
+    "task-routing-diagnostics",
+    "orchestrator-state-update",
+    "infrastructure-reporting"
+  ],
+  "blockedActions": [
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ]
+}

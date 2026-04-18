@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-04-17T20:52:31Z",
+  "source": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/client/ARCHAIOS_INFRASTRUCTURE/inbox/chatgpt_export_2026-04-16",
+  "tasks": [
+    {
+      "agent": "infra-agent",
+      "priority": "high",
+      "task": "Validate route availability and worker health after knowledge refresh."
+    },
+    {
+      "agent": "product-agent",
+      "priority": "high",
+      "task": "Review knowledge/project indexes and propose dashboard integration updates."
+    },
+    {
+      "agent": "revenue-agent",
+      "priority": "medium",
+      "task": "Re-evaluate monetization docs and Stripe prep artifacts from latest export insights."
+    },
+    {
+      "agent": "content-agent",
+      "priority": "medium",
+      "task": "Generate fresh content queue candidates from updated category files."
+    }
+  ]
+}

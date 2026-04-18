@@ -1,0 +1,21 @@
+{
+  "agent": "product-agent",
+  "lastExecution": "2026-04-17T19:42:33.341Z",
+  "tasksCompleted": 1,
+  "tasksBlocked": 0,
+  "currentTask": "Review knowledge/project indexes and propose dashboard integration updates.",
+  "status": "Running",
+  "allowedActions": [
+    "ui-ux-tasking",
+    "feature-spec-generation",
+    "dashboard-data-shaping",
+    "project-routing"
+  ],
+  "blockedActions": [
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ],
+  "outputDestination": "projects/product-agent"
+}

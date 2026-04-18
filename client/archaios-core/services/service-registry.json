@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-04-17T19:42:33.280Z",
+  "services": [
+    {
+      "name": "task-router",
+      "path": "archaios-core/orchestrator/orchestrator.mjs",
+      "role": "dispatches tasks to agent runtime scripts"
+    },
+    {
+      "name": "knowledge-index",
+      "path": "knowledge/knowledge-index.json",
+      "role": "knowledge ingestion summary interface"
+    },
+    {
+      "name": "dashboard-data",
+      "path": "archaios-core/interfaces/dashboard-data.json",
+      "role": "command dashboard data model"
+    },
+    {
+      "name": "Content Agent",
+      "key": "content-agent",
+      "path": "archaios-core/agents/content-agent.js",
+      "role": "Generate campaign-ready content from organized book/music/brand knowledge sources."
+    },
+    {
+      "name": "Infra Agent",
+      "key": "infra-agent",
+      "path": "archaios-core/agents/infra-agent.js",
+      "role": "Monitor and stabilize route, runtime, and service health for ARCHAIOS infrastructure."
+    },
+    {
+      "name": "Product Agent",
+      "key": "product-agent",
+      "path": "archaios-core/agents/product-agent.js",
+      "role": "Improve dashboard product quality, experience states, and feature execution flow."
+    },
+    {
+      "name": "Research Agent",
+      "key": "research-agent",
+      "path": "archaios-core/agents/research-agent.js",
+      "role": "Continuously extract, cluster, and enrich knowledge signals from ARCHAIOS exports."
+    },
+    {
+      "name": "Revenue Agent",
+      "key": "revenue-agent",
+      "path": "archaios-core/agents/revenue-agent.js",
+      "role": "Prepare and optimize monetization systems for SaaS, books, music, and digital products."
+    }
+  ]
+}

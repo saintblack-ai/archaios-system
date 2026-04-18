@@ -1,0 +1,9 @@
+{
+  "taskId": "saas-launch-02",
+  "workstream": "feature-gating",
+  "primaryAgent": "product-agent",
+  "supportAgent": "revenue-agent",
+  "status": "in_progress",
+  "currentTask": "Map entitlement and lock-state behavior for Free/Pro/Elite.",
+  "updatedAt": "2026-04-17T19:25:00Z"
+}

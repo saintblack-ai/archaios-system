@@ -1,0 +1,11 @@
+{
+  "id": "2026-04-17T18-53-58-378Z-product-agent-review-knowledge-project-indexes-and-pro",
+  "cycleId": "2026-04-17T18-53-58-378Z",
+  "createdAt": "2026-04-17T18:53:58.412Z",
+  "priority": "high",
+  "agent": "product-agent",
+  "task": "Review knowledge/project indexes and propose dashboard integration updates.",
+  "source": "tasks/agent-task-queue.json",
+  "status": "in_progress",
+  "startedAt": "2026-04-17T18:53:58.412Z"
+}

@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "archaios-vault-tools"
+version = "0.1.0"
+description = "ARCHAIOS Deep Research Capture Workflow tools"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "ARCHAIOS" }]
+dependencies = [
+  "streamlit>=1.32",
+]
+
+[project.optional-dependencies]
+watch = [
+  "watchdog>=4.0",
+]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+archaios_init = "archaios_vault_tools.init:main"
+archaios_capture = "archaios_vault_tools.capture:main"
+archaios_watch = "archaios_vault_tools.watch:main"
+archaios_dashboard = "archaios_vault_tools.dashboard:launch_streamlit"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

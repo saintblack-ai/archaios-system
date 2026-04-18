@@ -1,0 +1,11 @@
+{
+  "agent": "Product Agent",
+  "mission": "Improve dashboard UX, feature clarity, and product workflow consistency.",
+  "task": "Review knowledge/project indexes and propose dashboard integration updates.",
+  "outputs": [
+    "feature specs",
+    "ui iteration plans",
+    "implementation task cards"
+  ],
+  "generatedAt": "2026-04-17T19:42:33.336Z"
+}

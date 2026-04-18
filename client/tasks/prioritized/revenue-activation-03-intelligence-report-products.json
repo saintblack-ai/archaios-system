@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-03",
+  "system": "Intelligence report products",
+  "primaryAgent": "product-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "readiness": "medium",
+  "status": "queued",
+  "deliverable": "Report SKU matrix + Free/Pro/Elite visibility split",
+  "createdAt": "2026-04-17T19:20:00Z"
+}

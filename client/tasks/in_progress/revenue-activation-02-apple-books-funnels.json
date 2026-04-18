@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-02",
+  "system": "Apple Books funnels",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "readiness": "high",
+  "status": "in_progress",
+  "currentTask": "Create source-tagged CTA routing copy for 3 book funnels.",
+  "updatedAt": "2026-04-17T19:20:00Z"
+}

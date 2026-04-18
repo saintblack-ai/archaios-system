@@ -1,0 +1,22 @@
+{
+  "agent": "content-agent",
+  "lastExecution": "2026-04-17T19:42:33.403Z",
+  "tasksCompleted": 1,
+  "tasksBlocked": 0,
+  "currentTask": "Generate fresh content queue candidates from updated category files.",
+  "status": "Running",
+  "allowedActions": [
+    "campaign-pack-generation",
+    "messaging-variant-generation",
+    "content-queue-prep",
+    "knowledge-to-copy-transform"
+  ],
+  "blockedActions": [
+    "external-auto-posting",
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ],
+  "outputDestination": "projects/content-agent"
+}

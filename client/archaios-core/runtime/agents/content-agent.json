@@ -1,0 +1,25 @@
+{
+  "key": "content-agent",
+  "name": "Content Agent",
+  "mission": "Generate campaign-ready content from organized book/music/brand knowledge sources.",
+  "taskIntakeRules": [
+    "accept marketing/content generation tasks",
+    "derive content from approved knowledge routes only",
+    "log generated packs for review-first workflows"
+  ],
+  "outputDestination": "projects/content-agent",
+  "statusFile": "archaios-core/state/agents/content-agent.json",
+  "allowedActions": [
+    "campaign-pack-generation",
+    "messaging-variant-generation",
+    "content-queue-prep",
+    "knowledge-to-copy-transform"
+  ],
+  "blockedActions": [
+    "external-auto-posting",
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ]
+}

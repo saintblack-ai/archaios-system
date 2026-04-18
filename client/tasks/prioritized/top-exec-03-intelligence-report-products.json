@@ -1,0 +1,12 @@
+{
+  "taskId": "top-exec-03",
+  "system": "Intelligence report products",
+  "primaryAgent": "product-agent",
+  "supportAgent": "revenue-agent",
+  "readiness": "medium",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Productized report SKU model and tier access workflow",
+  "createdAt": "2026-04-17T18:45:00Z"
+}
+

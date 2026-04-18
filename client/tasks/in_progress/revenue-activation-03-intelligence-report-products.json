@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-03",
+  "system": "Intelligence report products",
+  "primaryAgent": "product-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "readiness": "medium",
+  "status": "in_progress",
+  "currentTask": "Draft report package matrix and map access rules by tier.",
+  "updatedAt": "2026-04-17T19:20:00Z"
+}

@@ -1,0 +1,11 @@
+{
+  "agent": "Research Agent",
+  "mission": "Extract knowledge signals, classify themes, and maintain retrieval-ready research indexes.",
+  "task": "Re-cluster conversations into AI/SaaS, books, music, game/OS, crypto, spiritual, and automation research domains.",
+  "outputs": [
+    "research digests",
+    "topic clusters",
+    "knowledge gap reports"
+  ],
+  "generatedAt": "2026-04-17T19:42:33.429Z"
+}

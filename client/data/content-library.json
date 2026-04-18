@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-04-16T00:00:00.000Z",
+  "note": "Seed library is generated and expanded at runtime by the local Book Growth agents. Posting queues are approval-ready and do not auto-post.",
+  "emailSequences": [
+    {
+      "id": "email-seq-discovery",
+      "name": "Reader Discovery Welcome",
+      "emails": [
+        "Welcome to the Saint Black reading path: start with the book that matches your current signal.",
+        "Behind the books: how spiritual warfare, Edenic memory, and cosmic research form one library.",
+        "Choose your next door: discipline, mystery, or cosmic investigation."
+      ]
+    },
+    {
+      "id": "email-seq-review",
+      "name": "Purchase to Review Journey",
+      "emails": [
+        "Thank you for reading. Here is how to move through the book with a notebook.",
+        "If a chapter marked you, save the line and share it with one reader.",
+        "Reader reviews help the work reach the right people. Leave an honest review when ready."
+      ]
+    },
+    {
+      "id": "email-seq-reengage",
+      "name": "Dormant Reader Re-Engagement",
+      "emails": [
+        "The signal is still active. Here are three entry points back into the Saint Black library.",
+        "A short reading path for when attention is low but conviction is rising.",
+        "The next book to open depends on the question you are carrying now."
+      ]
+    }
+  ],
+  "landingPageVariants": [
+    {
+      "id": "landing-spiritual-path",
+      "name": "The Sacred Warfare Path",
+      "angle": "Lead with The Art of Holy War and route readers into the broader Saint Black library."
+    },
+    {
+      "id": "landing-mystery-path",
+      "name": "The Eden Mystery Path",
+      "angle": "Lead with Echoes of Eden for readers drawn to origin, symbolism, and restoration."
+    },
+    {
+      "id": "landing-cosmic-path",
+      "name": "The Cosmic Research Path",
+      "angle": "Lead with The Pleiadian Project for researchers and esoteric knowledge seekers."
+    }
+  ],
+  "bundleCampaignIdeas": [
+    "The Saint Black Library: three books for readers studying spirit, origin, and sky.",
+    "From War to Eden to the Stars: a guided reading path through discipline, memory, and cosmic research.",
+    "Sacred Intelligence Starter Pack: one warfare book, one mystery book, one cosmic research guide."
+  ]
+}

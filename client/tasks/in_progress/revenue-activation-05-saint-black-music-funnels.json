@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-05",
+  "system": "Saint Black music funnels",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "readiness": "medium",
+  "status": "in_progress",
+  "currentTask": "Build campaign cadence with CTA path variants and audience hooks.",
+  "updatedAt": "2026-04-17T19:20:00Z"
+}

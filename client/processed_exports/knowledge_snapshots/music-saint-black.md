@@ -1,0 +1,100 @@
+# Music (Saint Black)
+
+Generated: 2026-04-17T16:47:51.919Z
+
+Total records: 111
+
+## Sample Files
+
+- `conversations-004.json`
+- `conversations-006.json`
+- `file-6p9cqodouLK2UM5YfGMzLN-report.md`
+- `file-8Mq6kgVAL8h8UoUVvo9wwk-report.md`
+- `file-EDZveS41HkTeu6vZEgpHcb-report.md`
+- `file-PNUyBhzfZt6hSaznNV1T7r-will_summary.md`
+- `file-SRF4EydLjGNkRuW89s2d4o-campaign_plan.md`
+- `file-YEsx1DRnGNfPjnHfrRZ4jn-saint_black_music_report.md`
+
+## Sample Conversations
+
+- Find Music Lawyer for Record Deal (3 msgs)
+- New chat (5 msgs)
+- Music video lyrics request (10 msgs)
+- Video Creation Request (13 msgs)
+- Wisdom Seeker's Vision (29 msgs)
+- AI in My Will (8 msgs)
+- Book Finalization Support (359 msgs)
+- AI Legacy System Blueprint (35 msgs)
+- File Conversion Assistance (27 msgs)
+- Colonel Role Breakdown (14 msgs)
+- Create video with music (12 msgs)
+- Quandrix Legacy Guide (5 msgs)
+- Album Cover Design Request (16 msgs)
+- Spymaster Album Cover (37 msgs)
+- Land recon report (19 msgs)
+- Digital Foundation Blueprint (7 msgs)
+- Boost music sales (132 msgs)
+- YouTube monetization check (85 msgs)
+- Marketing video creation (13 msgs)
+- Sadie's references explained (5 msgs)
+- 3iatlas alien craft inquiry (8 msgs)
+- Cloaking nanotech blueprint (20 msgs)
+- Tech legacy activation guide (22 msgs)
+- Clarify meeting purpose (52 msgs)
+- Comet details and proximity (8 msgs)
+- Dream interpretation help (63 msgs)
+- Link troubleshooting options (27 msgs)
+- Sora 2 prompt details (10 msgs)
+- AI agent builder (48 msgs)
+- Music content creation (28 msgs)
+- Saint Black discography summary (43 msgs)
+- Create music playlist (14 msgs)
+- Project retrieval and planning (24 msgs)
+- Setting up Archaios schema (376 msgs)
+- Sora 2 prompt creation (6 msgs)
+- Sora 2 prompt creation (36 msgs)
+- Task clarification questions (33 msgs)
+- LTX 2 album prompt (9 msgs)
+- Adidas design prompt (9 msgs)
+- Sora 2 prompt creation (30 msgs)
+- Saint Black legacy archive (5 msgs)
+- Saint Black cinematic prompt (5 msgs)
+- Movie editing apps XML import (16 msgs)
+- Home studio equipment list (11 msgs)
+- Create Saint Black playlist (8 msgs)
+- English language creation inquiry (11 msgs)
+- Sora 2 cinematic prompt (5 msgs)
+- Archaios phone capabilities (16 msgs)
+- Suno app overview (10 msgs)
+- Sora 2 prompt creation (9 msgs)
+- Saint Black story sequence (5 msgs)
+- SORA 2 storyboard (21 msgs)
+- LTX scene prompt (10 msgs)
+- Ascension arc directives (14 msgs)
+- Movie script creation (31 msgs)
+- Mac mini for Pro Tools (12 msgs)
+- Mac mini Pro 2022 explanation (12 msgs)
+- New design look (13 msgs)
+- Oldest Mac mini AI (57 msgs)
+- Pro Tools overview (7 msgs)
+- OP meaning explanations (7 msgs)
+- LTX studio prompt (7 msgs)
+- Dramatic headshot creation (8 msgs)
+- LTX Studio Prompt Framework (11 msgs)
+- Saint Black Script (31 msgs)
+- Email Response Draft (6 msgs)
+- CD Baby Artists (8 msgs)
+- Artist Identity and Vision (7 msgs)
+- Saint Black Visual Review (17 msgs)
+- Creative Talent vs Revenue (14 msgs)
+- Saint Black Music Framework (8 msgs)
+- Review Archaios progress (24 msgs)
+- Sora 2 Scene Prompts (9 msgs)
+- Strategist Not Handler (19 msgs)
+- Vocal Mic Amplifier Tips (8 msgs)
+- Revenue Network Projection (80 msgs)
+- Introduction Advice (8 msgs)
+- New chat (20 msgs)
+- Sora Storyboard Beta (8 msgs)
+- Album Promotion Request (27 msgs)
+

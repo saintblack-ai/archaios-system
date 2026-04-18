@@ -1,0 +1,144 @@
+{
+  "currentBuildPhase": "Layer 3 - Orchestrate",
+  "layers": [
+    {
+      "id": "layer-1-stabilize",
+      "name": "Layer 1 - Stabilize",
+      "status": "active",
+      "summary": "Verify local modules, protect approval-first mode, keep persistence recoverable, and improve logs."
+    },
+    {
+      "id": "layer-2-strengthen",
+      "name": "Layer 2 - Strengthen",
+      "status": "active",
+      "summary": "Improve agents, queues, content workflows, KPI logic, and UI review surfaces."
+    },
+    {
+      "id": "layer-3-orchestrate",
+      "name": "Layer 3 - Orchestrate",
+      "status": "active",
+      "summary": "Coordinate parent/child task routing, dependencies, retries, fallback systems, and health checks."
+    },
+    {
+      "id": "layer-4-scale-internally",
+      "name": "Layer 4 - Scale Internally",
+      "status": "queued",
+      "summary": "Create reusable templates, shared state structures, simulation modes, and dashboard visualization."
+    },
+    {
+      "id": "layer-5-hold-for-orders",
+      "name": "Layer 5 - Hold For Orders",
+      "status": "boundary",
+      "summary": "Stop before real external APIs, deployment, paid services, credential changes, or public launch."
+    }
+  ],
+  "supportAgents": [
+    {
+      "id": "architecture-orchestrator",
+      "name": "Architecture Orchestrator",
+      "purpose": "Coordinate parent and support agents, route tasks by dependency, and keep expansion layered.",
+      "parentAgent": "Operations Agent",
+      "inputs": ["agent registry", "roadmap queue", "execution logs", "dependency map"],
+      "outputs": ["orchestration map", "safe next steps", "dependency warnings"],
+      "schedules": ["Every operations refresh", "Before weekly reset"],
+      "permissions": ["internal planning", "dashboard reporting", "mock workflow simulation"],
+      "currentStatus": "active",
+      "dependencies": ["operations-agent", "strategy-commander"]
+    },
+    {
+      "id": "compliance-guardian",
+      "name": "Compliance Guardian",
+      "purpose": "Keep posting, funnel, and promotional workflows inside approval-first and platform-safe limits.",
+      "parentAgent": "Sales Optimizer Agent",
+      "inputs": ["posting settings", "queue state", "permissions map", "blocked items"],
+      "outputs": ["safety warnings", "approval requirements", "permission boundary flags"],
+      "schedules": ["Every scheduler tick", "Before auto-post mode"],
+      "permissions": ["block unsafe internal execution", "write recommendations"],
+      "currentStatus": "active",
+      "dependencies": ["sales-optimizer-agent", "postingScheduler"]
+    },
+    {
+      "id": "queue-auditor",
+      "name": "Queue Auditor",
+      "purpose": "Audit scheduled, pending, failed, and posted queue states for retry safety and duplicate-risk prevention.",
+      "parentAgent": "Social Distribution Agent",
+      "inputs": ["postQueue", "postingLogs", "scheduler settings"],
+      "outputs": ["queue health", "retry recommendations", "approval backlog"],
+      "schedules": ["Every 5 minutes in local dashboard mode"],
+      "permissions": ["internal queue reporting", "retry recommendation only"],
+      "currentStatus": "active",
+      "dependencies": ["social-distribution-agent", "postQueue"]
+    },
+    {
+      "id": "content-quality-reviewer",
+      "name": "Content Quality Reviewer",
+      "purpose": "Review generated copy for clarity, CTA discipline, duplication, and policy-safe language before scheduling.",
+      "parentAgent": "Content Creator Agent",
+      "inputs": ["content library", "campaign focus", "book metadata"],
+      "outputs": ["quality score", "revision flags", "approval notes"],
+      "schedules": ["After content regeneration"],
+      "permissions": ["internal scoring", "revision recommendations"],
+      "currentStatus": "active",
+      "dependencies": ["content-creator-agent", "brand-story-agent"]
+    },
+    {
+      "id": "projection-skeptic",
+      "name": "Projection Skeptic",
+      "purpose": "Challenge KPI assumptions so revenue projections remain labeled, conservative, and non-guaranteed.",
+      "parentAgent": "Analytics Agent",
+      "inputs": ["kpis", "content volume", "queue state", "campaign scores"],
+      "outputs": ["projection risk notes", "assumption warnings", "measurement gaps"],
+      "schedules": ["Every analytics refresh"],
+      "permissions": ["internal analytics review", "dashboard warnings"],
+      "currentStatus": "active",
+      "dependencies": ["analytics-agent", "kpis"]
+    }
+  ],
+  "buildLog": [
+    {
+      "id": "build-layer-001",
+      "timestamp": "2026-04-16T00:00:00.000Z",
+      "layer": "Layer 1 - Stabilize",
+      "summary": "Book Growth OS seeded with local data, agent runs, dashboard panels, and approval-first controls.",
+      "status": "complete"
+    },
+    {
+      "id": "build-layer-002",
+      "timestamp": "2026-04-16T00:00:00.000Z",
+      "layer": "Layer 2 - Strengthen",
+      "summary": "Scheduler, queue engine, mock social connectors, and posting logs added without live external posting.",
+      "status": "complete"
+    }
+  ],
+  "dependencyMap": [
+    { "from": "Strategy Commander", "to": "Content Creator Agent", "type": "priority input" },
+    { "from": "Brand Story Agent", "to": "Content Creator Agent", "type": "messaging input" },
+    { "from": "Content Creator Agent", "to": "Social Distribution Agent", "type": "content source" },
+    { "from": "Social Distribution Agent", "to": "Queue Auditor", "type": "queue source" },
+    { "from": "Scheduler", "to": "Social Connectors", "type": "execution path" },
+    { "from": "Compliance Guardian", "to": "Scheduler", "type": "safety gate" },
+    { "from": "Analytics Agent", "to": "Strategy Commander", "type": "performance feedback" },
+    { "from": "Projection Skeptic", "to": "Analytics Agent", "type": "assumption review" }
+  ],
+  "permissionsMap": [
+    { "capability": "Create internal agents", "status": "allowed", "boundary": "Must register purpose, parent, inputs, outputs, schedule, permissions, dependencies." },
+    { "capability": "Generate content", "status": "allowed", "boundary": "Must remain approval-first and compliant." },
+    { "capability": "Schedule mock posts", "status": "allowed", "boundary": "No real external posting without explicit approval." },
+    { "capability": "Connect real social APIs", "status": "blocked", "boundary": "Requires explicit approval and server-side credentials." },
+    { "capability": "Deploy publicly", "status": "blocked", "boundary": "Requires explicit approval." },
+    { "capability": "Spend money or change billing", "status": "blocked", "boundary": "Requires explicit approval." }
+  ],
+  "roadmapQueue": [
+    { "id": "roadmap-001", "priority": "high", "item": "Add Architect Mode dashboard visualization.", "status": "in-progress" },
+    { "id": "roadmap-002", "priority": "high", "item": "Add durable state migration guards for new localStorage fields.", "status": "in-progress" },
+    { "id": "roadmap-003", "priority": "medium", "item": "Add content QA scoring before posts move to scheduled.", "status": "queued" },
+    { "id": "roadmap-004", "priority": "medium", "item": "Add exportable approval packets for manual posting.", "status": "queued" },
+    { "id": "roadmap-005", "priority": "medium", "item": "Simulate future server-side queue worker without live external calls.", "status": "queued" }
+  ],
+  "awaitingAuthorization": [
+    { "id": "auth-001", "item": "Connect X API v2 for real posting.", "reason": "External API and credentials required.", "status": "awaiting explicit approval" },
+    { "id": "auth-002", "item": "Connect Meta Graph API for Facebook and Instagram posting.", "reason": "External API, app review, tokens, and platform policy review required.", "status": "awaiting explicit approval" },
+    { "id": "auth-003", "item": "Deploy public production scheduler.", "reason": "Public deployment boundary.", "status": "awaiting explicit approval" },
+    { "id": "auth-004", "item": "Run paid ads or connect ad accounts.", "reason": "Spending and paid service boundary.", "status": "awaiting explicit approval" }
+  ]
+}

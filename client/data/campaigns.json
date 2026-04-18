@@ -1,0 +1,46 @@
+[
+  {
+    "id": "campaign-holy-war-discipline",
+    "bookId": "holy-war",
+    "name": "Seven Days of Holy Discipline",
+    "stage": "scheduled",
+    "goal": "Drive spiritually serious readers to Apple Books through daily discipline hooks.",
+    "primaryChannels": ["X", "Instagram", "Threads", "Facebook"],
+    "status": "active",
+    "score": 74,
+    "nextAction": "Publish the strongest discipline quote as a carousel and pin the Apple Books CTA."
+  },
+  {
+    "id": "campaign-eden-return",
+    "bookId": "echoes-eden",
+    "name": "Return to Eden Mystery Thread",
+    "stage": "in-production",
+    "goal": "Use mystery-led literary posts to attract readers who respond to origin, symbolism, and restoration.",
+    "primaryChannels": ["X", "Instagram", "YouTube"],
+    "status": "active",
+    "score": 68,
+    "nextAction": "Turn the top Eden hook into a 5-post teaser thread."
+  },
+  {
+    "id": "campaign-pleiadian-research",
+    "bookId": "pleiadian-project",
+    "name": "Cosmic Archive Research Drops",
+    "stage": "idea",
+    "goal": "Position the guide as an organized entry point for cosmic researchers and esoteric study groups.",
+    "primaryChannels": ["TikTok", "YouTube", "Threads", "Blog"],
+    "status": "active",
+    "score": 63,
+    "nextAction": "Create a keyword-led blog outline around Pleiadian research terms."
+  },
+  {
+    "id": "campaign-cross-book-saint-black-library",
+    "bookId": "all",
+    "name": "Saint Black Sacred Intelligence Library",
+    "stage": "scheduled",
+    "goal": "Present all three books as one spiritual, literary, and cosmic knowledge path.",
+    "primaryChannels": ["Email", "Landing Page", "Facebook", "Instagram"],
+    "status": "active",
+    "score": 71,
+    "nextAction": "Build the cross-book landing page variant and route every post CTA through it."
+  }
+]

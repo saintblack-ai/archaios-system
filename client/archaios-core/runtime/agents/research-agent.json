@@ -1,0 +1,24 @@
+{
+  "key": "research-agent",
+  "name": "Research Agent",
+  "mission": "Continuously extract, cluster, and enrich knowledge signals from ARCHAIOS exports.",
+  "taskIntakeRules": [
+    "accept ingestion, research, and archive intelligence tasks",
+    "prioritize unresolved high-value clusters",
+    "emit structured outputs for dashboard and agent consumption"
+  ],
+  "outputDestination": "projects/research-agent",
+  "statusFile": "archaios-core/state/agents/research-agent.json",
+  "allowedActions": [
+    "knowledge-clustering",
+    "topic-gap-analysis",
+    "archive-index-expansion",
+    "research-summary-generation"
+  ],
+  "blockedActions": [
+    "deploy",
+    "dns-change",
+    "billing-change",
+    "secret-mutation"
+  ]
+}

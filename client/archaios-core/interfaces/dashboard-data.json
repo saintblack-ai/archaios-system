@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-04-17T19:42:33.434Z",
+  "archiveRoot": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/Archaios Infrastructure 2",
+  "knowledgeSource": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/Archaios Infrastructure 2/raw_exports/chatgpt_export_2026-04-16",
+  "systemHealth": "healthy",
+  "activeAgents": 5,
+  "taskCounts": {
+    "intake": 5,
+    "completed": 5,
+    "blocked": 0
+  },
+  "projectClusterSummary": [
+    {
+      "id": "saas-systems",
+      "label": "SaaS Systems",
+      "count": 218
+    },
+    {
+      "id": "music-saint-black",
+      "label": "Music (Saint Black)",
+      "count": 111
+    },
+    {
+      "id": "spiritual-research",
+      "label": "Spiritual / Research",
+      "count": 83
+    },
+    {
+      "id": "ai-infrastructure",
+      "label": "AI Infrastructure",
+      "count": 81
+    },
+    {
+      "id": "automation-systems",
+      "label": "Automation Systems",
+      "count": 63
+    }
+  ],
+  "revenueOpportunities": [
+    "SaaS subscriptions (Free / Pro / Elite) with Stripe test readiness.",
+    "Apple Books sales funnels and launch campaigns.",
+    "Saint Black music campaigns, release promos, and content bundles.",
+    "Premium intelligence products and gated dashboard features.",
+    "Digital products and consulting-style intelligence packs."
+  ],
+  "knowledgeIngestionSummary": {
+    "files": 25,
+    "conversations": 631,
+    "records": 656
+  },
+  "serviceRegistry": "archaios-core/services/service-registry.json"
+}

@@ -1,0 +1,48 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Install frontend dependencies
+        run: pip install -r frontend/requirements.txt
+
+      - name: Syntax check
+        run: |
+          python -m py_compile backend/app.py
+          python -m py_compile frontend/streamlit_app.py
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Trigger backend deploy
+        if: ${{ secrets.BACKEND_DEPLOY_HOOK_URL != '' }}
+        run: curl -X POST "${{ secrets.BACKEND_DEPLOY_HOOK_URL }}"
+
+      - name: Trigger frontend deploy
+        if: ${{ secrets.FRONTEND_DEPLOY_HOOK_URL != '' }}
+        run: curl -X POST "${{ secrets.FRONTEND_DEPLOY_HOOK_URL }}"
+
+      - name: Deployment note
+        if: ${{ secrets.BACKEND_DEPLOY_HOOK_URL == '' && secrets.FRONTEND_DEPLOY_HOOK_URL == '' }}
+        run: echo "No deploy hooks configured. Set BACKEND_DEPLOY_HOOK_URL and FRONTEND_DEPLOY_HOOK_URL secrets."

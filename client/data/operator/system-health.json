@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-04-16T00:00:00.000Z",
+  "mode": "internal-scaffold",
+  "summary": "ARCHAIOS Operator Mode is a read-first internal dashboard. Live deployment, credentials, billing mutation, and external posting remain blocked until explicit approval.",
+  "repos": [
+    {
+      "name": "ai-assassins-client",
+      "path": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/client",
+      "role": "Authenticated customer dashboard and current active build target",
+      "health": "active",
+      "risk": "Dirty worktree and generated-file noise must be cleaned before release."
+    },
+    {
+      "name": "Ai-Assassins",
+      "path": "/Users/quandrixblackburn/projects/Ai-Assassins",
+      "role": "Cloudflare Worker backend, static dashboard, daily brief logic, mobile/store assets",
+      "health": "strong-source",
+      "risk": "Older pricing and multiple billing routes need consolidation before production."
+    },
+    {
+      "name": "saintblack-ai.github.io",
+      "path": "/Users/quandrixblackburn/saintblack-ai.github.io",
+      "role": "Public marketing and experimental Next-style agent routes",
+      "health": "needs-alignment",
+      "risk": "Overlaps with active dashboard and backend responsibilities."
+    },
+    {
+      "name": "Archaios OS",
+      "path": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/Archaios OS",
+      "role": "Internal Python/Streamlit agent orchestration and logs",
+      "health": "internal-ready",
+      "risk": "Needs read-only bridge before production integration."
+    }
+  ],
+  "deployHealth": [
+    { "surface": "Frontend", "target": "Vercel or Cloudflare Pages", "status": "prepared", "next": "Choose final hosting target and set frontend env vars." },
+    { "surface": "Worker API", "target": "Cloudflare Workers", "status": "prepared", "next": "Set secrets/vars and deploy staging after approval." },
+    { "surface": "Public marketing", "target": "GitHub Pages or Vercel", "status": "needs-role-decision", "next": "Decide whether saintblack-ai.github.io remains marketing-only." },
+    { "surface": "Operator plane", "target": "Private/local first", "status": "internal-only", "next": "Keep private until auth and admin policy are finalized." }
+  ],
+  "subscriptionMetrics": {
+    "source": "local projection until Supabase/Stripe live data is queried",
+    "freeUsers": 0,
+    "proSubscriptions": 0,
+    "eliteSubscriptions": 0,
+    "mrr": 0,
+    "checkoutStarts": 0,
+    "checkoutCompletions": 0,
+    "churnSignals": 0
+  },
+  "contentPipeline": [
+    { "stage": "source-ingestion", "status": "partial", "detail": "News/market/sitrep agents exist; canonical pipeline still needs selection." },
+    { "stage": "brief-generation", "status": "partial", "detail": "Ai-Assassins Worker has mature daily brief logic; current client has dashboard payloads." },
+    { "stage": "approval", "status": "planned", "detail": "Admin publish/approve workflow should be added before live distribution." },
+    { "stage": "delivery", "status": "partial", "detail": "Dashboard delivery exists; email delivery is credential-bound." }
+  ],
+  "exportReadiness": [
+    { "name": "Inbox", "status": "ready", "detail": "ARCHAIOS_INFRASTRUCTURE/inbox is prepared for the OpenAI export." },
+    { "name": "Scanner", "status": "ready", "detail": "npm run archaios:intake creates manifest and markdown reports without mutating source files." },
+    { "name": "Taxonomy", "status": "expanded", "detail": "Prompts, product ideas, business model, spiritual research, books, music, OS/game systems, crypto, raw conversations, and app features are mapped." },
+    { "name": "Consolidation", "status": "waiting", "detail": "Requires the export before product requirements and prompt registry can be generated." }
+  ],
+  "mockMode": [
+    { "name": "Dashboard mock data", "status": "ready", "detail": "Use /dashboard?mock=1 or the dashboard toggle to test briefing and feature gates." },
+    { "name": "Stripe mock behavior", "status": "safe", "detail": "Checkout still requires auth and live Worker configuration; mock mode does not fake billing." },
+    { "name": "Operator projections", "status": "local", "detail": "Subscription metrics remain local projections until Supabase/Stripe are queried." }
+  ],
+  "recentErrors": [
+    "Missing /ARCHAIOS_INFRASTRUCTURE/ archive in accessible scan.",
+    "Dirty generated files detected in current repo.",
+    "Live Stripe and deployment verification blocked pending credentials and approval."
+  ],
+  "pendingTasks": [
+    "Clean repo status before production release.",
+    "Choose canonical backend between current Worker and Ai-Assassins Worker.",
+    "Align all pricing references to Pro $49 and Elite $99.",
+    "Create Supabase briefing tables.",
+    "Run Stripe test-mode checkout and webhook QA.",
+    "Deploy staging Worker and frontend after approval."
+  ],
+  "roadmap": [
+    { "phase": "Phase 1", "item": "Discovery docs and operator scaffold", "status": "complete" },
+    { "phase": "Phase 2", "item": "Canonical backend selection", "status": "queued" },
+    { "phase": "Phase 3", "item": "Stripe test-mode verification", "status": "awaiting credentials" },
+    { "phase": "Phase 4", "item": "Daily briefing publish/approval workflow", "status": "queued" },
+    { "phase": "Phase 5", "item": "Staging deploy", "status": "awaiting approval" }
+  ],
+  "blockedItems": [
+    { "item": "Connect real Stripe live mode", "reason": "Credential and billing mutation boundary" },
+    { "item": "Deploy public production app", "reason": "Public launch boundary" },
+    { "item": "Connect email delivery", "reason": "External API and sending policy boundary" },
+    { "item": "Merge or delete overlapping repos", "reason": "Destructive/refactor boundary" }
+  ]
+}

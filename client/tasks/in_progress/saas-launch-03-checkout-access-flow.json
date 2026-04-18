@@ -1,0 +1,9 @@
+{
+  "taskId": "saas-launch-03",
+  "workstream": "checkout-access-flow",
+  "primaryAgent": "revenue-agent",
+  "supportAgent": "product-agent",
+  "status": "in_progress",
+  "currentTask": "Prepare test-only checkout and upgrade/downgrade subscription flow docs.",
+  "updatedAt": "2026-04-17T19:25:00Z"
+}

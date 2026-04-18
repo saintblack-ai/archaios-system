@@ -1,0 +1,11 @@
+{
+  "taskId": "saas-launch-04",
+  "system": "SaaS launch",
+  "workstream": "funnel-copy",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Landing, pricing, in-app, and email conversion copy set",
+  "createdAt": "2026-04-17T19:25:00Z"
+}

@@ -1,0 +1,11 @@
+{
+  "agent": "Content Agent",
+  "mission": "Generate structured content packs for social, product pages, and campaign operations.",
+  "task": "Generate fresh content queue candidates from updated category files.",
+  "outputs": [
+    "post packs",
+    "campaign copy",
+    "book/music promo briefs"
+  ],
+  "generatedAt": "2026-04-17T19:42:33.399Z"
+}

@@ -1,0 +1,12 @@
+{
+  "taskId": "top-exec-01",
+  "system": "SaaS tier system",
+  "primaryAgent": "revenue-agent",
+  "supportAgent": "product-agent",
+  "readiness": "high",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Free/Pro/Elite entitlement matrix and upgrade gating spec",
+  "createdAt": "2026-04-17T18:45:00Z"
+}
+

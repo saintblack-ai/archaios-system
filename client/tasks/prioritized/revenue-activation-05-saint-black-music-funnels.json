@@ -1,0 +1,11 @@
+{
+  "taskId": "revenue-activation-05",
+  "system": "Saint Black music funnels",
+  "primaryAgent": "content-agent",
+  "supportAgent": "revenue-agent",
+  "priority": "high",
+  "readiness": "medium",
+  "status": "queued",
+  "deliverable": "14-day campaign cadence + CTA destination mapping",
+  "createdAt": "2026-04-17T19:20:00Z"
+}

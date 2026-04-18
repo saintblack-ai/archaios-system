@@ -1,0 +1,12 @@
+{
+  "taskId": "top-exec-04",
+  "system": "Digital bundle products",
+  "primaryAgent": "revenue-agent",
+  "supportAgent": "content-agent",
+  "readiness": "medium",
+  "priority": "high",
+  "status": "queued",
+  "deliverable": "Bundle catalog, tier alignment, and upsell sequencing",
+  "createdAt": "2026-04-17T18:45:00Z"
+}
+

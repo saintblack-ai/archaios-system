@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-04-17T19:42:33.434Z",
+  "cycleId": "2026-04-17T19-42-33-277Z",
+  "sourceQueue": "tasks/agent-task-queue.json",
+  "archiveRoot": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/Archaios Infrastructure 2",
+  "knowledgeSource": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/Archaios Infrastructure 2/raw_exports/chatgpt_export_2026-04-16",
+  "queueStats": {
+    "intake": 5,
+    "completed": 5,
+    "blocked": 0
+  },
+  "agentStatus": [
+    {
+      "agent": "infra-agent",
+      "lastExecution": "2026-04-17T19:42:33.311Z",
+      "tasksCompleted": 1,
+      "tasksBlocked": 0,
+      "currentTask": "Validate route availability and worker health after knowledge refresh.",
+      "status": "Running"
+    },
+    {
+      "agent": "product-agent",
+      "lastExecution": "2026-04-17T19:42:33.341Z",
+      "tasksCompleted": 1,
+      "tasksBlocked": 0,
+      "currentTask": "Review knowledge/project indexes and propose dashboard integration updates.",
+      "status": "Running"
+    },
+    {
+      "agent": "revenue-agent",
+      "lastExecution": "2026-04-17T19:42:33.372Z",
+      "tasksCompleted": 1,
+      "tasksBlocked": 0,
+      "currentTask": "Re-evaluate monetization docs and Stripe prep artifacts from latest export insights.",
+      "status": "Running"
+    },
+    {
+      "agent": "content-agent",
+      "lastExecution": "2026-04-17T19:42:33.403Z",
+      "tasksCompleted": 1,
+      "tasksBlocked": 0,
+      "currentTask": "Generate fresh content queue candidates from updated category files.",
+      "status": "Running"
+    },
+    {
+      "agent": "research-agent",
+      "lastExecution": "2026-04-17T19:42:33.433Z",
+      "tasksCompleted": 1,
+      "tasksBlocked": 0,
+      "currentTask": "Re-cluster conversations into AI/SaaS, books, music, game/OS, crypto, spiritual, and automation research domains.",
+      "status": "Running"
+    }
+  ],
+  "conventions": {
+    "logs": "logs/*.log append-only",
+    "state": "archaios-core/state/*.json",
+    "tasks": "tasks/{queue,in_progress,completed,blocked,prioritized}"
+  }
+}

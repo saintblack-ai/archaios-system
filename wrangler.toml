@@ -1,0 +1,30 @@
+name = "archaios-saas-worker"
+main = "worker.js"
+compatibility_date = "2026-03-05"
+
+[vars]
+OPENAI_MODEL = "gpt-4o-mini"
+LOCAL_TIMEZONE = "America/Chicago"
+WORKER_BASE_URL = "https://archaios-saas-worker.quandrix357.workers.dev"
+FRONTEND_URL = "https://saintblack-ai.github.io/ai-assassins-client"
+# Optional Stripe tier mapping vars:
+# STRIPE_PRICE_PRO = "price_..."
+# STRIPE_PRICE_ELITE = "price_..."
+# STRIPE_PRICE_ENTERPRISE = "price_..."
+# Optional revenue defaults if you want to override built-in monthly price assumptions:
+# PRO_PRICE_USD = "29"
+# ELITE_PRICE_USD = "99"
+# ENTERPRISE_PRICE_USD = "499"
+
+[triggers]
+crons = [
+  "0 7 * * *"
+]
+
+# Secrets (set with `wrangler secret put`):
+# - OPENAI_API_KEY
+# - SUPABASE_URL
+# - SUPABASE_SERVICE_ROLE_KEY
+# - AUTH_TOKEN (optional)
+# - STRIPE_SECRET_KEY
+# - STRIPE_WEBHOOK_SECRET

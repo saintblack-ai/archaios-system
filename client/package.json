@@ -1,0 +1,32 @@
+{
+  "name": "ai-assassins-client",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "loop:once": "./archaios-loop.sh once",
+    "loop:start": "./archaios-loop.sh start",
+    "loop:status": "./archaios-loop.sh status",
+    "archaios:intake": "node scripts/archaios-export-intake.mjs",
+    "archaios:build": "node scripts/archaios-ingest-build.mjs",
+    "archaios:orchestrate": "node archaios-core/orchestrator/orchestrator.mjs",
+    "worker:dev": "wrangler dev --test-scheduled",
+    "worker:check": "wrangler check",
+    "worker:deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.100.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "socket.io-client": "^4.7.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}
