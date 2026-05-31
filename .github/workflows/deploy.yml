@@ -33,6 +33,8 @@ jobs:
       - name: Build client
         working-directory: client
         run: npm run build
+      - name: Add GitHub Pages SPA fallback
+        run: cp client/dist/index.html client/dist/404.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
