@@ -10,6 +10,8 @@ import { PRICING_TIERS } from "./shared/pricing.js";
 const DEFAULT_OPENAI_MODEL = "gpt-4o-mini";
 const DEFAULT_WORKER_BASE_URL = "https://archaios-saas-worker.quandrix357.workers.dev";
 const DEFAULT_FRONTEND_URL = "https://saintblack-ai.github.io/ai-assassins-client";
+const WORKER_SERVICE_NAME = "archaios-saas-worker";
+const DEFAULT_WORKER_RELEASE = "2026-06-20-revenue-subscription-contract";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "https://saintblack-ai.github.io",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
@@ -155,7 +157,7 @@ export default {
       }
 
       if (request.method === "GET" && pathname === "/api/health") {
-        return respond(json({ ok: true }));
+        return respond(json(getHealthPayload(env)));
       }
 
       if (request.method === "GET" && pathname === "/api/pricing") {
@@ -2775,6 +2777,14 @@ function sanitizeCheckoutReturnUrl(env, candidate, fallbackPath) {
   }
 
   return fallbackUrl;
+}
+
+export function getHealthPayload(env = {}) {
+  return {
+    ok: true,
+    service: WORKER_SERVICE_NAME,
+    release: env.WORKER_RELEASE || DEFAULT_WORKER_RELEASE
+  };
 }
 
 async function createStripeCheckoutSession(env, user, tier, options = {}) {
