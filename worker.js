@@ -5,6 +5,13 @@ import { revenueAgent, buildRevenuePrompt } from "./agents/revenue_agent.js";
 import { buildDistributionPrompt } from "./agents/distribution_agent.js";
 import { buildFeedbackPrompt } from "./agents/feedback_agent.js";
 import { buildOptimizationPrompt } from "./agents/optimization_agent.js";
+import {
+  buildArchivistSearchPath,
+  buildArchivistSummaryPrompt,
+  isArchivistItemId,
+  normalizeArchivistItemInput,
+  normalizeArchivistTags
+} from "./shared/archivist.js";
 import { PRICING_TIERS } from "./shared/pricing.js";
 
 const DEFAULT_OPENAI_MODEL = "gpt-4o-mini";
@@ -239,6 +246,94 @@ export default {
 
         await clearUserAlerts(env, user.id);
         return respond(json({ ok: true, cleared: true }));
+      }
+
+      if (request.method === "GET" && pathname === "/api/archivist/items") {
+        const user = await getAuthenticatedSupabaseUser(request, env);
+        if (!user) {
+          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+        }
+
+        return respond(json({
+          ok: true,
+          items: await getArchivistItems(env, user.id, url.searchParams)
+        }));
+      }
+
+      if (request.method === "POST" && pathname === "/api/archivist/items") {
+        const user = await getAuthenticatedSupabaseUser(request, env);
+        if (!user) {
+          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+        }
+
+        const body = await request.json().catch(() => null);
+        let item;
+        try {
+          item = normalizeArchivistItemInput(body);
+        } catch (error) {
+          return respond(json({ ok: false, error: String(error.message || error) }, 400));
+        }
+
+        const rows = await supabaseInsert(env, "archivist_items", {
+          ...item,
+          owner_id: user.id
+        });
+        return respond(json({ ok: true, item: rows?.[0] || null }, 201));
+      }
+
+      const archivistItemRoute = matchArchivistItemRoute(pathname);
+      if (archivistItemRoute && request.method === "PATCH") {
+        const user = await getAuthenticatedSupabaseUser(request, env);
+        if (!user) {
+          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+        }
+
+        const body = await request.json().catch(() => null);
+        if (!body || !Array.isArray(body.tags)) {
+          return respond(json({ ok: false, error: "tags array is required" }, 400));
+        }
+
+        const rows = await supabaseUpdate(
+          env,
+          "archivist_items",
+          { tags: normalizeArchivistTags(body.tags) },
+          { id: `eq.${archivistItemRoute.id}`, owner_id: `eq.${user.id}` }
+        );
+        if (!rows?.[0]) {
+          return respond(json({ ok: false, error: "Research item not found" }, 404));
+        }
+        return respond(json({ ok: true, item: rows[0] }));
+      }
+
+      if (archivistItemRoute?.action === "summarize" && request.method === "POST") {
+        const user = await getAuthenticatedSupabaseUser(request, env);
+        if (!user) {
+          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+        }
+        if (!env.OPENAI_API_KEY) {
+          return respond(json({ ok: false, error: "ARCHIVIST summaries require OPENAI_API_KEY" }, 503));
+        }
+
+        const item = await getArchivistItem(env, user.id, archivistItemRoute.id);
+        if (!item) {
+          return respond(json({ ok: false, error: "Research item not found" }, 404));
+        }
+
+        const summary = await requestText(env, buildArchivistSummaryPrompt(item));
+        const rows = await supabaseUpdate(
+          env,
+          "archivist_items",
+          { summary },
+          { id: `eq.${item.id}`, owner_id: `eq.${user.id}` }
+        );
+        await supabaseInsert(env, "archivist_summaries", {
+          item_id: item.id,
+          owner_id: user.id,
+          summary_text: summary,
+          model: getOpenAIModel(env)
+        });
+
+        return respond(json({ ok: true, item: rows?.[0] || { ...item, summary }, summary }));
       }
 
       if (request.method === "POST" && pathname === "/api/stripe/checkout") {
@@ -1611,6 +1706,15 @@ function isBriefRoute(pathname) {
   return ["/api/brief", "/brief", "/api/generateBrief", "/"].includes(pathname);
 }
 
+function matchArchivistItemRoute(pathname) {
+  const match = pathname.match(/^\/api\/archivist\/items\/([^/]+)(?:\/(summarize))?$/);
+  if (!match || !isArchivistItemId(match[1])) {
+    return null;
+  }
+
+  return { id: match[1], action: match[2] || null };
+}
+
 async function handleBriefRequest(request, env) {
   console.log("entered /api/brief");
   assertCoreEnv(env);
@@ -2641,6 +2745,19 @@ async function getUserAlerts(env, userId) {
   );
 
   return Array.isArray(rows) ? rows : [];
+}
+
+async function getArchivistItems(env, userId, searchParams) {
+  return supabaseSelect(env, buildArchivistSearchPath(userId, searchParams));
+}
+
+async function getArchivistItem(env, userId, itemId) {
+  const rows = await supabaseSelect(
+    env,
+    `archivist_items?select=id,item_type,title,body,summary,source_type,source_ref,category,tags,importance,status,created_at,updated_at&id=eq.${encodeURIComponent(itemId)}&owner_id=eq.${encodeURIComponent(userId)}&limit=1`
+  );
+
+  return Array.isArray(rows) ? rows[0] || null : null;
 }
 
 async function clearUserAlerts(env, userId) {
