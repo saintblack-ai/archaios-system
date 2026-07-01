@@ -101,11 +101,28 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.daily-monitor-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
 .daily-panel,
 .daily-card,
-.daily-agent-card {
+.daily-agent-card,
+.daily-monitor-card {
   border-radius: 10px;
   padding: 18px;
+}
+
+.daily-monitor-card {
+  min-height: 168px;
+  border: 1px solid rgba(172, 190, 204, 0.16);
+  background: rgba(255, 255, 255, 0.035);
+  display: grid;
+  align-content: space-between;
+  gap: 10px;
 }
 
 .daily-panel-primary {
@@ -223,7 +240,8 @@
   .daily-briefing-grid,
   .daily-dashboard-grid,
   .daily-dashboard-grid-wide,
-  .daily-agent-grid {
+  .daily-agent-grid,
+  .daily-monitor-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -243,6 +261,7 @@
   .daily-dashboard-grid,
   .daily-dashboard-grid-wide,
   .daily-agent-grid,
+  .daily-monitor-grid,
   .daily-hero-metrics {
     grid-template-columns: 1fr;
   }
@@ -254,7 +273,8 @@
   .daily-hero,
   .daily-panel,
   .daily-card,
-  .daily-agent-card {
+  .daily-agent-card,
+  .daily-monitor-card {
     padding: 16px;
   }
 

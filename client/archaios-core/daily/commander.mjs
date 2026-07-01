@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { buildCommanderExecutiveService } from "../commander/service.mjs";
 import { buildOperatingSnapshot, loadAgentNetwork } from "../runtime/runtime-health.mjs";
 
 const DAILY_AGENT_KEYS = [
@@ -322,6 +323,7 @@ export function buildDailyCommandCenter(rootDir = process.cwd(), options = {}) {
   const generatedAt = options.generatedAt || new Date().toISOString();
   const manifest = loadAgentNetwork(rootDir);
   const operatingSnapshot = buildOperatingSnapshot(rootDir);
+  const executiveOfficer = buildCommanderExecutiveService(rootDir, { generatedAt });
   const knowledgeIndex =
     readJson(path.join(rootDir, "client", "knowledge", "knowledge-index.json"), null) ||
     readJson(path.join(rootDir, "client", "processed_exports", "knowledge_snapshots", "knowledge-index.json"), {});
@@ -399,18 +401,20 @@ export function buildDailyCommandCenter(rootDir = process.cwd(), options = {}) {
     title: "ARCHAIOS Daily Command Center",
     commander: {
       agentKey: "commander",
-      status: commanderStatus,
-      summary: `Commander merged ${agentReports.length} agent reports into today's operating brief.`,
+      status: executiveOfficer.executiveBrief.status || commanderStatus,
+      summary: `Commander merged ${agentReports.length} agent reports and ${executiveOfficer.monitors.length} executive monitors into today's operating brief.`,
       morningBriefing: {
-        headline: commanderStatus === REPORT_STATUS.green ? "System is ready for focused execution." : "System is useful, with watch items to clear.",
-        summary: "Start with revenue readiness, task blockers, and knowledge memory. Keep deploy and billing actions approval-gated.",
-        actions: morningActions
+        headline: executiveOfficer.executiveBrief.title,
+        summary: executiveOfficer.executiveBrief.summary,
+        actions: executiveOfficer.executiveBrief.actionQueue.map((item) => item.action).slice(0, 4)
       },
       eveningReview: {
         summary: "Capture wins, blockers, memory changes, and tomorrow's first action before ending the day.",
         prompts: eveningPrompts
       }
     },
+    executiveOfficer,
+    executiveBrief: executiveOfficer.executiveBrief,
     agentReports,
     dashboards: {
       activeProjects,

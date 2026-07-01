@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-01T21:07:26.094Z",
+  "generatedAt": "2026-07-01T21:35:54.877Z",
   "title": "ARCHAIOS Daily Command Center",
   "commander": {
     "agentKey": "commander",
-    "status": "amber",
-    "summary": "Commander merged 9 agent reports into today's operating brief.",
+    "status": "red",
+    "summary": "Commander merged 9 agent reports and 10 executive monitors into today's operating brief.",
     "morningBriefing": {
-      "headline": "System is useful, with watch items to clear.",
-      "summary": "Start with revenue readiness, task blockers, and knowledge memory. Keep deploy and billing actions approval-gated.",
+      "headline": "ARCHAIOS Executive Officer Morning Brief",
+      "summary": "XO reviewed 10 command sectors: 8 green, 1 watch, 1 critical.",
       "actions": [
-        "Review blocked and in-progress tasks before starting new work.",
-        "Advance one high-readiness revenue system.",
-        "Index or summarize one knowledge item into memory.",
-        "Run focused tests before any commit or deploy preparation."
+        "Verify Stripe test/live price IDs before paid launch.",
+        "Confirm webhook endpoint and required subscription events.",
+        "Review blocked and in-progress tasks before accepting new work.",
+        "Run test-mode checkout and subscription sync before production promotion."
       ]
     },
     "eveningReview": {
@@ -24,6 +24,563 @@
         "What memory, source, or decision should be preserved?"
       ]
     }
+  },
+  "executiveOfficer": {
+    "generatedAt": "2026-07-01T21:35:54.877Z",
+    "service": "archaios-commander-executive-officer",
+    "version": "2026-07-01",
+    "role": "AI Executive Officer",
+    "doctrine": {
+      "revenuePriority": "Revenue work outranks expansion work when launch gates are safe.",
+      "securityPriority": "Security can block revenue, deployment, and automation.",
+      "deploymentPriority": "Deployments require clean worktree, tests, env verification, and rollback path.",
+      "documentationPriority": "Docs must identify canonical commands and avoid conflicting launch authority."
+    },
+    "monitors": [
+      {
+        "key": "unfinished-work",
+        "label": "Unfinished Work",
+        "status": "red",
+        "priority": 2,
+        "summary": "61 in progress, 0 blocked, 6 unstaged/untracked git entries.",
+        "findings": [
+          "M client/archaios-core/daily/commander.mjs",
+          " M client/docs/DAILY_COMMAND_CENTER.md",
+          " M tests/archaios-daily-command.test.mjs",
+          "?? client/archaios-core/commander/",
+          "?? client/supabase/.temp/"
+        ],
+        "actions": [
+          "Review blocked and in-progress tasks before accepting new work.",
+          "Keep release branches clean before deployment.",
+          "Classify untracked files as commit-ready, work-in-progress, experimental, or disposable."
+        ],
+        "metrics": {
+          "queued": 51,
+          "prioritized": 46,
+          "inProgress": 61,
+          "completed": 51,
+          "blocked": 0,
+          "dirtyGitEntries": 6
+        },
+        "risks": [
+          "Dirty worktree can hide release drift."
+        ]
+      },
+      {
+        "key": "revenue",
+        "label": "Revenue Priority",
+        "status": "green",
+        "priority": 4,
+        "summary": "5 revenue systems tracked; 2 high-readiness paths; projected monthly revenue $1,428.",
+        "findings": [
+          "SaaS tier system (Free / Pro / Elite): Finalize entitlement matrix in client gating logic and map plan labels to UI states.",
+          "Apple Books funnels: Publish 3 funnel variants with source tags and conversion placeholders.",
+          "Intelligence report products: Draft product packaging and map each report class to Free/Pro/Elite visibility.",
+          "Digital bundle products: Define initial 3 bundles and attach upsell messaging by user tier."
+        ],
+        "actions": [
+          "Advance the highest-readiness revenue system first.",
+          "Keep self-serve billing gated until Stripe, Supabase, legal, and support checks pass.",
+          "Replace projections with verified Stripe/Supabase metrics when live data is available."
+        ],
+        "metrics": {
+          "estimatedMonthlyRevenue": 1428,
+          "annualRevenueTarget": 100000,
+          "conversionScore": 41,
+          "trackedSystems": 5,
+          "highReadiness": 2,
+          "blocked": 0
+        },
+        "risks": [
+          "Revenue dashboard still contains projections until live billing metrics are verified."
+        ]
+      },
+      {
+        "key": "security",
+        "label": "Security Priority",
+        "status": "green",
+        "priority": 4,
+        "summary": "7/7 local security control signals present.",
+        "findings": [
+          "jwtAuthentication: present",
+          "rbac: present",
+          "encryptedSecrets: present",
+          "auditLogging: present",
+          "rateLimiting: present",
+          "secureApiGateway: present",
+          "vulnerabilityScanning: present"
+        ],
+        "actions": [
+          "Block production deploys until secrets, billing, and Supabase service-role paths are verified.",
+          "Keep service-role keys server-side only.",
+          "Record approval before any deployment, billing, or destructive operation."
+        ],
+        "metrics": {
+          "implementedControls": 7,
+          "requiredControls": 7,
+          "missingLocalArtifacts": 0
+        },
+        "risks": []
+      },
+      {
+        "key": "deployments",
+        "label": "Deployment Tracking",
+        "status": "green",
+        "priority": 3,
+        "summary": "Deployment evidence: GitHub Pages workflow present, heartbeat present, Vercel linked, Cloudflare config present.",
+        "findings": [
+          "GitHub Pages workflow: present",
+          "Worker heartbeat workflow: present",
+          "Vercel project: ai-assassins-client",
+          "Cloudflare config: client worker config present"
+        ],
+        "actions": [
+          "Choose canonical frontend host before production release.",
+          "Align root and client Cloudflare Worker identities.",
+          "Require tests and build before deployment promotion."
+        ],
+        "metrics": {
+          "deploymentSignals": 4,
+          "vercelLinked": true,
+          "githubPagesWorkflow": true,
+          "cloudflareConfig": true
+        },
+        "risks": [
+          "Two Cloudflare config surfaces can drift."
+        ]
+      },
+      {
+        "key": "github",
+        "label": "GitHub Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "Branch revenue-subscription-constraint; remote https://github.com/saintblack-ai/archaios-system.git; 2 workflow files present.",
+        "findings": [
+          "HEAD: 66c5658 docs: add archaios operator readiness archive",
+          ".github/workflows/deploy.yml",
+          ".github/workflows/worker_heartbeat.yml"
+        ],
+        "actions": [
+          "Push logical commits only after local validation passes.",
+          "Review GitHub Actions status for the pushed commit before deploy.",
+          "Keep release branches free of temp files."
+        ],
+        "metrics": {
+          "workflows": 2,
+          "branch": "revenue-subscription-constraint",
+          "remoteConfigured": true
+        },
+        "risks": [
+          "Current branch is revenue-subscription-constraint, not main."
+        ]
+      },
+      {
+        "key": "supabase",
+        "label": "Supabase Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "9 client Supabase migrations tracked; semantic memory, command center, Archivist, and subscription contracts are present.",
+        "findings": [
+          "Semantic memory migration: present",
+          "Command center migration: present",
+          "Archivist migration: present",
+          "Subscription upsert migration: present"
+        ],
+        "actions": [
+          "Verify migrations are applied to the live Supabase project.",
+          "Confirm RLS policies for profiles, subscriptions, Archivist, and semantic memory.",
+          "Validate service-role key only in server/Worker runtime."
+        ],
+        "metrics": {
+          "migrations": 9,
+          "semanticMemoryReady": true,
+          "commandCenterReady": true,
+          "archivistReady": true,
+          "subscriptionContractReady": true
+        },
+        "risks": [
+          "Local migration presence does not prove live Supabase application."
+        ]
+      },
+      {
+        "key": "stripe",
+        "label": "Stripe Monitor",
+        "status": "amber",
+        "priority": 4,
+        "summary": "Stripe code paths include checkout, include webhook signature checks, and document Pro/Elite prices.",
+        "findings": [
+          "Checkout handler: present",
+          "Webhook signature verification: present",
+          "Pro/Elite env placeholders: present"
+        ],
+        "actions": [
+          "Verify Stripe test/live price IDs before paid launch.",
+          "Confirm webhook endpoint and required subscription events.",
+          "Run test-mode checkout and subscription sync before production promotion."
+        ],
+        "metrics": {
+          "checkoutPathPresent": true,
+          "webhookVerificationPresent": true,
+          "pricePlaceholdersPresent": true
+        },
+        "risks": [
+          "Stripe live readiness cannot be inferred from local code alone."
+        ]
+      },
+      {
+        "key": "cloudflare",
+        "label": "Cloudflare Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "Cloudflare configs detected: root archaios-saas-worker, client archaios-saas-worker.",
+        "findings": [
+          "Root Worker source: worker.js present",
+          "Client Worker source: client/worker/index.js present",
+          "Root wrangler name: archaios-saas-worker",
+          "Client wrangler name: archaios-saas-worker"
+        ],
+        "actions": [
+          "Align Worker identity and health response.",
+          "Document which Worker is canonical for SaaS API, cron, and daily automation.",
+          "Run Wrangler deploy validation before release."
+        ],
+        "metrics": {
+          "rootWorkerPresent": true,
+          "clientWorkerPresent": true,
+          "rootName": "archaios-saas-worker",
+          "clientName": "archaios-saas-worker"
+        },
+        "risks": []
+      },
+      {
+        "key": "documentation",
+        "label": "Documentation Monitor",
+        "status": "green",
+        "priority": 2,
+        "summary": "30 docs and 8 reports tracked; Daily Command Center docs present.",
+        "findings": [
+          "docs/*.md: 30",
+          "reports/*.md: 8",
+          "Daily Command Center doc: present",
+          "Secret inventory: present",
+          "System architecture: present"
+        ],
+        "actions": [
+          "Keep one canonical production release checklist.",
+          "Mark outdated host/deploy docs as archived or superseded.",
+          "Promote Executive Brief outputs into operator records."
+        ],
+        "metrics": {
+          "docsCount": 30,
+          "reportsCount": 8,
+          "commandDoc": true,
+          "secretInventory": true,
+          "systemArchitecture": true
+        },
+        "risks": [
+          "Documentation volume may obscure canonical instructions."
+        ]
+      },
+      {
+        "key": "tests",
+        "label": "Test Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "4 Node test files tracked; client build script present; server check script present.",
+        "findings": [
+          "tests/archaios-daily-command.test.mjs",
+          "tests/archaios-runtime-health.test.mjs",
+          "tests/archivist-agent.test.mjs",
+          "tests/revenue-readiness.test.mjs"
+        ],
+        "actions": [
+          "Run Node tests before commits.",
+          "Run client build before deploy.",
+          "Add Worker-specific deploy validation beyond Wrangler help output."
+        ],
+        "metrics": {
+          "testFiles": 4,
+          "hasClientBuild": true,
+          "hasServerCheck": true
+        },
+        "risks": [
+          "Current Worker check script does not prove deployment readiness."
+        ]
+      }
+    ],
+    "executiveBrief": {
+      "title": "ARCHAIOS Executive Officer Morning Brief",
+      "status": "red",
+      "summary": "XO reviewed 10 command sectors: 8 green, 1 watch, 1 critical.",
+      "commandIntent": [
+        "Protect revenue path without bypassing legal, Stripe, Supabase, or security gates.",
+        "Clear unfinished work before expanding scope.",
+        "Keep deployment promotion evidence-based and reversible."
+      ],
+      "topPriorities": [
+        {
+          "area": "Revenue",
+          "status": "green",
+          "order": 1,
+          "directive": "Advance the highest-readiness revenue system first."
+        },
+        {
+          "area": "Security",
+          "status": "green",
+          "order": 2,
+          "directive": "Block production deploys until secrets, billing, and Supabase service-role paths are verified."
+        },
+        {
+          "area": "Unfinished Work",
+          "status": "red",
+          "order": 3,
+          "directive": "Review blocked and in-progress tasks before accepting new work."
+        },
+        {
+          "area": "Deployment",
+          "status": "green",
+          "order": 4,
+          "directive": "Choose canonical frontend host before production release."
+        }
+      ],
+      "actionQueue": [
+        {
+          "action": "Verify Stripe test/live price IDs before paid launch.",
+          "source": "stripe",
+          "status": "amber"
+        },
+        {
+          "action": "Confirm webhook endpoint and required subscription events.",
+          "source": "stripe",
+          "status": "amber"
+        },
+        {
+          "action": "Review blocked and in-progress tasks before accepting new work.",
+          "source": "unfinished-work",
+          "status": "red"
+        },
+        {
+          "action": "Run test-mode checkout and subscription sync before production promotion.",
+          "source": "stripe",
+          "status": "amber"
+        },
+        {
+          "action": "Keep release branches clean before deployment.",
+          "source": "unfinished-work",
+          "status": "red"
+        },
+        {
+          "action": "Classify untracked files as commit-ready, work-in-progress, experimental, or disposable.",
+          "source": "unfinished-work",
+          "status": "red"
+        },
+        {
+          "action": "Advance the highest-readiness revenue system first.",
+          "source": "revenue",
+          "status": "green"
+        },
+        {
+          "action": "Block production deploys until secrets, billing, and Supabase service-role paths are verified.",
+          "source": "security",
+          "status": "green"
+        }
+      ],
+      "watchlist": [
+        {
+          "area": "Unfinished Work",
+          "status": "red",
+          "risks": [
+            "Dirty worktree can hide release drift."
+          ]
+        },
+        {
+          "area": "Revenue Priority",
+          "status": "green",
+          "risks": [
+            "Revenue dashboard still contains projections until live billing metrics are verified."
+          ]
+        },
+        {
+          "area": "Deployment Tracking",
+          "status": "green",
+          "risks": [
+            "Two Cloudflare config surfaces can drift."
+          ]
+        },
+        {
+          "area": "GitHub Monitor",
+          "status": "green",
+          "risks": [
+            "Current branch is revenue-subscription-constraint, not main."
+          ]
+        },
+        {
+          "area": "Supabase Monitor",
+          "status": "green",
+          "risks": [
+            "Local migration presence does not prove live Supabase application."
+          ]
+        },
+        {
+          "area": "Stripe Monitor",
+          "status": "amber",
+          "risks": [
+            "Stripe live readiness cannot be inferred from local code alone."
+          ]
+        },
+        {
+          "area": "Documentation Monitor",
+          "status": "green",
+          "risks": [
+            "Documentation volume may obscure canonical instructions."
+          ]
+        },
+        {
+          "area": "Test Monitor",
+          "status": "green",
+          "risks": [
+            "Current Worker check script does not prove deployment readiness."
+          ]
+        }
+      ]
+    }
+  },
+  "executiveBrief": {
+    "title": "ARCHAIOS Executive Officer Morning Brief",
+    "status": "red",
+    "summary": "XO reviewed 10 command sectors: 8 green, 1 watch, 1 critical.",
+    "commandIntent": [
+      "Protect revenue path without bypassing legal, Stripe, Supabase, or security gates.",
+      "Clear unfinished work before expanding scope.",
+      "Keep deployment promotion evidence-based and reversible."
+    ],
+    "topPriorities": [
+      {
+        "area": "Revenue",
+        "status": "green",
+        "order": 1,
+        "directive": "Advance the highest-readiness revenue system first."
+      },
+      {
+        "area": "Security",
+        "status": "green",
+        "order": 2,
+        "directive": "Block production deploys until secrets, billing, and Supabase service-role paths are verified."
+      },
+      {
+        "area": "Unfinished Work",
+        "status": "red",
+        "order": 3,
+        "directive": "Review blocked and in-progress tasks before accepting new work."
+      },
+      {
+        "area": "Deployment",
+        "status": "green",
+        "order": 4,
+        "directive": "Choose canonical frontend host before production release."
+      }
+    ],
+    "actionQueue": [
+      {
+        "action": "Verify Stripe test/live price IDs before paid launch.",
+        "source": "stripe",
+        "status": "amber"
+      },
+      {
+        "action": "Confirm webhook endpoint and required subscription events.",
+        "source": "stripe",
+        "status": "amber"
+      },
+      {
+        "action": "Review blocked and in-progress tasks before accepting new work.",
+        "source": "unfinished-work",
+        "status": "red"
+      },
+      {
+        "action": "Run test-mode checkout and subscription sync before production promotion.",
+        "source": "stripe",
+        "status": "amber"
+      },
+      {
+        "action": "Keep release branches clean before deployment.",
+        "source": "unfinished-work",
+        "status": "red"
+      },
+      {
+        "action": "Classify untracked files as commit-ready, work-in-progress, experimental, or disposable.",
+        "source": "unfinished-work",
+        "status": "red"
+      },
+      {
+        "action": "Advance the highest-readiness revenue system first.",
+        "source": "revenue",
+        "status": "green"
+      },
+      {
+        "action": "Block production deploys until secrets, billing, and Supabase service-role paths are verified.",
+        "source": "security",
+        "status": "green"
+      }
+    ],
+    "watchlist": [
+      {
+        "area": "Unfinished Work",
+        "status": "red",
+        "risks": [
+          "Dirty worktree can hide release drift."
+        ]
+      },
+      {
+        "area": "Revenue Priority",
+        "status": "green",
+        "risks": [
+          "Revenue dashboard still contains projections until live billing metrics are verified."
+        ]
+      },
+      {
+        "area": "Deployment Tracking",
+        "status": "green",
+        "risks": [
+          "Two Cloudflare config surfaces can drift."
+        ]
+      },
+      {
+        "area": "GitHub Monitor",
+        "status": "green",
+        "risks": [
+          "Current branch is revenue-subscription-constraint, not main."
+        ]
+      },
+      {
+        "area": "Supabase Monitor",
+        "status": "green",
+        "risks": [
+          "Local migration presence does not prove live Supabase application."
+        ]
+      },
+      {
+        "area": "Stripe Monitor",
+        "status": "amber",
+        "risks": [
+          "Stripe live readiness cannot be inferred from local code alone."
+        ]
+      },
+      {
+        "area": "Documentation Monitor",
+        "status": "green",
+        "risks": [
+          "Documentation volume may obscure canonical instructions."
+        ]
+      },
+      {
+        "area": "Test Monitor",
+        "status": "green",
+        "risks": [
+          "Current Worker check script does not prove deployment readiness."
+        ]
+      }
+    ]
   },
   "agentReports": [
     {
@@ -411,7 +968,7 @@
     "memoryUsage": {
       "timeline": [
         {
-          "timestamp": "2026-07-01T21:07:26.130Z",
+          "timestamp": "2026-07-01T21:35:55.023Z",
           "type": "knowledge-growth",
           "title": "Knowledge index baseline",
           "detail": "656 indexed records across 631 conversations."
@@ -835,7 +1392,7 @@
     }
   ],
   "operatingSnapshot": {
-    "generatedAt": "2026-07-01T21:07:26.095Z",
+    "generatedAt": "2026-07-01T21:35:54.879Z",
     "system": "ARCHAIOS OMEGA",
     "health": "healthy",
     "blockedSignals": [],

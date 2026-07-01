@@ -5,9 +5,10 @@ The Daily Command Center is the Phase II operating surface for making ARCHAIOS u
 ## Runtime Flow
 
 1. Each core agent emits a structured report with status, findings, actions, metrics, and risks.
-2. Commander merges the reports into a concise morning briefing and evening review.
-3. Dashboard panels read the generated interface at `client/archaios-core/interfaces/daily-command-center.json`.
-4. Scheduled tasks are prepared as records first. Actions that deploy, mutate billing, touch secrets, or publish externally stay approval-gated.
+2. Commander runs the Executive Officer service monitors for unfinished work, revenue, security, deployments, GitHub, Supabase, Stripe, Cloudflare, documentation, and tests.
+3. Commander merges the reports and monitor outputs into a concise morning Executive Brief and evening review.
+4. Dashboard panels read the generated interface at `client/archaios-core/interfaces/daily-command-center.json`.
+5. Scheduled tasks are prepared as records first. Actions that deploy, mutate billing, touch secrets, or publish externally stay approval-gated.
 
 ## Commander Inputs
 
@@ -17,6 +18,25 @@ The Daily Command Center is the Phase II operating surface for making ARCHAIOS u
 - Revenue readiness from `client/revenue/revenue-readiness.json`
 - Books and KPI data from `client/data`
 - Task queues from `client/tasks`
+
+## Executive Officer Service
+
+The modular service lives at `client/archaios-core/commander/service.mjs`.
+
+Monitor sectors:
+
+- unfinished work
+- revenue
+- security
+- deployments
+- GitHub
+- Supabase
+- Stripe
+- Cloudflare
+- documentation
+- tests
+
+Revenue and security are always top-priority command sectors. Security can block revenue, deployment, and automation when launch gates are not verified.
 
 ## Semantic Memory
 

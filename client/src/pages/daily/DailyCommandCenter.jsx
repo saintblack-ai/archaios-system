@@ -84,6 +84,44 @@ function AgentReports({ reports }) {
   );
 }
 
+function ExecutiveOfficerPanel({ executiveBrief, monitors }) {
+  return (
+    <section className="daily-panel">
+      <div className="daily-section-head">
+        <div>
+          <p className="eyebrow">Executive Officer</p>
+          <h2>{executiveBrief.title}</h2>
+          <p>{executiveBrief.summary}</p>
+        </div>
+        <StatusChip status={executiveBrief.status} />
+      </div>
+      <div className="daily-dashboard-grid daily-dashboard-grid-wide">
+        {executiveBrief.topPriorities.map((priority) => (
+          <article className="daily-agent-card" key={priority.area}>
+            <div className="daily-card-head">
+              <strong>{priority.order}. {priority.area}</strong>
+              <StatusChip status={priority.status} />
+            </div>
+            <p>{priority.directive}</p>
+          </article>
+        ))}
+      </div>
+      <div className="daily-monitor-grid">
+        {monitors.map((monitor) => (
+          <article className="daily-monitor-card" key={monitor.key}>
+            <div className="daily-card-head">
+              <strong>{monitor.label}</strong>
+              <StatusChip status={monitor.status} />
+            </div>
+            <p>{monitor.summary}</p>
+            <span className="daily-tag">Priority {monitor.priority}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ProjectPanels({ dashboards }) {
   return (
     <section className="daily-dashboard-grid">
@@ -251,6 +289,7 @@ export default function DailyCommandCenter() {
       </section>
 
       <BriefingPanel commander={dailyCommand.commander} />
+      <ExecutiveOfficerPanel executiveBrief={dailyCommand.executiveBrief} monitors={dailyCommand.executiveOfficer.monitors} />
       <ProjectPanels dashboards={dashboards} />
       <OperationsPanels dashboards={dashboards} scheduledTasks={dailyCommand.scheduledTasks} />
       <KnowledgePanels dashboards={dashboards} />
