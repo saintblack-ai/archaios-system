@@ -518,7 +518,13 @@ function getSupabaseConfig(env) {
 function createHttpError(message, status = 500) {
   const error = new Error(message);
   error.status = status;
+  error.statusCode = status;
   return error;
+}
+
+function getErrorStatus(error, fallback = 500) {
+  const status = Number(error?.status || error?.statusCode || fallback);
+  return Number.isFinite(status) ? status : fallback;
 }
 
 async function supabaseRequest(env, path, options = {}) {
@@ -554,10 +560,17 @@ async function supabaseRequest(env, path, options = {}) {
     const payload = await response.json().catch(() => null);
 
     if (!response.ok) {
-      throw new Error(payload?.message || payload?.error || `supabase_http_${response.status}`);
+      const detail = payload?.message || payload?.error || response.statusText || `supabase_http_${response.status}`;
+      throw createHttpError(`Supabase request failed (${response.status}): ${detail}`, response.status >= 500 ? 503 : response.status);
     }
 
     return payload;
+  } catch (error) {
+    if (error?.status || error?.statusCode) {
+      throw error;
+    }
+
+    throw createHttpError(`Supabase request failed: ${String(error?.message || error || "network_error")}`, 503);
   } finally {
     clearTimeout(timeoutId);
   }
@@ -706,6 +719,18 @@ function createSubscriptionWritePayload(record) {
   };
 }
 
+function createSubscriptionStoragePayload(record) {
+  return normalizeSubscriptionRecord({
+    user_id: record.user_id,
+    tier: record.tier || record.plan,
+    status: record.status,
+    current_period_end: record.current_period_end,
+    stripe_customer_id: record.stripe_customer_id,
+    stripe_subscription_id: record.stripe_subscription_id,
+    updated_at: record.updated_at
+  });
+}
+
 function normalizeStripeTimestamp(value) {
   if (!value) {
     return null;
@@ -752,6 +777,30 @@ function buildSubscriptionRecordFromSubscription(subscription) {
   });
 }
 
+function buildSubscriptionRecordFromInvoicePaymentFailed(invoice) {
+  const lineMetadata = invoice?.lines?.data?.[0]?.metadata || {};
+  const metadata = {
+    ...(invoice?.metadata || {}),
+    ...(invoice?.subscription_details?.metadata || {}),
+    ...lineMetadata
+  };
+  const userId = metadata.user_id || metadata.userId || invoice?.client_reference_id || "";
+  const tier = normalizePlan(metadata.tier || "free");
+
+  return normalizeSubscriptionRecord({
+    user_id: userId,
+    tier,
+    plan: tier,
+    status: "past_due",
+    stripe_customer_id: invoice?.customer || null,
+    stripe_subscription_id:
+      typeof invoice?.subscription === "string"
+        ? invoice.subscription
+        : invoice?.subscription?.id || null,
+    updated_at: new Date().toISOString()
+  });
+}
+
 async function findExistingSubscription(env, record) {
   if (record.user_id) {
     const byUser = await supabaseRequest(
@@ -773,7 +822,8 @@ async function findExistingSubscription(env, record) {
 }
 
 async function upsertSubscriptionRecord(env, record) {
-  const writePayload = createSubscriptionWritePayload(record);
+  const storagePayload = createSubscriptionStoragePayload(record);
+  const writePayload = createSubscriptionWritePayload(storagePayload);
   const existing = await findExistingSubscription(env, record);
 
   if (existing?.id) {
@@ -783,7 +833,7 @@ async function upsertSubscriptionRecord(env, record) {
         "content-profile": "public",
         prefer: "return=representation"
       },
-      body: JSON.stringify(record)
+      body: JSON.stringify(storagePayload)
     });
 
     return {
@@ -800,7 +850,7 @@ async function upsertSubscriptionRecord(env, record) {
       "content-profile": "public",
       prefer: "return=representation"
     },
-    body: JSON.stringify([record])
+    body: JSON.stringify([storagePayload])
   });
 
   return {
@@ -808,6 +858,35 @@ async function upsertSubscriptionRecord(env, record) {
     row: Array.isArray(inserted) ? inserted[0] || null : inserted,
     table: STRIPE_SUBSCRIPTIONS_TABLE,
     payload: writePayload
+  };
+}
+
+async function syncProfileTier(env, record) {
+  const userId = String(record?.user_id || "");
+  if (!isUuid(userId)) {
+    return { action: "skipped", reason: "invalid_user_id" };
+  }
+
+  const activeTier = isActiveSubscriptionStatus(record?.status || "")
+    ? normalizePlan(record?.tier || record?.plan)
+    : "free";
+
+  const updated = await supabaseRequest(env, `/rest/v1/profiles?id=eq.${encodeURIComponent(userId)}`, {
+    method: "PATCH",
+    headers: {
+      "content-profile": "public",
+      prefer: "return=representation"
+    },
+    body: JSON.stringify({
+      tier: activeTier,
+      updated_at: new Date().toISOString()
+    })
+  });
+
+  return {
+    action: "updated",
+    row: Array.isArray(updated) ? updated[0] || null : updated,
+    tier: activeTier
   };
 }
 
@@ -844,6 +923,10 @@ async function processSubscriptionWebhookRecord(eventType, record, env) {
   }
 
   const result = await upsertSubscriptionRecord(env, record);
+  const profileSync = await syncProfileTier(env, record).catch((error) => ({
+    action: "failed",
+    error: String(error?.message || error)
+  }));
   console.log("stripe.webhook.write.after", JSON.stringify({
     event_type: eventType || "unknown",
     user_id: extractedUserId,
@@ -855,7 +938,8 @@ async function processSubscriptionWebhookRecord(eventType, record, env) {
         action: result.action,
         row: result.row
       }
-    }
+    },
+    profile_tier_sync: profileSync
   }));
   return result;
 }
@@ -872,6 +956,11 @@ async function handleStripeWebhookEvent(event, env) {
     event.type === "customer.subscription.deleted"
   ) {
     const record = buildSubscriptionRecordFromSubscription(event.data?.object || {});
+    return processSubscriptionWebhookRecord(event.type, record, env);
+  }
+
+  if (event.type === "invoice.payment_failed") {
+    const record = buildSubscriptionRecordFromInvoicePaymentFailed(event.data?.object || {});
     return processSubscriptionWebhookRecord(event.type, record, env);
   }
 
@@ -1652,7 +1741,7 @@ export default {
       try {
         return await handleSubscriptionRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "subscription_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "subscription_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1660,7 +1749,7 @@ export default {
       try {
         return await handlePlatformDashboardRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "platform_dashboard_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "platform_dashboard_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1668,7 +1757,7 @@ export default {
       try {
         return await handleAlertsRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "alerts_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "alerts_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1676,7 +1765,7 @@ export default {
       try {
         return await handleClearAlertsRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "alerts_clear_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "alerts_clear_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1684,7 +1773,7 @@ export default {
       try {
         return await handleLeadRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "lead_capture_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "lead_capture_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1692,7 +1781,7 @@ export default {
       try {
         return await handleCtaClickRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "cta_click_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "cta_click_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1704,7 +1793,7 @@ export default {
       try {
         return await handleAdminDashboardRequest(request, env);
       } catch (error) {
-        return createJsonResponse({ ok: false, error: String(error?.message || error || "admin_dashboard_failed") }, Number(error?.status || 500), corsHeaders);
+        return createJsonResponse({ ok: false, error: String(error?.message || error || "admin_dashboard_failed") }, getErrorStatus(error), corsHeaders);
       }
     }
 
@@ -1720,7 +1809,7 @@ export default {
             ok: false,
             error: String(error?.message || error || "stripe_checkout_failed")
           },
-          500,
+          getErrorStatus(error),
           corsHeaders
         );
       }
@@ -1740,7 +1829,7 @@ export default {
             ok: false,
             error: String(error?.message || error || "stripe_customer_portal_failed")
           },
-          Number(error?.status || 500),
+          getErrorStatus(error),
           corsHeaders
         );
       }
@@ -1764,7 +1853,7 @@ export default {
             ok: false,
             error: String(error?.message || error || "stripe_webhook_failed")
           },
-          Number(error?.status || 400),
+          getErrorStatus(error, 400),
           corsHeaders
         );
       }

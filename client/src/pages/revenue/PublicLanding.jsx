@@ -10,11 +10,22 @@ const signals = [
   "Operator-ready infrastructure"
 ];
 
+const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Self-serve billing stays in test readiness until legal, tax, policy, and Stripe verification are complete.";
+
+const legalPlaceholders = [
+  ["Business legal name", import.meta.env.VITE_PUBLIC_BUSINESS_LEGAL_NAME || "Pending LLC/legal formation"],
+  ["EIN / tax setup", import.meta.env.VITE_PUBLIC_EIN_STATUS || "Pending after business formation"],
+  ["Privacy Policy", import.meta.env.VITE_PUBLIC_PRIVACY_POLICY_URL || "Placeholder URL required before launch"],
+  ["Terms of Service", import.meta.env.VITE_PUBLIC_TERMS_URL || "Placeholder URL required before launch"],
+  ["Refund Policy", import.meta.env.VITE_PUBLIC_REFUND_POLICY_URL || "Placeholder URL required before launch"],
+  ["Contact email", import.meta.env.VITE_PUBLIC_CONTACT_EMAIL || "support email pending"]
+];
+
 const sampleBrief = [
   {
     category: "Global Risk",
     title: "Macro volatility signal",
-    detail: "Free users see delayed summaries. Pro unlocks the full daily brief. Elite receives urgency-weighted analysis."
+    detail: "Free users see a limited preview. Pro unlocks the $49/month full dashboard. Elite unlocks $99/month priority intelligence."
   },
   {
     category: "Markets",
@@ -30,14 +41,14 @@ const sampleBrief = [
 
 function planSummary(plan) {
   if (plan.id === "free") {
-    return "Preview intelligence and enter the email funnel.";
+    return "Limited preview for early users, sample signals, and email capture.";
   }
 
   if (plan.id === "pro") {
-    return "Full daily intelligence and premium dashboard access.";
+    return "$49/month full dashboard access for daily intelligence and execution.";
   }
 
-  return "Priority intelligence, deeper reports, and high-urgency signals.";
+  return "$99/month priority intelligence with deeper reports and high-urgency signals.";
 }
 
 export default function PublicLanding() {
@@ -77,6 +88,7 @@ export default function PublicLanding() {
             AI Assassins turns global events, markets, risk signals, and strategic context into a premium daily briefing
             system with tier-aware intelligence access.
           </p>
+          <p className="revenue-status">{BUSINESS_ONBOARDING_NOTE}</p>
           <div className="revenue-actions">
             <a href={`${import.meta.env.BASE_URL || "/"}pricing`} onClick={() => handleCta("hero_pricing")}>View Pricing</a>
             <a className="secondary" href={`${import.meta.env.BASE_URL || "/"}dashboard`} onClick={() => handleCta("hero_dashboard")}>Open Dashboard</a>
@@ -99,7 +111,7 @@ export default function PublicLanding() {
         <div className="revenue-section-head">
           <span className="revenue-eyebrow">Product System</span>
           <h2>Built for recurring intelligence revenue.</h2>
-          <p>Free users enter the funnel. Pro and Elite subscribers unlock deeper briefings, dashboards, and priority intelligence.</p>
+          <p>Free is a limited preview. Pro is the $49/month full dashboard. Elite is the $99/month priority intelligence lane.</p>
         </div>
         <div className="revenue-grid">
           {signals.map((signal) => (
@@ -114,7 +126,7 @@ export default function PublicLanding() {
       <section className="revenue-section">
         <div className="revenue-section-head">
           <span className="revenue-eyebrow">Plans</span>
-          <h2>Start free, upgrade when signal matters.</h2>
+          <h2>Start with a limited preview, upgrade when signal matters.</h2>
         </div>
         <div className="revenue-pricing-grid">
           {PRICING_TIERS.map((plan) => (
@@ -128,7 +140,7 @@ export default function PublicLanding() {
                 ))}
               </ul>
               <a href={`${import.meta.env.BASE_URL || "/"}pricing`} onClick={() => handleCta(`plan_${plan.id}`)}>
-                {plan.id === "free" ? "Join Free" : `Upgrade to ${plan.name}`}
+                {plan.id === "free" ? "Start Free Preview" : `Upgrade to ${plan.name}`}
               </a>
             </article>
           ))}
@@ -139,13 +151,29 @@ export default function PublicLanding() {
         <div>
           <span className="revenue-eyebrow">Onboarding Funnel</span>
           <h2>Join the intelligence list.</h2>
-          <p>Lead capture routes prospects into the AI Assassins conversion system. Backend configuration is required for live storage.</p>
+          <p>Lead capture routes prospects into the AI Assassins conversion system. Backend storage and consent tracking must be verified before launch.</p>
         </div>
         <form className="revenue-lead-form" onSubmit={handleLeadSubmit}>
           <input value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" type="email" />
           <button type="submit">Join Waitlist</button>
           {leadStatus ? <p>{leadStatus}</p> : null}
         </form>
+      </section>
+
+      <section className="revenue-section">
+        <div className="revenue-section-head">
+          <span className="revenue-eyebrow">Business Readiness</span>
+          <h2>Legal and onboarding placeholders.</h2>
+          <p>These launch blockers should be replaced with final business details before self-serve paid checkout is promoted.</p>
+        </div>
+        <div className="feature-gate-table">
+          {legalPlaceholders.map(([label, value]) => (
+            <div className="feature-gate-row" key={label}>
+              <strong>{label}</strong>
+              <span>{value}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="revenue-section revenue-route-strip">

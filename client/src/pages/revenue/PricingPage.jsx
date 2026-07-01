@@ -8,11 +8,12 @@ import { FEATURE_GATES, getTierExperience, hasPlanAccess } from "../../lib/subsc
 const ACCESS_EMAIL_STORAGE_KEY = "archaios_saved_access_email";
 const ACCESS_EMAIL_TIMESTAMP_KEY = "archaios_saved_access_timestamp";
 const UPGRADE_INTENT_STORAGE_KEY = "archaios_upgrade_intent_tier";
+const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Pro and Elite checkout remain launch-gated until legal, tax, policy, and Stripe test verification are complete.";
 
 function getPlanPosition(planId) {
-  if (planId === "free") return "Funnel entry";
-  if (planId === "pro") return "Core revenue plan";
-  return "Priority intelligence plan";
+  if (planId === "free") return "Limited preview";
+  if (planId === "pro") return "$49/month full dashboard";
+  return "$99/month priority intelligence";
 }
 
 function isValidEmail(email) {
@@ -52,7 +53,7 @@ export default function PricingPage() {
       return "Checkout was canceled. No billing changes were made.";
     }
 
-    return "Limited access is active on Free. Signals are delayed on Free, while Pro and Elite unlock speed and advantage.";
+    return "Free is a limited preview. Pro is $49/month for the full dashboard. Elite is $99/month for priority intelligence.";
   });
 
   useEffect(() => {
@@ -137,7 +138,7 @@ export default function PricingPage() {
       setMessage(
         savedEmail
           ? `Checkout is blocked until sign-in. ${tier.toUpperCase()} intent is saved for ${savedEmail}.`
-          : `Checkout is blocked until sign-in. Save your access email below to keep your ${tier.toUpperCase()} early user advantage intent ready.`
+          : `Checkout is blocked until sign-in. Save your access email below to keep your ${tier.toUpperCase()} upgrade intent ready.`
       );
       await trackRevenueEvent("checkout_blocked_auth", { location: "pricing", requestedTier: tier, authState: "signed-out" });
       return;
@@ -166,11 +167,12 @@ export default function PricingPage() {
       <section className="revenue-hero pricing-hero">
         <div>
           <span className="revenue-eyebrow">AI Assassins Pricing</span>
-          <p className="revenue-status"><strong>This system pays for itself with one signal.</strong></p>
-          <h1>Turn daily signals into paid execution speed.</h1>
+          <p className="revenue-status"><strong>Simple launch pricing for the ARCHAIOS intelligence stack.</strong></p>
+          <h1>Free preview, Pro dashboard, Elite priority intelligence.</h1>
           <p>
-            Free is limited access. Pro unlocks live execution speed. Elite adds exclusivity, first-access signal timing, and maximum command advantage.
+            Free is a limited preview. Pro is $49/month for the full dashboard. Elite is $99/month for priority intelligence, deeper reports, and faster signal review.
           </p>
+          <p className="revenue-status">{BUSINESS_ONBOARDING_NOTE}</p>
           <div className="revenue-actions">
             <a href={`${import.meta.env.BASE_URL || "/"}landing`}>Back to Landing</a>
             <a className="secondary" href={`${import.meta.env.BASE_URL || "/"}dashboard`}>Dashboard</a>
@@ -185,7 +187,7 @@ export default function PricingPage() {
             Resolved API base: {backendConnection.apiBaseUrl} ({backendConnection.source}, {backendConnection.mode} mode).
           </p>
           <p className="revenue-status">
-            Urgency posture: Signals are delayed on Free. Early user advantage starts on paid tiers.
+            Launch posture: Free stays limited. Pro and Elite require signed-in checkout and verified Stripe/Supabase sync.
           </p>
         </div>
       </section>
@@ -224,9 +226,9 @@ export default function PricingPage() {
             <strong>{plan.displayPrice}</strong>
             <p>{plan.summary}</p>
             <p className="revenue-status">{getTierExperience(plan.id).headline}</p>
-            {plan.id === "free" ? <p className="revenue-status">Limited access: delayed signals, restricted execution, no early user advantage.</p> : null}
-            {plan.id === "pro" ? <p className="revenue-status">Most operators convert here: faster execution, better timing, and real revenue momentum.</p> : null}
-            {plan.id === "elite" ? <p className="revenue-status">Exclusive lane: first-access priority signals and deepest command visibility.</p> : null}
+            {plan.id === "free" ? <p className="revenue-status">Free = limited preview with delayed sample signals and restricted execution.</p> : null}
+            {plan.id === "pro" ? <p className="revenue-status">Pro = $49/month full dashboard for intelligence, alerts, and execution workflows.</p> : null}
+            {plan.id === "elite" ? <p className="revenue-status">Elite = $99/month priority intelligence with deeper reports and high-urgency signal review.</p> : null}
             <ul>
               {plan.features.map((feature) => (
                 <li key={feature}>{feature}</li>
@@ -240,12 +242,12 @@ export default function PricingPage() {
               disabled={busyTier === plan.id}
             >
               {plan.id === "free"
-                ? "Start Free"
+                ? "Start Free Preview"
                 : busyTier === plan.id
                   ? "Starting..."
                   : plan.id === "pro"
-                    ? `Accelerate execution for ${plan.displayPrice}`
-                    : `Claim exclusive advantage for ${plan.displayPrice}`}
+                    ? `Open full dashboard for ${plan.displayPrice}`
+                    : `Claim priority intelligence for ${plan.displayPrice}`}
             </button>
           </article>
         ))}
@@ -263,15 +265,15 @@ export default function PricingPage() {
           </div>
           <div className="feature-gate-row">
             <strong>Free</strong>
-            <span>Limited access with delayed signals and restricted execution.</span>
+            <span>Limited preview with delayed sample signals and restricted execution.</span>
           </div>
           <div className="feature-gate-row">
             <strong>Pro</strong>
-            <span>Live execution layer with faster signal-to-action speed and stronger monetization timing.</span>
+            <span>$49/month full dashboard with daily intelligence, alerts, and execution workflows.</span>
           </div>
           <div className="feature-gate-row">
             <strong>Elite</strong>
-            <span>Exclusive priority lane with first-access advantage and highest-depth visibility.</span>
+            <span>$99/month priority intelligence with deeper reports and high-urgency signal review.</span>
           </div>
         </div>
       </section>
