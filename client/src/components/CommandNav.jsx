@@ -3,6 +3,8 @@ const DEFAULT_ITEMS = [
   { label: "Landing", path: "landing" },
   { label: "Pricing", path: "pricing" },
   { label: "Dashboard", path: "dashboard" },
+  { label: "Daily", path: "daily" },
+  { label: "Archaios", path: "archaios" },
   { label: "Operator", path: "operator" },
   { label: "Book Growth", path: "book-growth" }
 ];

@@ -1,0 +1,477 @@
+{
+  "schemaVersion": "2026-06-28",
+  "system": "ARCHAIOS OMEGA",
+  "description": "Canonical operating contract for the ARCHAIOS autonomous agent network.",
+  "requiredAgentKeys": [
+    "archivist",
+    "researcher",
+    "strategist",
+    "engineer",
+    "writer",
+    "security",
+    "analyst",
+    "automation",
+    "vision",
+    "commander"
+  ],
+  "communicationProtocol": {
+    "messageEnvelope": {
+      "requiredFields": [
+        "messageId",
+        "cycleId",
+        "fromAgent",
+        "toAgent",
+        "intent",
+        "priority",
+        "createdAt",
+        "payload",
+        "auditRef"
+      ],
+      "priorityLevels": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "deliveryModes": [
+        "local-file-queue",
+        "supabase-row",
+        "worker-api"
+      ]
+    },
+    "rules": [
+      "Commander may assign or reprioritize work for all agents.",
+      "Security may block deployment, credential, billing, or data-export actions.",
+      "Agents must write decisions to append-only logs before mutating project state.",
+      "Agents must emit structured outputs for dashboard ingestion."
+    ]
+  },
+  "defaultTaskQueue": {
+    "intake": "client/tasks/queue",
+    "prioritized": "client/tasks/prioritized",
+    "inProgress": "client/tasks/in_progress",
+    "completed": "client/tasks/completed",
+    "blocked": "client/tasks/blocked"
+  },
+  "logging": {
+    "auditLog": "client/archaios-core/logs/audit.log",
+    "runtimeLog": "client/logs/orchestrator.log",
+    "stateDirectory": "client/archaios-core/state",
+    "minimumFields": [
+      "timestamp",
+      "agent",
+      "action",
+      "target",
+      "result",
+      "riskLevel"
+    ]
+  },
+  "memory": {
+    "conversationHistory": "knowledge/memory/conversations",
+    "documentIndex": "knowledge/memory/document-index.json",
+    "vectorStore": "supabase.pgvector",
+    "localCache": "client/archaios-core/memory",
+    "summaries": "knowledge/memory/summaries",
+    "pruningPolicy": "Summarize stale high-volume records, keep source metadata, and never delete canonical source files without operator approval.",
+    "encryptionPolicy": "Encrypt secrets and sensitive memory exports at rest; store only references to external credentials."
+  },
+  "agents": [
+    {
+      "key": "archivist",
+      "role": "Permanent memory steward for documents, source records, vault assets, and historical continuity.",
+      "tools": [
+        "document-ingestion",
+        "semantic-indexing",
+        "metadata-normalization",
+        "checksum-audit"
+      ],
+      "permissions": {
+        "read": [
+          "knowledge/**",
+          "client/processed_exports/**",
+          "docs/**"
+        ],
+        "write": [
+          "knowledge/**",
+          "client/archaios-core/memory/**",
+          "client/tasks/**"
+        ],
+        "blocked": [
+          "delete-source-assets",
+          "publish-private-vault",
+          "mutate-secrets"
+        ]
+      },
+      "memory": [
+        "vault-index",
+        "document-summaries",
+        "source-provenance"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "ingestionCompleteness",
+        "metadataCoverage",
+        "retrievalPrecision",
+        "duplicateRate"
+      ]
+    },
+    {
+      "key": "researcher",
+      "role": "Research collector and evidence analyst for technical, market, cultural, and strategic questions.",
+      "tools": [
+        "web-research",
+        "document-review",
+        "citation-capture",
+        "knowledge-clustering"
+      ],
+      "permissions": {
+        "read": [
+          "knowledge/research/**",
+          "client/knowledge/**",
+          "docs/**"
+        ],
+        "write": [
+          "knowledge/research/**",
+          "client/projects/research-agent/**",
+          "client/tasks/**"
+        ],
+        "blocked": [
+          "unsourced-claims-in-reports",
+          "credential-access"
+        ]
+      },
+      "memory": [
+        "research-briefs",
+        "source-confidence",
+        "open-questions"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "sourceQuality",
+        "coverageDepth",
+        "citationCompleteness",
+        "stalenessRisk"
+      ]
+    },
+    {
+      "key": "strategist",
+      "role": "Operating strategist for priorities, roadmaps, business positioning, and execution sequencing.",
+      "tools": [
+        "roadmap-builder",
+        "risk-register",
+        "market-analysis",
+        "decision-log"
+      ],
+      "permissions": {
+        "read": [
+          "knowledge/business/**",
+          "roadmaps/**",
+          "client/docs/**"
+        ],
+        "write": [
+          "roadmaps/**",
+          "knowledge/business/**",
+          "client/tasks/prioritized/**"
+        ],
+        "blocked": [
+          "billing-change",
+          "public-commitment-without-approval"
+        ]
+      },
+      "memory": [
+        "strategic-decisions",
+        "priority-history",
+        "risk-register"
+      ],
+      "taskQueue": "client/tasks/prioritized",
+      "evaluationMetrics": [
+        "priorityClarity",
+        "executionFit",
+        "riskCoverage",
+        "revenueAlignment"
+      ]
+    },
+    {
+      "key": "engineer",
+      "role": "Production software engineer for application code, APIs, tests, deployment contracts, and runtime reliability.",
+      "tools": [
+        "code-generation",
+        "test-runner",
+        "type-checker",
+        "deployment-diagnostics"
+      ],
+      "permissions": {
+        "read": [
+          "app/**",
+          "client/**",
+          "server/**",
+          "worker.js",
+          "sql/**"
+        ],
+        "write": [
+          "app/**",
+          "client/**",
+          "server/**",
+          "tests/**",
+          "scripts/**"
+        ],
+        "blocked": [
+          "production-deploy-without-approval",
+          "destructive-git-operation",
+          "secret-exfiltration"
+        ]
+      },
+      "memory": [
+        "architecture-decisions",
+        "test-results",
+        "deployment-history"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "testPassRate",
+        "typeSafety",
+        "changeBlastRadius",
+        "productionReadiness"
+      ]
+    },
+    {
+      "key": "writer",
+      "role": "Documentation and narrative agent for reports, manuals, product copy, briefs, and publishing drafts.",
+      "tools": [
+        "markdown-authoring",
+        "brief-generation",
+        "style-normalization",
+        "content-review"
+      ],
+      "permissions": {
+        "read": [
+          "knowledge/**",
+          "docs/**",
+          "reports/**"
+        ],
+        "write": [
+          "docs/**",
+          "reports/**",
+          "knowledge/projects/**",
+          "client/projects/content-agent/**"
+        ],
+        "blocked": [
+          "publish-without-approval",
+          "make-unsupported-legal-claims"
+        ]
+      },
+      "memory": [
+        "style-guide",
+        "published-assets",
+        "draft-history"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "accuracy",
+        "voiceConsistency",
+        "actionability",
+        "approvalRate"
+      ]
+    },
+    {
+      "key": "security",
+      "role": "Cybersecurity, compliance, and safety gate for secrets, RBAC, audit logs, rate limits, and deployment risk.",
+      "tools": [
+        "secret-scanner",
+        "dependency-audit",
+        "rbac-review",
+        "audit-log-review"
+      ],
+      "permissions": {
+        "read": [
+          ".env.example",
+          "SECRET_INVENTORY.md",
+          "app/**",
+          "server/**",
+          "worker.js",
+          "client/worker/**"
+        ],
+        "write": [
+          "docs/**",
+          "reports/**",
+          "client/archaios-core/state/**"
+        ],
+        "blocked": [
+          "read-live-secret-values",
+          "weaken-auth",
+          "disable-audit-logging"
+        ]
+      },
+      "memory": [
+        "security-findings",
+        "threat-model",
+        "approval-boundaries"
+      ],
+      "taskQueue": "client/tasks/prioritized",
+      "evaluationMetrics": [
+        "criticalFindings",
+        "secretExposureRisk",
+        "authCoverage",
+        "auditCompleteness"
+      ]
+    },
+    {
+      "key": "analyst",
+      "role": "Metrics and intelligence analyst for API usage, memory growth, project analytics, revenue, and system health.",
+      "tools": [
+        "metric-aggregation",
+        "dashboard-modeling",
+        "trend-analysis",
+        "anomaly-detection"
+      ],
+      "permissions": {
+        "read": [
+          "client/data/**",
+          "server/data/**",
+          "client/archaios-core/state/**",
+          "client/revenue/**"
+        ],
+        "write": [
+          "client/archaios-core/interfaces/**",
+          "reports/**",
+          "knowledge/business/**"
+        ],
+        "blocked": [
+          "change-billing-config",
+          "mutate-production-data"
+        ]
+      },
+      "memory": [
+        "metric-baselines",
+        "trend-summaries",
+        "data-quality-notes"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "metricFreshness",
+        "dataCompleteness",
+        "forecastAccuracy",
+        "anomalyRecall"
+      ]
+    },
+    {
+      "key": "automation",
+      "role": "Workflow operator for ingestion, summarization, code generation, file organization, tests, scans, and git preparation.",
+      "tools": [
+        "workflow-runner",
+        "scheduler",
+        "file-organizer",
+        "test-orchestrator"
+      ],
+      "permissions": {
+        "read": [
+          "client/tasks/**",
+          "scripts/**",
+          ".github/workflows/**"
+        ],
+        "write": [
+          "client/tasks/**",
+          "client/archaios-core/state/**",
+          "logs/**"
+        ],
+        "blocked": [
+          "auto-push",
+          "auto-deploy",
+          "delete-operator-files"
+        ]
+      },
+      "memory": [
+        "workflow-runs",
+        "blocked-reasons",
+        "scheduler-history"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "workflowSuccessRate",
+        "meanTimeToComplete",
+        "blockedTaskRate",
+        "retryRate"
+      ]
+    },
+    {
+      "key": "vision",
+      "role": "Visual intelligence and product experience agent for images, UI evidence, brand assets, and media catalogs.",
+      "tools": [
+        "image-inspection",
+        "asset-cataloging",
+        "ui-screenshot-review",
+        "brand-consistency-check"
+      ],
+      "permissions": {
+        "read": [
+          "client/data/**",
+          "Final books published /**",
+          "QX AI quantum Chip/**",
+          "client/src/**"
+        ],
+        "write": [
+          "knowledge/vault/**",
+          "reports/**",
+          "client/archaios-core/interfaces/**"
+        ],
+        "blocked": [
+          "publish-private-media",
+          "alter-original-assets"
+        ]
+      },
+      "memory": [
+        "asset-inventory",
+        "visual-review-notes",
+        "brand-references"
+      ],
+      "taskQueue": "client/tasks/queue",
+      "evaluationMetrics": [
+        "assetCoverage",
+        "visualDefectRate",
+        "metadataCompleteness",
+        "brandAlignment"
+      ]
+    },
+    {
+      "key": "commander",
+      "role": "Executive command agent for mission control, cross-agent coordination, escalation, and final operating decisions.",
+      "tools": [
+        "task-prioritization",
+        "agent-dispatch",
+        "readiness-gate",
+        "operator-briefing"
+      ],
+      "permissions": {
+        "read": [
+          "knowledge/**",
+          "client/archaios-core/**",
+          "docs/**",
+          "reports/**"
+        ],
+        "write": [
+          "client/archaios-core/state/**",
+          "client/tasks/prioritized/**",
+          "reports/**",
+          "ARCHAIOS_COMMAND_BRIEFING/**"
+        ],
+        "blocked": [
+          "override-security-block",
+          "deploy-without-approval",
+          "delete-agent-memory"
+        ]
+      },
+      "memory": [
+        "mission-state",
+        "agent-performance",
+        "operator-decisions"
+      ],
+      "taskQueue": "client/tasks/prioritized",
+      "evaluationMetrics": [
+        "missionProgress",
+        "agentUtilization",
+        "riskResolution",
+        "decisionLatency"
+      ]
+    }
+  ]
+}

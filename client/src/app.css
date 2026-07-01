@@ -18,6 +18,253 @@
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
+.daily-command-shell {
+  width: min(1440px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 36px 0 64px;
+}
+
+.daily-hero,
+.daily-panel,
+.daily-card,
+.daily-agent-card {
+  border: 1px solid rgba(172, 190, 204, 0.22);
+  background: linear-gradient(180deg, rgba(13, 20, 26, 0.96), rgba(7, 10, 14, 0.96));
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
+}
+
+.daily-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+  gap: 20px;
+  align-items: stretch;
+  margin-top: 22px;
+  padding: 26px;
+  border-radius: 12px;
+}
+
+.daily-hero h1,
+.daily-panel h2 {
+  margin: 8px 0 12px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.daily-hero h1 {
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  text-transform: uppercase;
+}
+
+.daily-hero p,
+.daily-panel p,
+.daily-card span,
+.daily-row span,
+.daily-agent-card p,
+.daily-timeline-item p {
+  color: #bfd0d5;
+  line-height: 1.55;
+}
+
+.daily-hero > div > span {
+  color: #90a8ad;
+  font-size: 0.92rem;
+}
+
+.daily-hero-metrics,
+.daily-briefing-grid,
+.daily-dashboard-grid,
+.daily-agent-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.daily-hero-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.daily-briefing-grid {
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
+  margin-top: 18px;
+}
+
+.daily-dashboard-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.daily-dashboard-grid-wide {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.daily-agent-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.daily-panel,
+.daily-card,
+.daily-agent-card {
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.daily-panel-primary {
+  background: linear-gradient(135deg, rgba(13, 54, 58, 0.98), rgba(10, 13, 18, 0.96));
+}
+
+.daily-panel-span {
+  grid-column: span 2;
+}
+
+.daily-card-head,
+.daily-section-head,
+.daily-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.daily-section-head {
+  margin-bottom: 16px;
+}
+
+.daily-section-head > span,
+.daily-tag,
+.daily-status {
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.daily-status-green {
+  color: #062116;
+  background: #38d996;
+}
+
+.daily-status-amber {
+  color: #231704;
+  background: #f0b64a;
+}
+
+.daily-status-red {
+  color: #fff6f6;
+  background: #d94a5f;
+}
+
+.daily-tag,
+.daily-section-head > span {
+  color: #c6f5ea;
+  background: rgba(31, 112, 107, 0.24);
+  border: 1px solid rgba(82, 190, 175, 0.3);
+}
+
+.daily-metric-card strong {
+  display: block;
+  margin: 16px 0 6px;
+  font-size: clamp(1.45rem, 3vw, 2.35rem);
+  line-height: 1;
+}
+
+.daily-action-list,
+.daily-prompt-list,
+.daily-list,
+.daily-mini-list,
+.daily-mini-metrics,
+.daily-timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.daily-action,
+.daily-prompt-list span,
+.daily-mini-list span,
+.daily-mini-metrics span,
+.daily-timeline-item {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.daily-action {
+  color: #eefcf8;
+}
+
+.daily-row {
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.daily-row:last-child {
+  border-bottom: 0;
+}
+
+.daily-row div {
+  display: grid;
+  gap: 4px;
+}
+
+.daily-timeline-item {
+  display: grid;
+  gap: 4px;
+}
+
+.daily-timeline-item span {
+  color: #7ea3a9;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1180px) {
+  .daily-hero,
+  .daily-briefing-grid,
+  .daily-dashboard-grid,
+  .daily-dashboard-grid-wide,
+  .daily-agent-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .daily-panel-span {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 760px) {
+  .daily-command-shell {
+    width: min(100% - 18px, 100%);
+    padding-top: 18px;
+  }
+
+  .daily-hero,
+  .daily-briefing-grid,
+  .daily-dashboard-grid,
+  .daily-dashboard-grid-wide,
+  .daily-agent-grid,
+  .daily-hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-panel-span {
+    grid-column: span 1;
+  }
+
+  .daily-hero,
+  .daily-panel,
+  .daily-card,
+  .daily-agent-card {
+    padding: 16px;
+  }
+
+  .daily-card-head,
+  .daily-section-head,
+  .daily-row {
+    display: grid;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -1398,6 +1645,227 @@ button {
   .ghost-button,
   .calendar-card {
     width: 100%;
+  }
+}
+
+.archaios-command-shell {
+  width: min(1420px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 40px 0 72px;
+}
+
+.archaios-hero,
+.archaios-command-card,
+.archaios-list-panel,
+.archaios-division-panel,
+.archaios-metric-tile {
+  border: 1px solid rgba(224, 202, 146, 0.18);
+  background:
+    linear-gradient(145deg, rgba(18, 20, 24, 0.96), rgba(8, 10, 14, 0.96)),
+    radial-gradient(circle at top left, rgba(216, 180, 93, 0.12), transparent 35%);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.archaios-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  gap: 18px;
+  padding: 28px;
+  border-radius: 18px;
+}
+
+.archaios-hero h1 {
+  max-width: 13ch;
+  margin: 8px 0 16px;
+  color: #fff7dc;
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.archaios-hero p,
+.archaios-command-card p,
+.archaios-list-panel p,
+.archaios-division-panel p,
+.archaios-metric-tile span {
+  color: rgba(247, 244, 234, 0.74);
+  line-height: 1.55;
+}
+
+.archaios-hero-actions,
+.archaios-card-head,
+.archaios-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.archaios-hero-actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 24px;
+}
+
+.archaios-command-card,
+.archaios-list-panel,
+.archaios-division-panel {
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.archaios-command-card-wide {
+  grid-column: span 2;
+}
+
+.archaios-system-grid,
+.archaios-metric-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.archaios-system-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.archaios-metric-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.archaios-metric-tile {
+  min-height: 146px;
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  align-content: space-between;
+  gap: 12px;
+}
+
+.archaios-metric-tile strong {
+  color: #fff7dc;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: 0;
+}
+
+.archaios-status {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #f8f7ff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.archaios-status-green {
+  background: rgba(42, 208, 135, 0.14);
+  color: #94ffc7;
+}
+
+.archaios-status-amber {
+  background: rgba(255, 186, 82, 0.14);
+  color: #ffd48a;
+}
+
+.archaios-status-red {
+  background: rgba(255, 93, 108, 0.14);
+  color: #ff9ca6;
+}
+
+.archaios-meta {
+  margin-bottom: 0;
+  font-size: 0.88rem;
+}
+
+.archaios-executive-grid,
+.archaios-division-stack {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.archaios-executive-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.archaios-sitrep {
+  margin-top: 18px;
+  border-left: 3px solid #d8b45d;
+  padding: 12px 0 12px 16px;
+}
+
+.archaios-sitrep strong {
+  display: block;
+  color: #fff7dc;
+  line-height: 1.5;
+}
+
+.archaios-command-list {
+  display: grid;
+  gap: 10px;
+}
+
+.archaios-command-list-compact {
+  margin-top: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.archaios-command-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.archaios-command-item strong,
+.archaios-list-panel h3,
+.archaios-division-panel h2,
+.archaios-command-card h2 {
+  color: #fff7dc;
+}
+
+.archaios-command-item p {
+  margin: 6px 0 0;
+}
+
+@media (max-width: 1180px) {
+  .archaios-hero,
+  .archaios-executive-grid,
+  .archaios-metric-grid,
+  .archaios-command-list-compact {
+    grid-template-columns: 1fr;
+  }
+
+  .archaios-command-card-wide {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .archaios-command-shell {
+    width: min(100% - 18px, 100%);
+    padding-top: 18px;
+  }
+
+  .archaios-hero,
+  .archaios-command-card,
+  .archaios-list-panel,
+  .archaios-division-panel {
+    padding: 16px;
+  }
+
+  .archaios-system-grid,
+  .archaios-card-head,
+  .archaios-section-head,
+  .archaios-command-item {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
 

@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { buildOperatingSnapshot } from "../runtime/runtime-health.mjs";
 
 const ROOT = process.cwd();
 const RESOLVED_ARCHIVE_ROOT = process.env.ARCHAIOS_ARCHIVE_ROOT || null;
@@ -256,6 +257,7 @@ function main() {
   writeJson(path.join(DIRS.state, "runtime-state.json"), runtimeState);
 
   const dashboardData = {
+    operatingSnapshot: buildOperatingSnapshot(ROOT),
     generatedAt: runtimeState.generatedAt,
     archiveRoot: RESOLVED_ARCHIVE_ROOT,
     knowledgeSource: KNOWLEDGE_SOURCE,

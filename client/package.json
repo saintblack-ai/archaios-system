@@ -12,6 +12,7 @@
     "loop:status": "./archaios-loop.sh status",
     "archaios:intake": "node scripts/archaios-export-intake.mjs",
     "archaios:build": "node scripts/archaios-ingest-build.mjs",
+    "archaios:daily": "node scripts/archaios-daily-command.mjs",
     "archaios:orchestrate": "node archaios-core/orchestrator/orchestrator.mjs",
     "worker:dev": "wrangler dev --test-scheduled",
     "worker:check": "wrangler check",
