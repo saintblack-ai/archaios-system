@@ -18,6 +18,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
     steps:
       - name: Checkout
@@ -37,9 +41,36 @@ jobs:
         working-directory: client
         run: npm ci
 
+      - name: Verify production environment
+        run: |
+          missing=0
+
+          if [ -z "${VITE_BACKEND_URL}" ]; then
+            echo "::error::Missing required GitHub Actions variable VITE_BACKEND_URL."
+            missing=1
+          fi
+
+          if [ -z "${VITE_SUPABASE_URL}" ]; then
+            echo "::error::Missing required GitHub Actions variable VITE_SUPABASE_URL."
+            missing=1
+          fi
+
+          if [ -z "${VITE_SUPABASE_ANON_KEY}" ]; then
+            echo "::error::Missing required GitHub Actions secret VITE_SUPABASE_ANON_KEY."
+            missing=1
+          fi
+
+          if [ "${missing}" -ne 0 ]; then
+            echo "Required GitHub Pages production configuration is incomplete."
+            exit 1
+          fi
+
       - name: Build client
         working-directory: client
         run: npm run build
+
+      - name: Add GitHub Pages SPA fallback
+        run: cp client/dist/index.html client/dist/404.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

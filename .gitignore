@@ -7,7 +7,14 @@ dist/
 build/
 .vercel/
 .env
+.env.local
+.env.development
+.env.production
 .env.*
+!/.env.example
+*.pem
+*.key
+secrets/
 .DS_Store
 __pycache__/
 *.pyc
