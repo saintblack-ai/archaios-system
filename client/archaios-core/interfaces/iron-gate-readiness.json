@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-07-02T12:29:26.173Z",
+  "generatedAt": "2026-07-02T12:31:11.328Z",
   "service": "operation-iron-gate",
   "objective": "Operational readiness verification for ARCHAIOS production deployment.",
   "summary": {
-    "score": 61,
-    "earned": 67,
+    "score": 68,
+    "earned": 75,
     "total": 110,
     "status": "blocked",
-    "complete": 6,
+    "complete": 7,
     "warnings": 2,
-    "blockers": 4
+    "blockers": 3
   },
   "checks": [
     {
       "id": "git-worktree-clean",
       "category": "github",
-      "title": "Git worktree is not release-clean",
-      "status": "fail",
-      "score": 0,
+      "title": "Git worktree is release-clean",
+      "status": "pass",
+      "score": 8,
       "maxScore": 8,
-      "evidence": "31 modified/untracked entries.",
-      "action": "Classify, commit, archive, or explicitly discard all dirty worktree entries before production deployment.",
-      "productionBlocker": true
+      "evidence": "No modified or untracked entries.",
+      "action": "No action required.",
+      "productionBlocker": false
     },
     {
       "id": "required-runtime-files",
