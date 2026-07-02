@@ -1,0 +1,148 @@
+{
+  "generatedAt": "2026-07-02T12:29:26.173Z",
+  "service": "operation-iron-gate",
+  "objective": "Operational readiness verification for ARCHAIOS production deployment.",
+  "summary": {
+    "score": 61,
+    "earned": 67,
+    "total": 110,
+    "status": "blocked",
+    "complete": 6,
+    "warnings": 2,
+    "blockers": 4
+  },
+  "checks": [
+    {
+      "id": "git-worktree-clean",
+      "category": "github",
+      "title": "Git worktree is not release-clean",
+      "status": "fail",
+      "score": 0,
+      "maxScore": 8,
+      "evidence": "31 modified/untracked entries.",
+      "action": "Classify, commit, archive, or explicitly discard all dirty worktree entries before production deployment.",
+      "productionBlocker": true
+    },
+    {
+      "id": "required-runtime-files",
+      "category": "subsystems",
+      "title": "Required runtime files are present",
+      "status": "pass",
+      "score": 10,
+      "maxScore": 10,
+      "evidence": "8 required files found.",
+      "action": "No action required.",
+      "productionBlocker": false
+    },
+    {
+      "id": "duplicate-worker-surfaces",
+      "category": "technical-debt",
+      "title": "Duplicate Worker implementations exist",
+      "status": "warn",
+      "score": 2,
+      "maxScore": 6,
+      "evidence": "Both worker.js and client/worker/index.js exist.",
+      "action": "Choose one canonical Worker implementation and retire or archive the non-canonical path.",
+      "productionBlocker": false
+    },
+    {
+      "id": "placeholder-closure",
+      "category": "placeholders",
+      "title": "No production-facing placeholder signals found",
+      "status": "pass",
+      "score": 10,
+      "maxScore": 10,
+      "evidence": "Scanned production-facing files are clear.",
+      "action": "No action required.",
+      "productionBlocker": false
+    },
+    {
+      "id": "sentinel-actionable-findings",
+      "category": "security",
+      "title": "Project Sentinel has actionable findings",
+      "status": "warn",
+      "score": 5,
+      "maxScore": 8,
+      "evidence": "1 actionable finding(s).",
+      "action": "Resolve Project Sentinel findings before production.",
+      "productionBlocker": false
+    },
+    {
+      "id": "client-dependency-audit",
+      "category": "security",
+      "title": "Client dependency audit passes",
+      "status": "pass",
+      "score": 8,
+      "maxScore": 8,
+      "evidence": "npm audit found no moderate-or-higher client vulnerabilities.",
+      "action": "No action required.",
+      "productionBlocker": false
+    },
+    {
+      "id": "automated-tests",
+      "category": "health-checks",
+      "title": "Automated tests pass",
+      "status": "pass",
+      "score": 12,
+      "maxScore": 12,
+      "evidence": "Node test suite completed successfully.",
+      "action": "No action required.",
+      "productionBlocker": false
+    },
+    {
+      "id": "client-production-build",
+      "category": "health-checks",
+      "title": "Client production build passes",
+      "status": "pass",
+      "score": 12,
+      "maxScore": 12,
+      "evidence": "Vite build completed successfully.",
+      "action": "No action required.",
+      "productionBlocker": false
+    },
+    {
+      "id": "live-github-repository",
+      "category": "github",
+      "title": "Live GitHub repository is reachable",
+      "status": "pass",
+      "score": 8,
+      "maxScore": 8,
+      "evidence": "saintblack-ai/archaios-system; default branch main. Latest runs reachable: yes.",
+      "action": "No action required.",
+      "productionBlocker": false
+    },
+    {
+      "id": "live-cloudflare-worker",
+      "category": "cloudflare",
+      "title": "Cloudflare Worker identity mismatch",
+      "status": "fail",
+      "score": 0,
+      "maxScore": 10,
+      "evidence": "HTTP 200; expected service archaios-saas-worker, got archaios-daily-automation.",
+      "action": "Deploy the canonical revenue Worker with `npx wrangler deploy --name archaios-saas-worker` and verify /api/health identity.",
+      "productionBlocker": true
+    },
+    {
+      "id": "live-supabase-health",
+      "category": "supabase",
+      "title": "Supabase auth health failed",
+      "status": "fail",
+      "score": 0,
+      "maxScore": 8,
+      "evidence": "HTTP 0: fetch failed.",
+      "action": "Verify Supabase project status and configured project URL.",
+      "productionBlocker": true
+    },
+    {
+      "id": "live-stripe-metrics",
+      "category": "stripe",
+      "title": "Stripe metrics are not connected",
+      "status": "fail",
+      "score": 0,
+      "maxScore": 10,
+      "evidence": "STRIPE_SECRET_KEY is not available to Iron Gate.",
+      "action": "Run Iron Gate from an approved environment with read-only Stripe access or verify metrics through a controlled backend endpoint.",
+      "productionBlocker": true
+    }
+  ]
+}
