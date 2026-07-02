@@ -3,6 +3,7 @@ const DEFAULT_ITEMS = [
   { label: "Landing", path: "landing" },
   { label: "Pricing", path: "pricing" },
   { label: "Dashboard", path: "dashboard" },
+  { label: "Mission Control", path: "mission-control" },
   { label: "Daily", path: "daily" },
   { label: "Archaios", path: "archaios" },
   { label: "Operator", path: "operator" },

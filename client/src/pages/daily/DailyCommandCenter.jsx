@@ -122,6 +122,56 @@ function ExecutiveOfficerPanel({ executiveBrief, monitors }) {
   );
 }
 
+function SentinelPanel({ sentinel }) {
+  const findings = sentinel.findings || [];
+  return (
+    <section className="daily-panel daily-sentinel-panel">
+      <div className="daily-section-head">
+        <div>
+          <p className="eyebrow">Project Sentinel</p>
+          <h2>{sentinel.title}</h2>
+          <p>{sentinel.summary}</p>
+        </div>
+        <StatusChip status={sentinel.status} />
+      </div>
+      <div className="daily-sentinel-strip">
+        <span>{sentinel.metrics.cleanSectors}/{sentinel.metrics.sectors} sectors clean</span>
+        <span>{sentinel.metrics.actionableFindings} actionable findings</span>
+        <span>{sentinel.metrics.critical} critical</span>
+        <span>{sentinel.metrics.high} high</span>
+      </div>
+      {findings.length ? (
+        <div className="daily-list">
+          {findings.slice(0, 6).map((finding) => (
+            <div className="daily-row" key={finding.id}>
+              <div>
+                <strong>{finding.title}</strong>
+                <span>{finding.evidence}</span>
+                <span>{finding.action}</span>
+              </div>
+              <span className="daily-tag">{finding.severity}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="daily-action">No actionable SOC findings from local evidence.</div>
+      )}
+      <div className="daily-monitor-grid">
+        {sentinel.sectors.map((sector) => (
+          <article className="daily-monitor-card" key={sector.key}>
+            <div className="daily-card-head">
+              <strong>{sector.label}</strong>
+              <StatusChip status={sector.status} />
+            </div>
+            <p>{sector.actionableFindings} actionable finding{sector.actionableFindings === 1 ? "" : "s"}</p>
+            <span className="daily-tag">{sector.key}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ProjectPanels({ dashboards }) {
   return (
     <section className="daily-dashboard-grid">
@@ -290,6 +340,7 @@ export default function DailyCommandCenter() {
 
       <BriefingPanel commander={dailyCommand.commander} />
       <ExecutiveOfficerPanel executiveBrief={dailyCommand.executiveBrief} monitors={dailyCommand.executiveOfficer.monitors} />
+      <SentinelPanel sentinel={dailyCommand.securityOperations} />
       <ProjectPanels dashboards={dashboards} />
       <OperationsPanels dashboards={dashboards} scheduledTasks={dailyCommand.scheduledTasks} />
       <KnowledgePanels dashboards={dashboards} />

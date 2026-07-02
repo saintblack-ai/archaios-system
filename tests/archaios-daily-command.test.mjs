@@ -12,6 +12,8 @@ test("Commander merges structured agent reports into a daily command center", ()
   assert.equal(snapshot.agentReports.length, 9);
   assert.equal(snapshot.executiveOfficer.role, "AI Executive Officer");
   assert.equal(snapshot.executiveOfficer.monitors.length, 10);
+  assert.equal(snapshot.securityOperations.service, "project-sentinel");
+  assert.equal(snapshot.securityOperations.sectors.length, 11);
   assert.ok(snapshot.executiveBrief.topPriorities.some((priority) => priority.area === "Revenue"));
   assert.ok(snapshot.executiveBrief.topPriorities.some((priority) => priority.area === "Security"));
   assert.ok(snapshot.commander.morningBriefing.actions.length >= 3);

@@ -33,6 +33,7 @@ const BookGrowthCommand = lazy(() => import("./pages/bookGrowth/BookGrowthComman
 const ArchaiosCommandCenter = lazy(() => import("./pages/archaios/ArchaiosCommandCenter"));
 const DailyCommandCenter = lazy(() => import("./pages/daily/DailyCommandCenter"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
+const MissionControl = lazy(() => import("./pages/mission/MissionControl"));
 const OperatorMode = lazy(() => import("./pages/operator/OperatorMode"));
 const CommandLinks = lazy(() => import("./pages/revenue/CommandLinks"));
 const PricingPage = lazy(() => import("./pages/revenue/PricingPage"));
@@ -2627,6 +2628,14 @@ export default function App() {
     return (
       <Suspense fallback={<main className="app-shell"><div className="panel">Loading Daily Command Center...</div></main>}>
         <DailyCommandCenter />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/mission-control")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Mission Control...</div></main>}>
+        <MissionControl />
       </Suspense>
     );
   }

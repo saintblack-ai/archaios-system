@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { buildCommanderExecutiveService } from "../commander/service.mjs";
 import { buildOperatingSnapshot, loadAgentNetwork } from "../runtime/runtime-health.mjs";
+import { buildProjectSentinelDashboard } from "../sentinel/service.mjs";
 
 const DAILY_AGENT_KEYS = [
   "archivist",
@@ -324,6 +325,7 @@ export function buildDailyCommandCenter(rootDir = process.cwd(), options = {}) {
   const manifest = loadAgentNetwork(rootDir);
   const operatingSnapshot = buildOperatingSnapshot(rootDir);
   const executiveOfficer = buildCommanderExecutiveService(rootDir, { generatedAt });
+  const projectSentinel = buildProjectSentinelDashboard(rootDir, { generatedAt });
   const knowledgeIndex =
     readJson(path.join(rootDir, "client", "knowledge", "knowledge-index.json"), null) ||
     readJson(path.join(rootDir, "client", "processed_exports", "knowledge_snapshots", "knowledge-index.json"), {});
@@ -492,6 +494,7 @@ export function buildDailyCommandCenter(rootDir = process.cwd(), options = {}) {
       },
       projectStatus: activeProjects
     },
+    securityOperations: projectSentinel,
     scheduledTasks,
     operatingSnapshot
   };

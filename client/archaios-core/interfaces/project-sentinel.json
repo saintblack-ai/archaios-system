@@ -1,0 +1,164 @@
+{
+  "generatedAt": "2026-07-02T12:27:45.521Z",
+  "service": "project-sentinel",
+  "title": "Project Sentinel Security Operations Dashboard",
+  "doctrine": "Report only actionable findings backed by local evidence. Do not speculate about connector state.",
+  "status": "amber",
+  "summary": "1 actionable finding(s): 0 critical, 0 high, 1 medium, 0 low.",
+  "sectors": [
+    {
+      "key": "github",
+      "label": "GitHub",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "remoteConfigured": true,
+        "deployWorkflow": true,
+        "workerHeartbeatWorkflow": true
+      }
+    },
+    {
+      "key": "dependencies",
+      "label": "Dependencies",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "packageManifests": 3,
+        "lockfiles": 3,
+        "auditScript": true
+      }
+    },
+    {
+      "key": "secrets",
+      "label": "Secrets",
+      "status": "amber",
+      "actionableFindings": 1,
+      "coverage": {
+        "searchMode": "ripgrep-redacted-plus-export-quarantine",
+        "reportedLimit": 25,
+        "scanTargets": 15,
+        "rawExportInboxPresent": true,
+        "maxContinuousExportBytes": 26214400,
+        "patterns": 5
+      }
+    },
+    {
+      "key": "authentication",
+      "label": "Authentication",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "signedOutCheckoutBlocked": true,
+        "workerAuth": true,
+        "protectedContent": true
+      }
+    },
+    {
+      "key": "cloudflare",
+      "label": "Cloudflare",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "rootName": "archaios-saas-worker",
+        "clientName": "archaios-saas-worker",
+        "hasHealthEndpoint": true
+      }
+    },
+    {
+      "key": "supabase",
+      "label": "Supabase",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "migrationCount": 9,
+        "requiredMigrationsPresent": 4
+      }
+    },
+    {
+      "key": "stripe",
+      "label": "Stripe",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "hasCheckout": true,
+        "hasWebhookVerification": true,
+        "requiredEvents": 5,
+        "missingEvents": [],
+        "hasProElitePlaceholders": true
+      }
+    },
+    {
+      "key": "api-keys",
+      "label": "API Keys",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "scannedBrowserFiles": 50,
+        "forbiddenNames": 6
+      }
+    },
+    {
+      "key": "certificates",
+      "label": "Certificates",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "certificateFiles": 0
+      }
+    },
+    {
+      "key": "broken-links",
+      "label": "Broken Links",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "markdownFiles": 164,
+        "reportedLimit": 12
+      }
+    },
+    {
+      "key": "deployments",
+      "label": "Deployments",
+      "status": "green",
+      "actionableFindings": 0,
+      "coverage": {
+        "clientBuild": true,
+        "workerCheck": true,
+        "canonicalHeartbeat": true,
+        "deployWorkflowBuildStep": true
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "secrets-raw-export-inbox-requires-quarantine-scan",
+      "sector": "secrets",
+      "severity": "medium",
+      "title": "Raw export inbox requires quarantine scan",
+      "evidence": "client/ARCHAIOS_INFRASTRUCTURE/inbox exists.",
+      "action": "Run an offline redaction/secret scan before promoting raw exports into production knowledge or semantic memory.",
+      "owner": "security",
+      "blockedBy": [
+        "production-deploy"
+      ]
+    }
+  ],
+  "metrics": {
+    "sectors": 11,
+    "cleanSectors": 10,
+    "actionableFindings": 1,
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "responsePlan": [
+    {
+      "order": 1,
+      "findingId": "secrets-raw-export-inbox-requires-quarantine-scan",
+      "severity": "medium",
+      "owner": "security",
+      "action": "Run an offline redaction/secret scan before promoting raw exports into production knowledge or semantic memory."
+    }
+  ]
+}

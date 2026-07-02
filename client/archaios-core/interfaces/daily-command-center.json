@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-01T21:35:54.877Z",
+  "generatedAt": "2026-07-01T22:03:43.485Z",
   "title": "ARCHAIOS Daily Command Center",
   "commander": {
     "agentKey": "commander",
@@ -26,7 +26,7 @@
     }
   },
   "executiveOfficer": {
-    "generatedAt": "2026-07-01T21:35:54.877Z",
+    "generatedAt": "2026-07-01T22:03:43.485Z",
     "service": "archaios-commander-executive-officer",
     "version": "2026-07-01",
     "role": "AI Executive Officer",
@@ -42,13 +42,13 @@
         "label": "Unfinished Work",
         "status": "red",
         "priority": 2,
-        "summary": "61 in progress, 0 blocked, 6 unstaged/untracked git entries.",
+        "summary": "61 in progress, 0 blocked, 12 unstaged/untracked git entries.",
         "findings": [
           "M client/archaios-core/daily/commander.mjs",
-          " M client/docs/DAILY_COMMAND_CENTER.md",
-          " M tests/archaios-daily-command.test.mjs",
-          "?? client/archaios-core/commander/",
-          "?? client/supabase/.temp/"
+          " M client/archaios-core/interfaces/daily-command-center.json",
+          " M client/package.json",
+          " M client/src/app.css",
+          " M client/src/pages/daily/DailyCommandCenter.jsx"
         ],
         "actions": [
           "Review blocked and in-progress tasks before accepting new work.",
@@ -61,7 +61,7 @@
           "inProgress": 61,
           "completed": 51,
           "blocked": 0,
-          "dirtyGitEntries": 6
+          "dirtyGitEntries": 12
         },
         "risks": [
           "Dirty worktree can hide release drift."
@@ -157,7 +157,7 @@
         "priority": 3,
         "summary": "Branch revenue-subscription-constraint; remote https://github.com/saintblack-ai/archaios-system.git; 2 workflow files present.",
         "findings": [
-          "HEAD: 66c5658 docs: add archaios operator readiness archive",
+          "HEAD: 56d6295 feat: upgrade commander executive officer service",
           ".github/workflows/deploy.yml",
           ".github/workflows/worker_heartbeat.yml"
         ],
@@ -287,11 +287,12 @@
         "label": "Test Monitor",
         "status": "green",
         "priority": 3,
-        "summary": "4 Node test files tracked; client build script present; server check script present.",
+        "summary": "5 Node test files tracked; client build script present; server check script present.",
         "findings": [
           "tests/archaios-daily-command.test.mjs",
           "tests/archaios-runtime-health.test.mjs",
           "tests/archivist-agent.test.mjs",
+          "tests/project-sentinel.test.mjs",
           "tests/revenue-readiness.test.mjs"
         ],
         "actions": [
@@ -300,7 +301,7 @@
           "Add Worker-specific deploy validation beyond Wrangler help output."
         ],
         "metrics": {
-          "testFiles": 4,
+          "testFiles": 5,
           "hasClientBuild": true,
           "hasServerCheck": true
         },
@@ -968,7 +969,7 @@
     "memoryUsage": {
       "timeline": [
         {
-          "timestamp": "2026-07-01T21:35:55.023Z",
+          "timestamp": "2026-07-01T22:03:44.243Z",
           "type": "knowledge-growth",
           "title": "Knowledge index baseline",
           "detail": "656 indexed records across 631 conversations."
@@ -1325,6 +1326,187 @@
       }
     ]
   },
+  "securityOperations": {
+    "generatedAt": "2026-07-01T22:03:43.485Z",
+    "service": "project-sentinel",
+    "title": "Project Sentinel Security Operations Dashboard",
+    "doctrine": "Report only actionable findings backed by local evidence. Do not speculate about connector state.",
+    "status": "amber",
+    "summary": "2 actionable finding(s): 0 critical, 0 high, 1 medium, 1 low.",
+    "sectors": [
+      {
+        "key": "github",
+        "label": "GitHub",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "remoteConfigured": true,
+          "deployWorkflow": true,
+          "workerHeartbeatWorkflow": true
+        }
+      },
+      {
+        "key": "dependencies",
+        "label": "Dependencies",
+        "status": "amber",
+        "actionableFindings": 1,
+        "coverage": {
+          "packageManifests": 3,
+          "lockfiles": 3,
+          "auditScript": false
+        }
+      },
+      {
+        "key": "secrets",
+        "label": "Secrets",
+        "status": "amber",
+        "actionableFindings": 1,
+        "coverage": {
+          "searchMode": "ripgrep-redacted-plus-export-quarantine",
+          "reportedLimit": 25,
+          "scanTargets": 15,
+          "rawExportInboxPresent": true,
+          "maxContinuousExportBytes": 26214400,
+          "patterns": 5
+        }
+      },
+      {
+        "key": "authentication",
+        "label": "Authentication",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "signedOutCheckoutBlocked": true,
+          "workerAuth": true,
+          "protectedContent": true
+        }
+      },
+      {
+        "key": "cloudflare",
+        "label": "Cloudflare",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "rootName": "archaios-saas-worker",
+          "clientName": "archaios-saas-worker",
+          "hasHealthEndpoint": true
+        }
+      },
+      {
+        "key": "supabase",
+        "label": "Supabase",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "migrationCount": 9,
+          "requiredMigrationsPresent": 4
+        }
+      },
+      {
+        "key": "stripe",
+        "label": "Stripe",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "hasCheckout": true,
+          "hasWebhookVerification": true,
+          "requiredEvents": 5,
+          "missingEvents": [],
+          "hasProElitePlaceholders": true
+        }
+      },
+      {
+        "key": "api-keys",
+        "label": "API Keys",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "scannedBrowserFiles": 49,
+          "forbiddenNames": 6
+        }
+      },
+      {
+        "key": "certificates",
+        "label": "Certificates",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "certificateFiles": 0
+        }
+      },
+      {
+        "key": "broken-links",
+        "label": "Broken Links",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "markdownFiles": 162,
+          "reportedLimit": 12
+        }
+      },
+      {
+        "key": "deployments",
+        "label": "Deployments",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "clientBuild": true,
+          "workerCheck": true,
+          "canonicalHeartbeat": true,
+          "deployWorkflowBuildStep": true
+        }
+      }
+    ],
+    "findings": [
+      {
+        "id": "secrets-raw-export-inbox-requires-quarantine-scan",
+        "sector": "secrets",
+        "severity": "medium",
+        "title": "Raw export inbox requires quarantine scan",
+        "evidence": "client/ARCHAIOS_INFRASTRUCTURE/inbox exists.",
+        "action": "Run an offline redaction/secret scan before promoting raw exports into production knowledge or semantic memory.",
+        "owner": "security",
+        "blockedBy": [
+          "production-deploy"
+        ]
+      },
+      {
+        "id": "dependencies-dependency-audit-script-missing",
+        "sector": "dependencies",
+        "severity": "low",
+        "title": "Dependency audit script missing",
+        "evidence": "No npm audit/security script is defined in root or client package.json.",
+        "action": "Add a non-mutating dependency audit command and include it in the pre-release checklist.",
+        "owner": "security",
+        "blockedBy": []
+      }
+    ],
+    "metrics": {
+      "sectors": 11,
+      "cleanSectors": 9,
+      "actionableFindings": 2,
+      "critical": 0,
+      "high": 0,
+      "medium": 1,
+      "low": 1
+    },
+    "responsePlan": [
+      {
+        "order": 1,
+        "findingId": "secrets-raw-export-inbox-requires-quarantine-scan",
+        "severity": "medium",
+        "owner": "security",
+        "action": "Run an offline redaction/secret scan before promoting raw exports into production knowledge or semantic memory."
+      },
+      {
+        "order": 2,
+        "findingId": "dependencies-dependency-audit-script-missing",
+        "severity": "low",
+        "owner": "security",
+        "action": "Add a non-mutating dependency audit command and include it in the pre-release checklist."
+      }
+    ]
+  },
   "scheduledTasks": [
     {
       "id": "daily-morning-brief",
@@ -1392,7 +1574,7 @@
     }
   ],
   "operatingSnapshot": {
-    "generatedAt": "2026-07-01T21:35:54.879Z",
+    "generatedAt": "2026-07-01T22:03:43.488Z",
     "system": "ARCHAIOS OMEGA",
     "health": "healthy",
     "blockedSignals": [],
