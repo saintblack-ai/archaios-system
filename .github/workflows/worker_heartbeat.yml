@@ -20,11 +20,15 @@ jobs:
       - name: Ping Cloudflare Worker
         shell: bash
         run: |
+          response_file="$(mktemp)"
+
           if [[ -n "${AUTH_TOKEN}" ]]; then
             curl -f -sS -L --connect-timeout 10 --max-time 30 --retry 3 --retry-all-errors --retry-delay 2 \
               -H "Authorization: Bearer ${AUTH_TOKEN}" \
-              "${WORKER_HEALTH_URL}"
+              "${WORKER_HEALTH_URL}" > "${response_file}"
           else
             curl -f -sS -L --connect-timeout 10 --max-time 30 --retry 3 --retry-all-errors --retry-delay 2 \
-              "${WORKER_HEALTH_URL}"
+              "${WORKER_HEALTH_URL}" > "${response_file}"
           fi
+
+          node -e "const fs=require('node:fs'); const body=JSON.parse(fs.readFileSync(process.argv[1], 'utf8')); if (body.service !== 'archaios-saas-worker') { console.error('Unexpected Worker service:', body.service); process.exit(1); } console.log('Worker service verified:', body.service);" "${response_file}"
