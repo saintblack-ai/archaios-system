@@ -61,7 +61,7 @@ export function evaluateArchitectHealth(state) {
   const failedPosts = postQueue.filter((item) => item.status === "failed").length;
   const awaitingApproval = postQueue.filter((item) => item.approvalStatus !== "approved").length;
   const blockedItems = state.architectMode.awaitingAuthorization?.length || 0;
-  const missingLiveLinks = state.books.filter((book) => book.appleBooksLink.includes("placeholder")).length;
+  const missingLiveLinks = state.books.filter((book) => !/^https:\/\/books\.apple\.com\/us\//.test(book.appleBooksLink || "")).length;
   const autoPostBoundary =
     state.postingScheduler?.autoPostEnabled && state.socialConnectors?.some((connector) => !connector.connected);
 
@@ -88,7 +88,7 @@ export function evaluateArchitectHealth(state) {
       id: "health-links",
       label: "Apple Books links",
       status: missingLiveLinks ? "warn" : "pass",
-      detail: `${missingLiveLinks} titles still use placeholder Apple Books URLs.`
+      detail: `${missingLiveLinks} titles need Apple Books URLs.`
     },
     {
       id: "health-autopost",

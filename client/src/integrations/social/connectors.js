@@ -1,19 +1,19 @@
 const SUPPORTED_PLATFORMS = ["X", "Facebook", "Instagram"];
 
-function createMockResult(platform, content) {
+function createDryRunResult(platform, content) {
   return {
     ok: true,
-    mode: "mock",
+    mode: "dry-run",
     platform,
-    externalId: `mock-${platform.toLowerCase()}-${Date.now()}`,
-    message: `Mock posted to ${platform}. No external API call was made.`,
+    externalId: `dry-run-${platform.toLowerCase()}-${Date.now()}`,
+    message: `Dry run completed for ${platform}. No external API call was made.`,
     contentPreview: String(content?.copy || content?.text || content || "").slice(0, 180)
   };
 }
 
 function assertSupportedPlatform(platform) {
   if (!SUPPORTED_PLATFORMS.includes(platform)) {
-    throw new Error(`${platform} is not connected. Supported placeholders: ${SUPPORTED_PLATFORMS.join(", ")}.`);
+    throw new Error(`${platform} is not connected. Supported platforms: ${SUPPORTED_PLATFORMS.join(", ")}.`);
   }
 }
 
@@ -21,7 +21,7 @@ export function getSocialConnectorStatus(config = {}) {
   return SUPPORTED_PLATFORMS.map((platform) => ({
     platform,
     connected: Boolean(config.credentials?.[platform]?.enabled),
-    mode: config.credentials?.[platform]?.enabled ? "api-ready" : "mock-placeholder",
+    mode: config.credentials?.[platform]?.enabled ? "api-ready" : "dry-run",
     requiredCredentials:
       platform === "X"
         ? ["X_API_KEY", "X_API_SECRET", "X_ACCESS_TOKEN"]
@@ -31,7 +31,7 @@ export function getSocialConnectorStatus(config = {}) {
 
 export async function postToX(content, config = {}) {
   if (!config.credentials?.X?.enabled) {
-    return createMockResult("X", content);
+    return createDryRunResult("X", content);
   }
 
   throw new Error("X API v2 connector is prepared but not activated. Add server-side credentials before enabling real posting.");
@@ -39,7 +39,7 @@ export async function postToX(content, config = {}) {
 
 export async function postToFacebook(content, config = {}) {
   if (!config.credentials?.Facebook?.enabled) {
-    return createMockResult("Facebook", content);
+    return createDryRunResult("Facebook", content);
   }
 
   throw new Error("Facebook Graph API connector is prepared but not activated. Add server-side credentials before enabling real posting.");
@@ -47,7 +47,7 @@ export async function postToFacebook(content, config = {}) {
 
 export async function postToInstagram(content, config = {}) {
   if (!config.credentials?.Instagram?.enabled) {
-    return createMockResult("Instagram", content);
+    return createDryRunResult("Instagram", content);
   }
 
   throw new Error("Instagram Graph API connector is prepared but not activated. Add server-side credentials before enabling real posting.");

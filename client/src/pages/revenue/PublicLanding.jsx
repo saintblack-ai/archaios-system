@@ -10,15 +10,15 @@ const signals = [
   "Operator-ready infrastructure"
 ];
 
-const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Self-serve billing stays in test readiness until legal, tax, policy, and Stripe verification are complete.";
+const BUSINESS_ONBOARDING_NOTE = "Business verification is in progress. Self-serve billing requires legal, tax, policy, and Stripe verification before paid promotion.";
 
-const legalPlaceholders = [
-  ["Business legal name", import.meta.env.VITE_PUBLIC_BUSINESS_LEGAL_NAME || "Pending LLC/legal formation"],
-  ["EIN / tax setup", import.meta.env.VITE_PUBLIC_EIN_STATUS || "Pending after business formation"],
-  ["Privacy Policy", import.meta.env.VITE_PUBLIC_PRIVACY_POLICY_URL || "Placeholder URL required before launch"],
-  ["Terms of Service", import.meta.env.VITE_PUBLIC_TERMS_URL || "Placeholder URL required before launch"],
-  ["Refund Policy", import.meta.env.VITE_PUBLIC_REFUND_POLICY_URL || "Placeholder URL required before launch"],
-  ["Contact email", import.meta.env.VITE_PUBLIC_CONTACT_EMAIL || "support email pending"]
+const legalReadiness = [
+  ["Business legal name", import.meta.env.VITE_PUBLIC_BUSINESS_LEGAL_NAME || "Required before paid promotion"],
+  ["EIN / tax setup", import.meta.env.VITE_PUBLIC_EIN_STATUS || "Required before paid promotion"],
+  ["Privacy Policy", import.meta.env.VITE_PUBLIC_PRIVACY_POLICY_URL || "Required before paid promotion"],
+  ["Terms of Service", import.meta.env.VITE_PUBLIC_TERMS_URL || "Required before paid promotion"],
+  ["Refund Policy", import.meta.env.VITE_PUBLIC_REFUND_POLICY_URL || "Required before paid promotion"],
+  ["Contact email", import.meta.env.VITE_PUBLIC_CONTACT_EMAIL || "Required before paid promotion"]
 ];
 
 const sampleBrief = [
@@ -69,7 +69,7 @@ export default function PublicLanding() {
       setLeadStatus("Saved. Your intelligence access path is queued.");
       setEmail("");
     } catch (error) {
-      setLeadStatus(String(error?.message || "Lead capture is not configured yet. Try again after backend setup."));
+      setLeadStatus(String(error?.message || "Lead capture requires verified backend setup. Try again after operations review."));
     }
   }
 
@@ -154,7 +154,7 @@ export default function PublicLanding() {
           <p>Lead capture routes prospects into the AI Assassins conversion system. Backend storage and consent tracking must be verified before launch.</p>
         </div>
         <form className="revenue-lead-form" onSubmit={handleLeadSubmit}>
-          <input value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" type="email" />
+          <input value={email} onChange={(event) => setEmail(event.target.value)} aria-label="Email address" type="email" />
           <button type="submit">Join Waitlist</button>
           {leadStatus ? <p>{leadStatus}</p> : null}
         </form>
@@ -163,11 +163,11 @@ export default function PublicLanding() {
       <section className="revenue-section">
         <div className="revenue-section-head">
           <span className="revenue-eyebrow">Business Readiness</span>
-          <h2>Legal and onboarding placeholders.</h2>
+          <h2>Legal and onboarding readiness.</h2>
           <p>These launch blockers should be replaced with final business details before self-serve paid checkout is promoted.</p>
         </div>
         <div className="feature-gate-table">
-          {legalPlaceholders.map(([label, value]) => (
+          {legalReadiness.map(([label, value]) => (
             <div className="feature-gate-row" key={label}>
               <strong>{label}</strong>
               <span>{value}</span>
@@ -179,7 +179,7 @@ export default function PublicLanding() {
       <section className="revenue-section revenue-route-strip">
         <span className="revenue-eyebrow">Live Routes</span>
         <a href={`${import.meta.env.BASE_URL || "/"}pricing`}>Upgrade path</a>
-        <a href={`${import.meta.env.BASE_URL || "/"}dashboard?mock=1`}>Test dashboard mock mode</a>
+        <a href={`${import.meta.env.BASE_URL || "/"}dashboard?mock=1`}>Test dashboard demo mode</a>
         <a href={`${import.meta.env.BASE_URL || "/"}book-growth`}>Book Growth Command</a>
       </section>
     </main>

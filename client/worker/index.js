@@ -53,7 +53,9 @@ function logEvent(level, event, context = {}) {
 function buildHealthPayload(env) {
   return {
     ok: true,
-    service: "archaios-daily-automation",
+    service: "archaios-saas-worker",
+    release: env.WORKER_RELEASE || "client-worker-aligned-revenue-health",
+    role: "daily-automation",
     backendBaseUrlConfigured: Boolean(normalizeBaseUrl(env.BACKEND_BASE_URL)),
     adminEmailConfigured: Boolean(String(env.ADMIN_EMAIL || env.VITE_ADMIN_EMAIL || "").trim()),
     cron: env.CRON_SCHEDULE || "17 13 * * *",

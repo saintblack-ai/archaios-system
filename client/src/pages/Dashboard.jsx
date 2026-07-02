@@ -24,7 +24,7 @@ import { MOCK_PLATFORM_DASHBOARD, setMockMode, shouldUseMockData } from "../lib/
 
 const ADMIN_EMAIL = String(import.meta.env.VITE_ADMIN_EMAIL || "").trim().toLowerCase();
 const DASHBOARD_PATH = `${import.meta.env.BASE_URL || "/"}dashboard`.replace(/\/{2,}/g, "/");
-const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Paid checkout is launch-gated until legal, tax, policy, and Stripe verification are complete.";
+const BUSINESS_ONBOARDING_NOTE = "Business verification is in progress. Paid checkout requires legal, tax, policy, and Stripe verification before paid promotion.";
 const SIGNAL_PREVIEW_ITEMS = [
   {
     title: "Macro volatility pulse",
@@ -705,7 +705,7 @@ function AdminLayout({ session, adminData, loading, error, adminConfigured, auth
         <section className="saint-dashboard-hero">
           <div className="saint-dashboard-copy">
             <p className="eyebrow">Hidden Admin Route</p>
-            <h1>Admin email is not configured.</h1>
+            <h1>Admin email requires configuration.</h1>
             <p>Set `VITE_ADMIN_EMAIL` in the frontend and `ADMIN_EMAIL` in the worker to activate the protected admin route.</p>
           </div>
         </section>

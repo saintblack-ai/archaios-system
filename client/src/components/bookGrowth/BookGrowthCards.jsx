@@ -17,7 +17,7 @@ export function BookCard({ book, clicks }) {
 
   return (
     <article className="book-growth-card book-card">
-      <div className={`book-cover-slot ${book.coverPlaceholder}`}>
+      <div className={`book-cover-slot ${book.coverKey || book.coverPlaceholder}`}>
         <span>{book.title.split(" ").slice(0, 3).join(" ")}</span>
       </div>
       <div className="book-card-body">

@@ -8,7 +8,7 @@ import { FEATURE_GATES, getTierExperience, hasPlanAccess } from "../../lib/subsc
 const ACCESS_EMAIL_STORAGE_KEY = "archaios_saved_access_email";
 const ACCESS_EMAIL_TIMESTAMP_KEY = "archaios_saved_access_timestamp";
 const UPGRADE_INTENT_STORAGE_KEY = "archaios_upgrade_intent_tier";
-const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Pro and Elite checkout remain launch-gated until legal, tax, policy, and Stripe test verification are complete.";
+const BUSINESS_ONBOARDING_NOTE = "Business verification is in progress. Pro and Elite checkout require legal, tax, policy, and Stripe verification before paid promotion.";
 
 function getPlanPosition(planId) {
   if (planId === "free") return "Limited preview";
@@ -156,7 +156,7 @@ export default function PricingPage() {
       }
       window.location.href = url;
     } catch (error) {
-      setMessage(String(error?.message || "Checkout is not configured yet. Verify Stripe env vars and Worker deployment."));
+      setMessage(String(error?.message || "Checkout requires verified Stripe env vars and Worker deployment."));
       setBusyTier("");
     }
   }
@@ -176,7 +176,7 @@ export default function PricingPage() {
           <div className="revenue-actions">
             <a href={`${import.meta.env.BASE_URL || "/"}landing`}>Back to Landing</a>
             <a className="secondary" href={`${import.meta.env.BASE_URL || "/"}dashboard`}>Dashboard</a>
-            <a className="secondary" href={`${import.meta.env.BASE_URL || "/"}dashboard?mock=1`}>Preview Mock Dashboard</a>
+            <a className="secondary" href={`${import.meta.env.BASE_URL || "/"}dashboard?mock=1`}>Preview Demo Dashboard</a>
           </div>
           <p className="revenue-status">{message}</p>
           <p className="revenue-status">
@@ -201,7 +201,7 @@ export default function PricingPage() {
           <input
             className="auth-input"
             type="email"
-            placeholder="you@domain.com"
+            aria-label="Email address"
             value={emailInput}
             onChange={(event) => setEmailInput(event.target.value)}
           />
@@ -310,7 +310,7 @@ export default function PricingPage() {
           </div>
         </div>
         <p className="revenue-status">
-          Checkout buttons above use real Stripe checkout-session creation in test mode through the backend. If Stripe is not configured, safe fallback errors are shown.
+          Checkout buttons above use real Stripe checkout-session creation in test mode through the backend. If Stripe requires additional environment setup, the backend returns a controlled error.
         </p>
       </section>
 
@@ -352,12 +352,12 @@ export default function PricingPage() {
             <span>{hostRoles.supabaseAuthReady ? "Configured in client env" : "Missing client env"}</span>
           </div>
           <div className="feature-gate-row">
-            <strong>Pro price ID placeholder</strong>
-            <span>{stripeTest.clientPlaceholders.proPriceIdValid ? stripeTest.clientPlaceholders.proPriceId : "Not set or invalid format"}</span>
+            <strong>Pro price ID</strong>
+            <span>{stripeTest.clientStripeConfig.proPriceIdValid ? stripeTest.clientStripeConfig.proPriceId : "Missing or invalid format"}</span>
           </div>
           <div className="feature-gate-row">
-            <strong>Elite price ID placeholder</strong>
-            <span>{stripeTest.clientPlaceholders.elitePriceIdValid ? stripeTest.clientPlaceholders.elitePriceId : "Not set or invalid format"}</span>
+            <strong>Elite price ID</strong>
+            <span>{stripeTest.clientStripeConfig.elitePriceIdValid ? stripeTest.clientStripeConfig.elitePriceId : "Missing or invalid format"}</span>
           </div>
           <div className="feature-gate-row">
             <strong>Stripe checkout activation</strong>

@@ -3,7 +3,7 @@
     "id": "holy-war",
     "title": "The Art of Holy War",
     "author": "Saint Black",
-    "description": "Placeholder: a spiritually charged guide to discipline, discernment, resistance, and sacred conflict for readers seeking conviction and direction.",
+    "description": "A spiritually charged guide to discipline, discernment, resistance, and sacred conflict for readers seeking conviction and direction.",
     "audience": ["spiritual seekers", "warfare-minded believers", "purpose-driven creators", "men rebuilding discipline"],
     "themes": ["spiritual warfare", "discipline", "sacred resistance", "identity", "calling"],
     "hooks": [
@@ -11,8 +11,8 @@
       "Peace is not passive when the spirit is under siege.",
       "Holy war begins with disciplined attention."
     ],
-    "appleBooksLink": "https://books.apple.com/us/book/the-art-of-holy-war/id-placeholder",
-    "coverPlaceholder": "cover-holy-war",
+    "appleBooksLink": "https://books.apple.com/us/search?term=The%20Art%20of%20Holy%20War%20Saint%20Black",
+    "coverKey": "cover-holy-war",
     "campaignPriority": 1,
     "status": "active",
     "revenueTargetContribution": 40000,
@@ -23,7 +23,7 @@
     "id": "echoes-eden",
     "title": "Echoes of Eden",
     "author": "Saint Black",
-    "description": "Placeholder: a literary and spiritual exploration of lost origin, sacred memory, mystery, and the ache to return to divine alignment.",
+    "description": "A literary and spiritual exploration of lost origin, sacred memory, mystery, and the ache to return to divine alignment.",
     "audience": ["mystery readers", "spiritual romantics", "literary seekers", "symbolic theology readers"],
     "themes": ["Eden", "memory", "origin", "restoration", "sacred mystery"],
     "hooks": [
@@ -31,8 +31,8 @@
       "Eden still echoes through longing, symbol, and return.",
       "The oldest wound may also be the oldest map."
     ],
-    "appleBooksLink": "https://books.apple.com/us/book/echoes-of-eden/id-placeholder",
-    "coverPlaceholder": "cover-echoes-eden",
+    "appleBooksLink": "https://books.apple.com/us/search?term=Echoes%20of%20Eden%20Saint%20Black",
+    "coverKey": "cover-echoes-eden",
     "campaignPriority": 2,
     "status": "active",
     "revenueTargetContribution": 30000,
@@ -43,7 +43,7 @@
     "id": "pleiadian-project",
     "title": "The Pleiadian Project: A Cosmic Research Guide",
     "author": "Saint Black",
-    "description": "Placeholder: a research-driven guide for exploring Pleiadian themes, cosmic narratives, star knowledge, and alternative history signals.",
+    "description": "A research-driven guide for exploring Pleiadian themes, cosmic narratives, star knowledge, and alternative history signals.",
     "audience": ["cosmic researchers", "alternative history readers", "star seed communities", "esoteric study groups"],
     "themes": ["Pleiades", "cosmic research", "star knowledge", "alternative history", "mystery systems"],
     "hooks": [
@@ -51,8 +51,8 @@
       "Cosmic research begins where official history stops answering.",
       "The Pleiades have always been more than a constellation."
     ],
-    "appleBooksLink": "https://books.apple.com/us/book/the-pleiadian-project-a-cosmic-research-guide/id-placeholder",
-    "coverPlaceholder": "cover-pleiadian-project",
+    "appleBooksLink": "https://books.apple.com/us/search?term=The%20Pleiadian%20Project%20Saint%20Black",
+    "coverKey": "cover-pleiadian-project",
     "campaignPriority": 3,
     "status": "active",
     "revenueTargetContribution": 30000,

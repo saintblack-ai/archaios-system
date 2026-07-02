@@ -21,5 +21,6 @@ __pycache__/
 .pycache_local/
 logs/
 Archaios OS/logs/
+**/supabase/.temp/
 
 !client/index.html

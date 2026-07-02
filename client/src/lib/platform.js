@@ -85,7 +85,7 @@ export function getStripeTestReadiness() {
 
   return {
     mode: "test-prep-only",
-    clientPlaceholders: {
+    clientStripeConfig: {
       proPriceId: proPriceId || "not-set",
       elitePriceId: elitePriceId || "not-set",
       proPriceIdValid: isLikelyStripePriceId(proPriceId),
