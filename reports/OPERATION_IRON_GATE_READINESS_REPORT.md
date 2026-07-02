@@ -1,6 +1,6 @@
 # Operation Iron Gate Readiness Report
 
-Generated: 2026-07-02T12:31:11.328Z
+Generated: 2026-07-02T12:43:42.413Z
 Operational Readiness Score: 68/100
 Status: blocked
 
