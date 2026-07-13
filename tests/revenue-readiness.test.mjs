@@ -11,11 +11,14 @@ test("health endpoint identifies the canonical revenue Worker release", async ()
   );
 
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), {
-    ok: true,
-    service: "archaios-saas-worker",
-    release: "test-release"
-  });
+  const payload = await response.json();
+  assert.equal(payload.ok, true);
+  assert.equal(payload.service, "archaios-core-api");
+  assert.equal(payload.runtime, "cloudflare-worker");
+  assert.equal(payload.release, "test-release");
+  assert.equal(payload.version, "test-release");
+  assert.equal(payload.dependencies.supabase, "inactive");
+  assert.equal(payload.dependencies.stripe, "test_or_inactive");
 });
 
 test("canonical migration enforces the subscriptions upsert conflict target", async () => {

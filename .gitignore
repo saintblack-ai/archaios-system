@@ -11,7 +11,11 @@ build/
 .env.development
 .env.production
 .env.*
+**/.dev.vars
 !/.env.example
+!/.dev.vars.example
+!**/.env.example
+!**/.dev.vars.example
 *.pem
 *.key
 secrets/

@@ -13,16 +13,29 @@ import {
   normalizeArchivistTags
 } from "./shared/archivist.js";
 import { PRICING_TIERS } from "./shared/pricing.js";
+import {
+  apiError,
+  isPaidTier,
+  normalizeCheckoutTier as validateCheckoutTier,
+  normalizeSubscriptionTier
+} from "./shared/api-contracts.js";
+import {
+  LOCAL_FRONTEND_ORIGINS,
+  PRODUCTION_API_URL,
+  PRODUCTION_FRONTEND_ORIGIN,
+  PRODUCTION_FRONTEND_URL
+} from "./shared/production-config.js";
 
 const DEFAULT_OPENAI_MODEL = "gpt-4o-mini";
-const DEFAULT_WORKER_BASE_URL = "https://archaios-saas-worker.quandrix357.workers.dev";
-const DEFAULT_FRONTEND_URL = "https://saintblack-ai.github.io/ai-assassins-client";
-const WORKER_SERVICE_NAME = "archaios-saas-worker";
+const DEFAULT_WORKER_BASE_URL = PRODUCTION_API_URL;
+const DEFAULT_FRONTEND_URL = PRODUCTION_FRONTEND_URL;
+const WORKER_SERVICE_NAME = "archaios-core-api";
 const DEFAULT_WORKER_RELEASE = "2026-06-20-revenue-subscription-contract";
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://saintblack-ai.github.io",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Origin": PRODUCTION_FRONTEND_ORIGIN,
+  "Access-Control-Allow-Methods": "GET, POST, DELETE, PATCH, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Request-Id, Stripe-Signature",
+  "Access-Control-Expose-Headers": "X-Request-Id",
   Vary: "Origin"
 };
 const BRIEF_SCHEMA = {
@@ -56,6 +69,62 @@ const DEFAULT_OPTIMIZATION_PROFILE = {
     email: "14:00"
   }
 };
+const SITREP_SAMPLE_EVENTS = [
+  {
+    id: "demo-usgs-public-feed",
+    headline: "USGS public source adapter ready",
+    summary: "Demonstration SITREP event showing the canonical public-source contract. This is not live threat intelligence.",
+    category: "science",
+    severity: "informational",
+    confidence: 0.72,
+    status: "sample",
+    source_name: "ARCHAIOS demo dataset",
+    source_url: null,
+    source_type: "sample",
+    published_at: "2026-07-10T12:00:00.000Z",
+    ingested_at: "2026-07-10T12:00:00.000Z",
+    latitude: 37.7749,
+    longitude: -122.4194,
+    country_code: "US",
+    region: "San Francisco, California",
+    tags: ["demo", "sitrep"],
+    entities: ["ARCHAIOS"],
+    related_event_ids: [],
+    research_mission_id: null,
+    analysis: "Sample data only. Configure and refresh live sources before operational use.",
+    recommended_actions: ["Activate infrastructure sources before relying on SITREP data."],
+    is_live: false,
+    is_verified: false,
+    raw_payload_hash: "sample-demo-usgs-public-feed"
+  },
+  {
+    id: "demo-infrastructure-status",
+    headline: "Infrastructure activation pending",
+    summary: "Supabase-dependent persistence, personal dashboards, alerts, and subscriptions remain in degraded mode until infrastructure activation.",
+    category: "archaios",
+    severity: "guarded",
+    confidence: 0.8,
+    status: "sample",
+    source_name: "ARCHAIOS system status",
+    source_url: null,
+    source_type: "internal-demo",
+    published_at: "2026-07-10T12:00:00.000Z",
+    ingested_at: "2026-07-10T12:00:00.000Z",
+    latitude: null,
+    longitude: null,
+    country_code: null,
+    region: "ARCHAIOS Core Stack",
+    tags: ["demo", "degraded-mode"],
+    entities: ["ARCHAIOS", "Supabase"],
+    related_event_ids: [],
+    research_mission_id: null,
+    analysis: "This status reflects runtime readiness, not external intelligence.",
+    recommended_actions: ["Restore Supabase only after business and security readiness are complete."],
+    is_live: false,
+    is_verified: true,
+    raw_payload_hash: "sample-demo-infrastructure-status"
+  }
+];
 
 const AGENTS = [
   {
@@ -151,12 +220,12 @@ export default {
   async fetch(request, env, ctx) {
     try {
       const url = new URL(request.url);
-      const respond = (response) => withCors(response);
+      const requestId = getRequestId(request);
+      const respond = (response) => withCors(response, request, env, requestId);
       const pathname = normalizeRoutePath(url.pathname);
 
       if (request.method === "OPTIONS") {
-        console.log("CORS enabled:", env.WORKER_BASE_URL || DEFAULT_WORKER_BASE_URL);
-        return new Response(null, { status: 204, headers: corsHeaders });
+        return respond(new Response(null, { status: 204 }));
       }
 
       if (isBriefRoute(pathname) && request.method === "GET") {
@@ -165,6 +234,22 @@ export default {
 
       if (request.method === "GET" && pathname === "/api/health") {
         return respond(json(getHealthPayload(env)));
+      }
+
+      if (request.method === "GET" && pathname === "/api/version") {
+        return respond(json(getVersionPayload(env)));
+      }
+
+      if (request.method === "GET" && pathname === "/api/status") {
+        return respond(json(getStatusPayload(env)));
+      }
+
+      if (pathname.startsWith("/api/sitrep") && request.method === "GET") {
+        return respond(handleSitrepReadRequest(pathname, url, env));
+      }
+
+      if (pathname.startsWith("/api/sitrep") && request.method === "POST") {
+        return respond(degradedJson("supabase", "SITREP refresh and research persistence are awaiting infrastructure activation."));
       }
 
       if (request.method === "GET" && pathname === "/api/pricing") {
@@ -196,9 +281,13 @@ export default {
       }
 
       if (request.method === "GET" && pathname === "/api/subscription") {
+        if (!hasSupabaseAuthConfig(env) || !hasSupabaseServiceConfig(env)) {
+          return respond(degradedJson("supabase", "Subscriptions are awaiting infrastructure activation."));
+        }
+
         const user = await getAuthenticatedSupabaseUser(request, env);
         if (!user) {
-          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+          return respond(json(apiError("unauthorized", "Authentication is required."), 401));
         }
 
         const subscription = await getCurrentSubscription(env, user.id);
@@ -221,9 +310,13 @@ export default {
       }
 
       if (request.method === "GET" && pathname === "/api/alerts") {
+        if (!hasSupabaseAuthConfig(env) || !hasSupabaseServiceConfig(env)) {
+          return respond(degradedJson("supabase", "Alerts are awaiting infrastructure activation."));
+        }
+
         const user = await getAuthenticatedSupabaseUser(request, env);
         if (!user) {
-          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+          return respond(json(apiError("unauthorized", "Authentication is required."), 401));
         }
 
         const tier = await getUserTier(env, user.id);
@@ -239,9 +332,13 @@ export default {
       }
 
       if (request.method === "DELETE" && pathname === "/api/alerts") {
+        if (!hasSupabaseAuthConfig(env) || !hasSupabaseServiceConfig(env)) {
+          return respond(degradedJson("supabase", "Alerts are awaiting infrastructure activation."));
+        }
+
         const user = await getAuthenticatedSupabaseUser(request, env);
         if (!user) {
-          return respond(json({ ok: false, error: "Unauthorized" }, 401));
+          return respond(json(apiError("unauthorized", "Authentication is required."), 401));
         }
 
         await clearUserAlerts(env, user.id);
@@ -337,18 +434,37 @@ export default {
       }
 
       if (request.method === "POST" && pathname === "/api/stripe/checkout") {
+        if (!hasSupabaseAuthConfig(env) || !hasSupabaseServiceConfig(env)) {
+          return respond(degradedJson("supabase", "Checkout requires Supabase authentication and subscription synchronization."));
+        }
+        if (!hasStripeCheckoutConfig(env)) {
+          return respond(degradedJson("stripe", "Checkout is awaiting Stripe test-mode activation."));
+        }
+
         const user = await getAuthenticatedSupabaseUser(request, env);
         if (!user) {
           return respond(json({ ok: false, error: "Unauthorized" }, 401));
         }
 
         const body = await request.json().catch(() => null);
-        const tier = normalizeCheckoutTier(body?.tier);
+        let tier;
+        try {
+          tier = validateCheckoutTier(body?.tier);
+        } catch (error) {
+          return respond(json(apiError("invalid_checkout_tier", error.message), 400));
+        }
         const session = await createStripeCheckoutSession(env, user, tier, {
           successUrl: body?.successUrl,
           cancelUrl: body?.cancelUrl
         });
         return respond(json({ url: session.url, tier }));
+      }
+
+      if (
+        request.method === "POST" &&
+        ["/api/stripe/customer_portal", "/api/stripe/customer-portal", "/api/stripe/portal"].includes(pathname)
+      ) {
+        return respond(degradedJson("stripe", "Billing portal access is awaiting Stripe customer portal activation."));
       }
 
       if (request.method === "POST" && pathname === "/api/leads") {
@@ -357,7 +473,7 @@ export default {
         const source = String(body?.source || "dashboard").trim() || "dashboard";
 
         if (!email || !email.includes("@")) {
-          return respond(json({ ok: false, error: "Valid email required" }, 400));
+          return respond(json(apiError("invalid_email", "Valid email required"), 400));
         }
 
         const result = await recordLead(env, { email, source });
@@ -583,20 +699,15 @@ export default {
         return respond(json({ ok: true, result }));
       }
 
-      return respond(json({ ok: false, error: "Not found" }, 404));
+      return respond(json(apiError("not_found", "Route not found"), 404));
     } catch (error) {
-      console.log("caught error", error instanceof Error ? error.message : String(error));
-      return new Response(JSON.stringify({
-        success: false,
-        error: "worker_internal_error",
-        message: String(error && error.message ? error.message : error)
-      }), {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders
-        }
-      });
+      console.log("caught error", sanitizeInternalError(error));
+      return withCors(
+        json(apiError("worker_internal_error", "The service could not complete the request."), 500),
+        request,
+        env,
+        getRequestId(request)
+      );
     }
   },
 
@@ -2584,16 +2695,11 @@ function shouldUseResponses(env) {
 }
 
 function normalizeTier(value) {
-  const tier = String(value || "free").trim().toLowerCase();
-  return ["free", "pro", "elite", "enterprise"].includes(tier) ? tier : "free";
-}
-
-function normalizeCheckoutTier(value) {
-  return String(value || "pro").trim().toLowerCase() === "elite" ? "elite" : "pro";
+  return normalizeSubscriptionTier(value);
 }
 
 function hasPaidAccess(tier) {
-  return tier === "pro" || tier === "elite";
+  return isPaidTier(tier);
 }
 
 function isEliteTier(tier) {
@@ -2602,6 +2708,14 @@ function isEliteTier(tier) {
 
 function getFrontendUrl(env) {
   return String(env.FRONTEND_URL || DEFAULT_FRONTEND_URL).replace(/\/+$/, "");
+}
+
+function getFrontendOrigin(env) {
+  try {
+    return new URL(getFrontendUrl(env)).origin;
+  } catch {
+    return PRODUCTION_FRONTEND_ORIGIN;
+  }
 }
 
 function visibleAgentIdsForTier(tier) {
@@ -2682,7 +2796,7 @@ async function getAuthenticatedSupabaseUser(request, env) {
     return null;
   }
 
-  if (!env.SUPABASE_URL || (!env.SUPABASE_ANON_KEY && !env.SUPABASE_SERVICE_ROLE_KEY)) {
+  if (!hasSupabaseAuthConfig(env)) {
     throw new Error("Missing Supabase auth configuration");
   }
 
@@ -2706,7 +2820,7 @@ async function getAuthenticatedSupabaseUser(request, env) {
 }
 
 async function getCurrentSubscription(env, userId) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !userId) {
+  if (!hasSupabaseServiceConfig(env) || !userId) {
     return null;
   }
 
@@ -2735,7 +2849,7 @@ async function getUserTier(env, userId) {
 }
 
 async function getUserAlerts(env, userId) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !userId) {
+  if (!hasSupabaseServiceConfig(env) || !userId) {
     return [];
   }
 
@@ -2761,7 +2875,7 @@ async function getArchivistItem(env, userId, itemId) {
 }
 
 async function clearUserAlerts(env, userId) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !userId) {
+  if (!hasSupabaseServiceConfig(env) || !userId) {
     return [];
   }
 
@@ -2769,7 +2883,7 @@ async function clearUserAlerts(env, userId) {
 }
 
 async function recordLead(env, { email, source }) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!hasSupabaseServiceConfig(env)) {
     return { ok: true, stored: true, source: "worker" };
   }
 
@@ -2791,7 +2905,7 @@ async function recordLead(env, { email, source }) {
 }
 
 async function recordCtaClick(env, { cta, location, tier }) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!hasSupabaseServiceConfig(env)) {
     return { ok: true, stored: true, source: "worker" };
   }
 
@@ -2809,7 +2923,7 @@ async function recordCtaClick(env, { cta, location, tier }) {
 }
 
 async function getGrowthMetrics(env) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!hasSupabaseServiceConfig(env)) {
     return {
       leadSubmissions: 0,
       ctaClicks: 0,
@@ -2897,11 +3011,269 @@ function sanitizeCheckoutReturnUrl(env, candidate, fallbackPath) {
 }
 
 export function getHealthPayload(env = {}) {
+  const version = getWorkerVersion(env);
   return {
     ok: true,
     service: WORKER_SERVICE_NAME,
-    release: env.WORKER_RELEASE || DEFAULT_WORKER_RELEASE
+    runtime: "cloudflare-worker",
+    version,
+    release: version,
+    timestamp: new Date().toISOString(),
+    dependencies: {
+      supabase: hasSupabaseServiceConfig(env) ? "configured" : "inactive",
+      stripe: hasStripeCheckoutConfig(env) ? "test_or_configured" : "test_or_inactive"
+    }
   };
+}
+
+function getWorkerVersion(env = {}) {
+  return String(env.WORKER_RELEASE || DEFAULT_WORKER_RELEASE);
+}
+
+function getVersionPayload(env = {}) {
+  return {
+    ok: true,
+    service: WORKER_SERVICE_NAME,
+    runtime: "cloudflare-worker",
+    version: getWorkerVersion(env),
+    timestamp: new Date().toISOString()
+  };
+}
+
+function getStatusPayload(env = {}) {
+  return {
+    ok: true,
+    service: WORKER_SERVICE_NAME,
+    mode: "degraded_public",
+    timestamp: new Date().toISOString(),
+    publicFunctions: [
+      "landing_page",
+      "pricing_display",
+      "architecture_status",
+      "public_demonstration_data",
+      "frontend_navigation",
+      "health_version_status"
+    ],
+    unavailableUntilActivation: [
+      "user_authentication",
+      "personal_dashboard_data",
+      "subscriptions",
+      "alerts",
+      "persisted_agent_memory",
+      "stripe_subscription_synchronization"
+    ],
+    dependencies: getHealthPayload(env).dependencies
+  };
+}
+
+function hasSupabaseAuthConfig(env = {}) {
+  return isSupabaseActive(env) && Boolean(env.SUPABASE_URL && (env.SUPABASE_ANON_KEY || env.SUPABASE_SERVICE_ROLE_KEY));
+}
+
+function hasSupabaseServiceConfig(env = {}) {
+  return isSupabaseActive(env) && Boolean(env.SUPABASE_URL && env.SUPABASE_SERVICE_ROLE_KEY);
+}
+
+function hasStripeCheckoutConfig(env = {}) {
+  return isStripeCheckoutActive(env) && Boolean(env.STRIPE_SECRET_KEY && env.STRIPE_PRICE_PRO && env.STRIPE_PRICE_ELITE);
+}
+
+function isSupabaseActive(env = {}) {
+  return String(env.SUPABASE_ACTIVE || "false").toLowerCase() === "true";
+}
+
+function isStripeCheckoutActive(env = {}) {
+  return String(env.STRIPE_CHECKOUT_ACTIVE || "false").toLowerCase() === "true";
+}
+
+function degradedJson(service, message, status = 503) {
+  return json(
+    {
+      ok: false,
+      status: "temporarily_unavailable",
+      service,
+      message: message || "This feature is awaiting infrastructure activation."
+    },
+    status
+  );
+}
+
+function getSitrepSourceHealth(env = {}) {
+  return [
+    {
+      id: "archaios-demo",
+      name: "ARCHAIOS demo dataset",
+      type: "sample",
+      status: "available",
+      live: false,
+      lastCheckedAt: new Date().toISOString()
+    },
+    {
+      id: "supabase-memory",
+      name: "Supabase intelligence memory",
+      type: "database",
+      status: hasSupabaseServiceConfig(env) ? "configured" : "inactive",
+      live: false,
+      lastCheckedAt: new Date().toISOString()
+    }
+  ];
+}
+
+function buildSitrepCommanderBrief(env = {}) {
+  return {
+    threat_level: "guarded",
+    confidence: 0.78,
+    timestamp: new Date().toISOString(),
+    source: "ARCHAIOS Core public demo contract",
+    summary:
+      "Public SITREP is operating in degraded demonstration mode. No claim is made that sample events are current live intelligence.",
+    related_events: SITREP_SAMPLE_EVENTS.map((event) => event.id),
+    suggested_actions: [
+      "Use health, version, and status endpoints for deployment readiness.",
+      "Restore Supabase-dependent persistence only after infrastructure activation approval."
+    ]
+  };
+}
+
+function mapSitrepEventForMarker(event) {
+  return {
+    id: event.id,
+    type: event.category,
+    headline: event.headline,
+    summary: event.summary,
+    severity: event.severity,
+    confidence: event.confidence,
+    timestamp: event.published_at,
+    source: event.source_name,
+    latitude: event.latitude,
+    longitude: event.longitude,
+    related_event_ids: event.related_event_ids,
+    llm_analysis: event.analysis
+  };
+}
+
+function filterSitrepEvents(searchParams) {
+  const category = String(searchParams.get("category") || "").trim().toLowerCase();
+  const severity = String(searchParams.get("severity") || "").trim().toLowerCase();
+  const verifiedOnly = searchParams.get("verified") === "true";
+
+  return SITREP_SAMPLE_EVENTS.filter((event) => {
+    if (category && String(event.category).toLowerCase() !== category) {
+      return false;
+    }
+    if (severity && String(event.severity).toLowerCase() !== severity) {
+      return false;
+    }
+    if (verifiedOnly && !event.is_verified) {
+      return false;
+    }
+    return true;
+  });
+}
+
+function handleSitrepReadRequest(pathname, url, env = {}) {
+  if (pathname === "/api/sitrep" || pathname === "/api/sitrep/latest") {
+    const events = filterSitrepEvents(url.searchParams);
+    return json({
+      ok: true,
+      status: "degraded_public_demo",
+      live: false,
+      data_status: "sample_not_current",
+      generated_at: new Date().toISOString(),
+      global_threat_level: "guarded",
+      commander_brief: buildSitrepCommanderBrief(env),
+      sections: {
+        global: buildSitrepCommanderBrief(env),
+        us: null,
+        markets: null,
+        ai: null,
+        cybersecurity: null,
+        defense: null,
+        space: null,
+        energy: null,
+        science: null,
+        weather: null,
+        open_source_intelligence: null
+      },
+      events,
+      sources: getSitrepSourceHealth(env)
+    });
+  }
+
+  if (pathname === "/api/sitrep/events") {
+    const events = filterSitrepEvents(url.searchParams);
+    return json({
+      ok: true,
+      status: "degraded_public_demo",
+      live: false,
+      events,
+      count: events.length
+    });
+  }
+
+  const eventMatch = pathname.match(/^\/api\/sitrep\/events\/([^/]+)$/);
+  if (eventMatch) {
+    const event = SITREP_SAMPLE_EVENTS.find((candidate) => candidate.id === eventMatch[1]);
+    if (!event) {
+      return json(apiError("not_found", "SITREP event not found"), 404);
+    }
+    return json({
+      ok: true,
+      event,
+      timeline: [
+        {
+          timestamp: event.published_at,
+          label: "Published",
+          detail: event.summary
+        },
+        {
+          timestamp: event.ingested_at,
+          label: "Ingested",
+          detail: "Loaded into public degraded-mode response contract."
+        }
+      ],
+      sources: [{ name: event.source_name, url: event.source_url }],
+      related_events: event.related_event_ids,
+      llm_analysis: event.analysis
+    });
+  }
+
+  if (pathname === "/api/sitrep/map") {
+    const markers = filterSitrepEvents(url.searchParams)
+      .filter((event) => Number.isFinite(event.latitude) && Number.isFinite(event.longitude))
+      .map(mapSitrepEventForMarker);
+    return json({
+      ok: true,
+      status: "degraded_public_demo",
+      live: false,
+      markers,
+      count: markers.length
+    });
+  }
+
+  if (pathname === "/api/sitrep/sources") {
+    return json({
+      ok: true,
+      status: "degraded_public_demo",
+      sources: getSitrepSourceHealth(env)
+    });
+  }
+
+  if (pathname === "/api/sitrep/health") {
+    return json({
+      ok: true,
+      service: "sitrep",
+      status: "degraded_public_demo",
+      live: false,
+      dependencies: getHealthPayload(env).dependencies
+    });
+  }
+
+  if (pathname === "/api/sitrep/research") {
+    return degradedJson("supabase", "SITREP research persistence is awaiting infrastructure activation.");
+  }
+
+  return json(apiError("not_found", "SITREP route not found"), 404);
 }
 
 async function createStripeCheckoutSession(env, user, tier, options = {}) {
@@ -2958,7 +3330,7 @@ function toIsoOrNull(unixSeconds) {
 }
 
 async function upsertSubscriptionRecord(env, { userId, tier, status, stripeCustomerId, stripeSubscriptionId, currentPeriodEnd }) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY || !userId) {
+  if (!hasSupabaseServiceConfig(env) || !userId) {
     return null;
   }
 
@@ -3123,7 +3495,7 @@ async function logBriefEvent(env, payload) {
 }
 
 async function insertAgentLogSafe(env, payload) {
-  if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!hasSupabaseServiceConfig(env)) {
     return null;
   }
 
@@ -3415,12 +3787,50 @@ function json(payload, status = 200, extraHeaders = {}) {
   });
 }
 
-function withCors(response) {
+function getRequestId(request) {
+  const existing = request?.headers?.get("X-Request-Id");
+  if (existing && /^[A-Za-z0-9._:-]{8,128}$/.test(existing)) {
+    return existing;
+  }
+  if (globalThis.crypto?.randomUUID) {
+    return globalThis.crypto.randomUUID();
+  }
+  return `req-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function parseAllowedOrigins(env = {}) {
+  const configured = String(env.ALLOWED_ORIGINS || "")
+    .split(",")
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
+    .filter(Boolean);
+
+  return new Set([
+    PRODUCTION_FRONTEND_ORIGIN,
+    getFrontendOrigin(env),
+    ...LOCAL_FRONTEND_ORIGINS,
+    ...configured
+  ]);
+}
+
+function sanitizeInternalError(error) {
+  return {
+    message: String(error?.message || error || "unknown_error").slice(0, 200),
+    name: String(error?.name || "Error").slice(0, 80)
+  };
+}
+
+function withCors(response, request, env = {}, requestId = getRequestId(request)) {
   const headers = new Headers(response.headers);
 
+  const origin = request?.headers?.get("Origin") || "";
+  const configuredFrontend = getFrontendOrigin(env);
+  const allowedOrigins = parseAllowedOrigins(env);
+  const allowedOrigin = allowedOrigins.has(origin) ? origin : configuredFrontend;
+
   for (const [key, value] of Object.entries(corsHeaders)) {
-    headers.set(key, value);
+    headers.set(key, key === "Access-Control-Allow-Origin" ? allowedOrigin : value);
   }
+  headers.set("X-Request-Id", requestId);
 
   return new Response(response.body, {
     status: response.status,

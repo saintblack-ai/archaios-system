@@ -1,36 +1,24 @@
 import { isSupabaseEnabled, supabase } from "./supabase";
-
-const DEFAULT_BACKEND_URL = "https://archaios-saas-worker.quandrix357.workers.dev";
-
-function resolveApiBaseUrl() {
-  const configured = String(import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/, "");
-
-  if (import.meta.env.PROD) {
-    return configured || DEFAULT_BACKEND_URL;
-  }
-
-  return configured || "http://127.0.0.1:5050";
-}
-
-const API_BASE_URL = resolveApiBaseUrl();
+import { isPaidTier, normalizeCheckoutTier } from "../../../shared/api-contracts.js";
+import { apiRequest, getApiBaseUrl as getCanonicalApiBaseUrl } from "./api";
 
 export function getApiBaseUrl() {
-  return API_BASE_URL;
+  return getCanonicalApiBaseUrl();
 }
 
 export function getBackendConnectionSummary() {
-  const configured = String(import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/, "");
+  const configured = String(import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/, "");
   const isProd = Boolean(import.meta.env.PROD);
   const source = configured
     ? "env-configured"
     : isProd
       ? "cloudflare-default"
-      : "local-dev-fallback";
+      : "cloudflare-default-dev";
 
   return {
     mode: isProd ? "production" : "development",
     configuredBackendUrl: configured || null,
-    apiBaseUrl: API_BASE_URL,
+    apiBaseUrl: getCanonicalApiBaseUrl(),
     source,
     localTestMode: !isProd
   };
@@ -68,11 +56,15 @@ function toFriendlyApiError(path, error) {
 }
 
 export function getBackendHealthcheckUrl() {
-  return `${API_BASE_URL || ""}/api/health`;
+  return `${getCanonicalApiBaseUrl() || ""}/api/health`;
+}
+
+export async function fetchBackendHealth() {
+  return apiRequest("/api/health", { method: "GET" });
 }
 
 export function hasPaidAccess(tier) {
-  return tier === "pro" || tier === "elite";
+  return isPaidTier(tier);
 }
 
 function isLikelyStripePriceId(value) {
@@ -116,10 +108,10 @@ export function getRuntimeHostRoles() {
   const backendConnection = getBackendConnectionSummary();
 
   return {
-    appHost: "Vercel primary",
-    backupHost: "GitHub Pages static backup",
+    appHost: "GitHub Pages static frontend",
+    backupHost: "Static frontend host fallback",
     backendHost: "Cloudflare Worker API/health",
-    apiBaseUrl: API_BASE_URL,
+    apiBaseUrl: getCanonicalApiBaseUrl(),
     backendConnection,
     supabaseAuthReady: isSupabaseEnabled,
     billingMode: "prepared-not-activated",
@@ -291,30 +283,14 @@ export function shouldPreferSignInForSignup(result) {
 }
 
 async function apiFetch(path, accessToken, options = {}) {
-  const url = `${API_BASE_URL}${path}`;
-
   try {
-    const response = await fetch(url, {
+    const payload = await apiRequest(path, {
       ...options,
       headers: {
-        "Content-Type": "application/json",
         ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         ...(options.headers || {})
       }
     });
-
-    const payload = await response.json().catch(() => null);
-    if (!response.ok) {
-      const apiError = new Error(payload?.error || `request_failed_${response.status}`);
-      apiError.status = response.status;
-
-      logPlatformEvent("error", "api-response", {
-        path,
-        status: response.status,
-        error: apiError.message
-      });
-      throw apiError;
-    }
 
     if (
       path === "/api/stripe/checkout" ||
@@ -324,14 +300,14 @@ async function apiFetch(path, accessToken, options = {}) {
       path === "/api/platform/dashboard" ||
       path === "/api/cta-click"
     ) {
-      logPlatformEvent("info", "api-success", { path, status: response.status });
+      logPlatformEvent("info", "api-success", { path });
     }
 
     return payload;
   } catch (error) {
     logPlatformEvent("error", "api-fetch", {
       path,
-      url,
+      url: getCanonicalApiBaseUrl(),
       message: String(error?.message || error)
     });
     const friendlyError = toFriendlyApiError(path, error);
@@ -366,8 +342,9 @@ export async function clearUserAlerts(accessToken) {
 }
 
 export async function createCheckoutSession(accessToken, tier) {
+  const checkoutTier = normalizeCheckoutTier(tier);
   const body = {
-    tier
+    tier: checkoutTier
   };
 
   if (typeof window !== "undefined") {
@@ -379,13 +356,6 @@ export async function createCheckoutSession(accessToken, tier) {
 
     body.successUrl = successUrl.toString();
     body.cancelUrl = cancelUrl.toString();
-  }
-
-  if (tier === "pro") {
-    return apiFetchFirst(["/api/stripe/create-checkout-session", "/api/stripe/checkout"], accessToken, {
-      method: "POST",
-      body: JSON.stringify(body)
-    });
   }
 
   return apiFetch("/api/stripe/checkout", accessToken, {
@@ -409,6 +379,10 @@ export async function fetchSubscription(accessToken) {
 
 export async function fetchPlatformDashboard(accessToken) {
   return apiFetch("/api/platform/dashboard", accessToken, { method: "GET" });
+}
+
+export async function fetchAdminDashboard(accessToken) {
+  return apiFetch("/api/admin/dashboard", accessToken, { method: "GET" });
 }
 
 export async function captureLead(email) {

@@ -7,11 +7,14 @@ OPENAI_MODEL = "gpt-4o-mini"
 LOCAL_TIMEZONE = "America/Chicago"
 WORKER_BASE_URL = "https://archaios-saas-worker.quandrix357.workers.dev"
 FRONTEND_URL = "https://saintblack-ai.github.io/ai-assassins-client"
-WORKER_RELEASE = "2026-06-20-revenue-subscription-contract"
+WORKER_RELEASE = "2026-07-12-production-routing-contract"
 # Optional Stripe tier mapping vars:
 # STRIPE_PRICE_PRO = "price_..."
 # STRIPE_PRICE_ELITE = "price_..."
 # STRIPE_PRICE_ENTERPRISE = "price_..."
+# Activation gates, intentionally unset by default:
+# SUPABASE_ACTIVE = "true"
+# STRIPE_CHECKOUT_ACTIVE = "true"
 # Optional revenue defaults if you want to override built-in monthly price assumptions:
 # PRO_PRICE_USD = "29"
 # ELITE_PRICE_USD = "99"

@@ -5,11 +5,11 @@ import { startStripeCheckout } from "../agents/stripeAgent";
 import { PRICING_TIERS } from "../lib/pricing";
 import {
   createBillingPortalSession,
+  fetchAdminDashboard,
+  fetchBackendHealth,
   fetchPlatformDashboard,
   fetchSubscription,
-  getApiBaseUrl,
   getBackendConnectionSummary,
-  getBackendHealthcheckUrl,
   getCurrentSession,
   subscribeToAuthChanges
 } from "../lib/platform";
@@ -832,9 +832,7 @@ export default function DashboardPage({ adminMode = false }) {
     setError("");
 
     try {
-      const healthResult = await fetch(getBackendHealthcheckUrl())
-        .then((response) => response.json())
-        .catch(() => ({ ok: false }));
+      const healthResult = await fetchBackendHealth().catch(() => ({ ok: false }));
       setHealth({ ok: Boolean(healthResult?.ok) });
       const dashboardPayload = await fetchPlatformDashboard(session?.access_token || null).catch(() => null);
       const resolvedDashboard = mockEnabled ? MOCK_PLATFORM_DASHBOARD : dashboardPayload;
@@ -857,17 +855,7 @@ export default function DashboardPage({ adminMode = false }) {
       }
 
       if (adminMode && authorizedAdmin) {
-        const adminPayload = await fetch(`${getApiBaseUrl()}/api/admin/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${session.access_token}`
-          }
-        }).then(async (response) => {
-          const payload = await response.json().catch(() => null);
-          if (!response.ok) {
-            throw new Error(payload?.error || `admin_request_failed_${response.status}`);
-          }
-          return payload;
-        });
+        const adminPayload = await fetchAdminDashboard(session.access_token);
         setAdminData(adminPayload);
       } else {
         setAdminData(null);

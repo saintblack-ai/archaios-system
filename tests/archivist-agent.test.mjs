@@ -12,6 +12,7 @@ function createEnv() {
     SUPABASE_URL: "https://supabase.example",
     SUPABASE_ANON_KEY: "anon-key",
     SUPABASE_SERVICE_ROLE_KEY: "service-key",
+    SUPABASE_ACTIVE: "true",
     OPENAI_API_KEY: "openai-key",
     OPENAI_MODEL: "gpt-4o-mini"
   };
