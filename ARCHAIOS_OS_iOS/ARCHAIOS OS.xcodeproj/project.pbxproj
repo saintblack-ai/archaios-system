@@ -1,0 +1,801 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B00000000000000000000001 /* ARCHAIOSOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000001 /* ARCHAIOSOSApp.swift */; };
+		B00000000000000000000002 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000002 /* AppContainer.swift */; };
+		B00000000000000000000003 /* AppRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000003 /* AppRoute.swift */; };
+		B00000000000000000000004 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000004 /* RootView.swift */; };
+		B00000000000000000000005 /* ArchaiosTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000005 /* ArchaiosTheme.swift */; };
+		B00000000000000000000006 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000006 /* ThemeManager.swift */; };
+		B00000000000000000000007 /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000007 /* DomainModels.swift */; };
+		B00000000000000000000008 /* SwiftDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000008 /* SwiftDataModels.swift */; };
+		B00000000000000000000009 /* BackendProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000009 /* BackendProtocols.swift */; };
+		B0000000000000000000000A /* MockBackendServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000000A /* MockBackendServices.swift */; };
+		B0000000000000000000000B /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000000B /* SectionHeader.swift */; };
+		B0000000000000000000000C /* StatusPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000000C /* StatusPill.swift */; };
+		B0000000000000000000000D /* MetricCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000000D /* MetricCard.swift */; };
+		B0000000000000000000000E /* CommandCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000000E /* CommandCard.swift */; };
+		B0000000000000000000000F /* CommanderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000000F /* CommanderViewModel.swift */; };
+		B00000000000000000000010 /* CommanderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000010 /* CommanderView.swift */; };
+		B00000000000000000000011 /* AIAssassinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000011 /* AIAssassinsViewModel.swift */; };
+		B00000000000000000000012 /* AIAssassinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000012 /* AIAssassinsView.swift */; };
+		B00000000000000000000013 /* BlackVaultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000013 /* BlackVaultViewModel.swift */; };
+		B00000000000000000000014 /* BlackVaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000014 /* BlackVaultView.swift */; };
+		B00000000000000000000015 /* OperationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000015 /* OperationsViewModel.swift */; };
+		B00000000000000000000016 /* OperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000016 /* OperationsView.swift */; };
+		B00000000000000000000017 /* InfrastructureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000017 /* InfrastructureViewModel.swift */; };
+		B00000000000000000000018 /* InfrastructureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000018 /* InfrastructureView.swift */; };
+		B00000000000000000000019 /* FounderModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000019 /* FounderModeViewModel.swift */; };
+		B0000000000000000000001A /* FounderModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000001A /* FounderModeView.swift */; };
+		B0000000000000000000001B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000001B /* SettingsViewModel.swift */; };
+		B0000000000000000000001C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000001C /* SettingsView.swift */; };
+		B0000000000000000000001D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000001D /* Assets.xcassets */; };
+		B0000000000000000000001E /* Sprint2Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000001E /* Sprint2Components.swift */; };
+		B0000000000000000000001F /* AICommanderChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000001F /* AICommanderChatViewModel.swift */; };
+		B00000000000000000000020 /* AICommanderChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000020 /* AICommanderChatView.swift */; };
+		B00000000000000000000021 /* FounderBrandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000021 /* FounderBrandingView.swift */; };
+		B00000000000000000000022 /* Sprint4Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000022 /* Sprint4Components.swift */; };
+		B00000000000000000000023 /* DailyCommandCenterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000023 /* DailyCommandCenterViewModel.swift */; };
+		B00000000000000000000024 /* DailyCommandCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000024 /* DailyCommandCenterView.swift */; };
+		B00000000000000000000025 /* MusicCommandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000025 /* MusicCommandViewModel.swift */; };
+		B00000000000000000000026 /* MusicCommandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000026 /* MusicCommandView.swift */; };
+		B00000000000000000000027 /* DailyCommandCenterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000028 /* DailyCommandCenterViewModelTests.swift */; };
+		B00000000000000000000028 /* MusicCommandViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000029 /* MusicCommandViewModelTests.swift */; };
+		B00000000000000000000029 /* MockBackendServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000002A /* MockBackendServicesTests.swift */; };
+		B0000000000000000000002A /* FounderIntelligenceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000002B /* FounderIntelligenceViews.swift */; };
+		B0000000000000000000002B /* MissionControlAIViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000002C /* MissionControlAIViews.swift */; };
+		B0000000000000000000002C /* CoreNetworkViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000002D /* CoreNetworkViews.swift */; };
+		B0000000000000000000002D /* LiveCommandBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000002E /* LiveCommandBridgeView.swift */; };
+		B0000000000000000000002E /* FounderOperationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0000000000000000000002F /* FounderOperationsView.swift */; };
+		B0000000000000000000002F /* LivingCommanderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000030 /* LivingCommanderView.swift */; };
+		B00000000000000000000030 /* FutureCommandBridgeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000031 /* FutureCommandBridgeProtocols.swift */; };
+		B00000000000000000000031 /* LivingIntelligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000032 /* LivingIntelligenceView.swift */; };
+		B00000000000000000000032 /* LivingIntelligenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000033 /* LivingIntelligenceModels.swift */; };
+		B00000000000000000000033 /* LivingIntelligenceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000034 /* LivingIntelligenceEngine.swift */; };
+		B00000000000000000000034 /* OperationalPersistenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000035 /* OperationalPersistenceView.swift */; };
+		B00000000000000000000035 /* OperationalPersistenceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00000000000000000000036 /* OperationalPersistenceModels.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		X00000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = P00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = T00000000000000000000001;
+			remoteInfo = "ARCHAIOS OS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F00000000000000000000000 /* ARCHAIOS OS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ARCHAIOS OS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00000000000000000000001 /* ARCHAIOSOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCHAIOSOSApp.swift; sourceTree = "<group>"; };
+		F00000000000000000000002 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		F00000000000000000000003 /* AppRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRoute.swift; sourceTree = "<group>"; };
+		F00000000000000000000004 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		F00000000000000000000005 /* ArchaiosTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchaiosTheme.swift; sourceTree = "<group>"; };
+		F00000000000000000000006 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		F00000000000000000000007 /* DomainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModels.swift; sourceTree = "<group>"; };
+		F00000000000000000000008 /* SwiftDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataModels.swift; sourceTree = "<group>"; };
+		F00000000000000000000009 /* BackendProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendProtocols.swift; sourceTree = "<group>"; };
+		F0000000000000000000000A /* MockBackendServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBackendServices.swift; sourceTree = "<group>"; };
+		F0000000000000000000000B /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		F0000000000000000000000C /* StatusPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPill.swift; sourceTree = "<group>"; };
+		F0000000000000000000000D /* MetricCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricCard.swift; sourceTree = "<group>"; };
+		F0000000000000000000000E /* CommandCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandCard.swift; sourceTree = "<group>"; };
+		F0000000000000000000000F /* CommanderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommanderViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000010 /* CommanderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommanderView.swift; sourceTree = "<group>"; };
+		F00000000000000000000011 /* AIAssassinsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAssassinsViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000012 /* AIAssassinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAssassinsView.swift; sourceTree = "<group>"; };
+		F00000000000000000000013 /* BlackVaultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackVaultViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000014 /* BlackVaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackVaultView.swift; sourceTree = "<group>"; };
+		F00000000000000000000015 /* OperationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000016 /* OperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsView.swift; sourceTree = "<group>"; };
+		F00000000000000000000017 /* InfrastructureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfrastructureViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000018 /* InfrastructureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfrastructureView.swift; sourceTree = "<group>"; };
+		F00000000000000000000019 /* FounderModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounderModeViewModel.swift; sourceTree = "<group>"; };
+		F0000000000000000000001A /* FounderModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounderModeView.swift; sourceTree = "<group>"; };
+		F0000000000000000000001B /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		F0000000000000000000001C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F0000000000000000000001D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F0000000000000000000001E /* Sprint2Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprint2Components.swift; sourceTree = "<group>"; };
+		F0000000000000000000001F /* AICommanderChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICommanderChatViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000020 /* AICommanderChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AICommanderChatView.swift; sourceTree = "<group>"; };
+		F00000000000000000000021 /* FounderBrandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounderBrandingView.swift; sourceTree = "<group>"; };
+		F00000000000000000000022 /* Sprint4Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprint4Components.swift; sourceTree = "<group>"; };
+		F00000000000000000000023 /* DailyCommandCenterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCommandCenterViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000024 /* DailyCommandCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCommandCenterView.swift; sourceTree = "<group>"; };
+		F00000000000000000000025 /* MusicCommandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCommandViewModel.swift; sourceTree = "<group>"; };
+		F00000000000000000000026 /* MusicCommandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCommandView.swift; sourceTree = "<group>"; };
+		F00000000000000000000027 /* ARCHAIOS OSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ARCHAIOS OSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00000000000000000000028 /* DailyCommandCenterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCommandCenterViewModelTests.swift; sourceTree = "<group>"; };
+		F00000000000000000000029 /* MusicCommandViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCommandViewModelTests.swift; sourceTree = "<group>"; };
+		F0000000000000000000002A /* MockBackendServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBackendServicesTests.swift; sourceTree = "<group>"; };
+		F0000000000000000000002B /* FounderIntelligenceViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounderIntelligenceViews.swift; sourceTree = "<group>"; };
+		F0000000000000000000002C /* MissionControlAIViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionControlAIViews.swift; sourceTree = "<group>"; };
+		F0000000000000000000002D /* CoreNetworkViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreNetworkViews.swift; sourceTree = "<group>"; };
+		F0000000000000000000002E /* LiveCommandBridgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCommandBridgeView.swift; sourceTree = "<group>"; };
+		F0000000000000000000002F /* FounderOperationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FounderOperationsView.swift; sourceTree = "<group>"; };
+		F00000000000000000000030 /* LivingCommanderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivingCommanderView.swift; sourceTree = "<group>"; };
+		F00000000000000000000031 /* FutureCommandBridgeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureCommandBridgeProtocols.swift; sourceTree = "<group>"; };
+		F00000000000000000000032 /* LivingIntelligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivingIntelligenceView.swift; sourceTree = "<group>"; };
+		F00000000000000000000033 /* LivingIntelligenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivingIntelligenceModels.swift; sourceTree = "<group>"; };
+		F00000000000000000000034 /* LivingIntelligenceEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivingIntelligenceEngine.swift; sourceTree = "<group>"; };
+		F00000000000000000000035 /* OperationalPersistenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationalPersistenceView.swift; sourceTree = "<group>"; };
+		F00000000000000000000036 /* OperationalPersistenceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationalPersistenceModels.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		P00000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		P00000000000000000000006 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		G00000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				G00000000000000000000002 /* ARCHAIOS OS */,
+				G00000000000000000000015 /* ARCHAIOS OSTests */,
+				G00000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		G00000000000000000000002 /* ARCHAIOS OS */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000001 /* ARCHAIOSOSApp.swift */,
+				G00000000000000000000004 /* App */,
+				G00000000000000000000008 /* Components */,
+				G00000000000000000000006 /* Models */,
+				G00000000000000000000007 /* Services */,
+				G00000000000000000000005 /* Theme */,
+				G00000000000000000000009 /* Modules */,
+				F0000000000000000000001D /* Assets.xcassets */,
+			);
+			path = "ARCHAIOS OS";
+			sourceTree = "<group>";
+		};
+		G00000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000000 /* ARCHAIOS OS.app */,
+				F00000000000000000000027 /* ARCHAIOS OSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000004 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000002 /* AppContainer.swift */,
+				F00000000000000000000003 /* AppRoute.swift */,
+				F00000000000000000000004 /* RootView.swift */,
+				F0000000000000000000002B /* FounderIntelligenceViews.swift */,
+				F0000000000000000000002C /* MissionControlAIViews.swift */,
+				F0000000000000000000002D /* CoreNetworkViews.swift */,
+				F0000000000000000000002E /* LiveCommandBridgeView.swift */,
+				F0000000000000000000002F /* FounderOperationsView.swift */,
+				F00000000000000000000030 /* LivingCommanderView.swift */,
+				F00000000000000000000032 /* LivingIntelligenceView.swift */,
+				F00000000000000000000035 /* OperationalPersistenceView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000005 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000005 /* ArchaiosTheme.swift */,
+				F00000000000000000000006 /* ThemeManager.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000007 /* DomainModels.swift */,
+				F00000000000000000000008 /* SwiftDataModels.swift */,
+				F00000000000000000000033 /* LivingIntelligenceModels.swift */,
+				F00000000000000000000036 /* OperationalPersistenceModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000007 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000009 /* BackendProtocols.swift */,
+				F0000000000000000000000A /* MockBackendServices.swift */,
+				F00000000000000000000031 /* FutureCommandBridgeProtocols.swift */,
+				F00000000000000000000034 /* LivingIntelligenceEngine.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000008 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F0000000000000000000000B /* SectionHeader.swift */,
+				F0000000000000000000000C /* StatusPill.swift */,
+				F0000000000000000000000D /* MetricCard.swift */,
+				F0000000000000000000000E /* CommandCard.swift */,
+				F0000000000000000000001E /* Sprint2Components.swift */,
+				F00000000000000000000022 /* Sprint4Components.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000009 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				G00000000000000000000013 /* DailyCommandCenter */,
+				G0000000000000000000000A /* Commander */,
+				G0000000000000000000000B /* AIAssassins */,
+				G0000000000000000000000C /* BlackVault */,
+				G0000000000000000000000D /* Operations */,
+				G00000000000000000000014 /* MusicCommand */,
+				G0000000000000000000000E /* Infrastructure */,
+				G0000000000000000000000F /* FounderMode */,
+				G00000000000000000000011 /* AICommander */,
+				G00000000000000000000012 /* Branding */,
+				G00000000000000000000010 /* Settings */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		G0000000000000000000000A /* Commander */ = {
+			isa = PBXGroup;
+			children = (
+				F0000000000000000000000F /* CommanderViewModel.swift */,
+				F00000000000000000000010 /* CommanderView.swift */,
+			);
+			path = Commander;
+			sourceTree = "<group>";
+		};
+		G0000000000000000000000B /* AIAssassins */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000011 /* AIAssassinsViewModel.swift */,
+				F00000000000000000000012 /* AIAssassinsView.swift */,
+			);
+			path = AIAssassins;
+			sourceTree = "<group>";
+		};
+		G0000000000000000000000C /* BlackVault */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000013 /* BlackVaultViewModel.swift */,
+				F00000000000000000000014 /* BlackVaultView.swift */,
+			);
+			path = BlackVault;
+			sourceTree = "<group>";
+		};
+		G0000000000000000000000D /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000015 /* OperationsViewModel.swift */,
+				F00000000000000000000016 /* OperationsView.swift */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		G0000000000000000000000E /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000017 /* InfrastructureViewModel.swift */,
+				F00000000000000000000018 /* InfrastructureView.swift */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		G0000000000000000000000F /* FounderMode */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000019 /* FounderModeViewModel.swift */,
+				F0000000000000000000001A /* FounderModeView.swift */,
+			);
+			path = FounderMode;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000010 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F0000000000000000000001B /* SettingsViewModel.swift */,
+				F0000000000000000000001C /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000011 /* AICommander */ = {
+			isa = PBXGroup;
+			children = (
+				F0000000000000000000001F /* AICommanderChatViewModel.swift */,
+				F00000000000000000000020 /* AICommanderChatView.swift */,
+			);
+			path = AICommander;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000012 /* Branding */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000021 /* FounderBrandingView.swift */,
+			);
+			path = Branding;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000013 /* DailyCommandCenter */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000023 /* DailyCommandCenterViewModel.swift */,
+				F00000000000000000000024 /* DailyCommandCenterView.swift */,
+			);
+			path = DailyCommandCenter;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000014 /* MusicCommand */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000025 /* MusicCommandViewModel.swift */,
+				F00000000000000000000026 /* MusicCommandView.swift */,
+			);
+			path = MusicCommand;
+			sourceTree = "<group>";
+		};
+		G00000000000000000000015 /* ARCHAIOS OSTests */ = {
+			isa = PBXGroup;
+			children = (
+				F00000000000000000000028 /* DailyCommandCenterViewModelTests.swift */,
+				F00000000000000000000029 /* MusicCommandViewModelTests.swift */,
+				F0000000000000000000002A /* MockBackendServicesTests.swift */,
+			);
+			path = "ARCHAIOS OSTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		T00000000000000000000001 /* ARCHAIOS OS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C00000000000000000000004 /* Build configuration list for PBXNativeTarget "ARCHAIOS OS" */;
+			buildPhases = (
+				P00000000000000000000002 /* Sources */,
+				P00000000000000000000003 /* Frameworks */,
+				P00000000000000000000004 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ARCHAIOS OS";
+			productName = "ARCHAIOS OS";
+			productReference = F00000000000000000000000 /* ARCHAIOS OS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		T00000000000000000000002 /* ARCHAIOS OSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C00000000000000000000007 /* Build configuration list for PBXNativeTarget "ARCHAIOS OSTests" */;
+			buildPhases = (
+				P00000000000000000000005 /* Sources */,
+				P00000000000000000000006 /* Frameworks */,
+				P00000000000000000000007 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D00000000000000000000001 /* PBXTargetDependency */,
+			);
+			name = "ARCHAIOS OSTests";
+			productName = "ARCHAIOS OSTests";
+			productReference = F00000000000000000000027 /* ARCHAIOS OSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		P00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					T00000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					T00000000000000000000002 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = T00000000000000000000001;
+					};
+				};
+			};
+			buildConfigurationList = C00000000000000000000001 /* Build configuration list for PBXProject "ARCHAIOS OS" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = G00000000000000000000001;
+			productRefGroup = G00000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				T00000000000000000000001 /* ARCHAIOS OS */,
+				T00000000000000000000002 /* ARCHAIOS OSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		P00000000000000000000004 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0000000000000000000001D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		P00000000000000000000007 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		P00000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000001 /* ARCHAIOSOSApp.swift in Sources */,
+				B00000000000000000000002 /* AppContainer.swift in Sources */,
+				B00000000000000000000003 /* AppRoute.swift in Sources */,
+				B00000000000000000000004 /* RootView.swift in Sources */,
+				B0000000000000000000002A /* FounderIntelligenceViews.swift in Sources */,
+				B0000000000000000000002B /* MissionControlAIViews.swift in Sources */,
+				B0000000000000000000002C /* CoreNetworkViews.swift in Sources */,
+				B0000000000000000000002D /* LiveCommandBridgeView.swift in Sources */,
+				B0000000000000000000002E /* FounderOperationsView.swift in Sources */,
+				B0000000000000000000002F /* LivingCommanderView.swift in Sources */,
+				B00000000000000000000031 /* LivingIntelligenceView.swift in Sources */,
+				B00000000000000000000034 /* OperationalPersistenceView.swift in Sources */,
+				B00000000000000000000005 /* ArchaiosTheme.swift in Sources */,
+				B00000000000000000000006 /* ThemeManager.swift in Sources */,
+				B00000000000000000000007 /* DomainModels.swift in Sources */,
+				B00000000000000000000008 /* SwiftDataModels.swift in Sources */,
+				B00000000000000000000032 /* LivingIntelligenceModels.swift in Sources */,
+				B00000000000000000000035 /* OperationalPersistenceModels.swift in Sources */,
+				B00000000000000000000009 /* BackendProtocols.swift in Sources */,
+				B0000000000000000000000A /* MockBackendServices.swift in Sources */,
+				B00000000000000000000030 /* FutureCommandBridgeProtocols.swift in Sources */,
+				B00000000000000000000033 /* LivingIntelligenceEngine.swift in Sources */,
+				B0000000000000000000000B /* SectionHeader.swift in Sources */,
+				B0000000000000000000000C /* StatusPill.swift in Sources */,
+				B0000000000000000000000D /* MetricCard.swift in Sources */,
+				B0000000000000000000000E /* CommandCard.swift in Sources */,
+				B0000000000000000000001E /* Sprint2Components.swift in Sources */,
+				B00000000000000000000022 /* Sprint4Components.swift in Sources */,
+				B00000000000000000000023 /* DailyCommandCenterViewModel.swift in Sources */,
+				B00000000000000000000024 /* DailyCommandCenterView.swift in Sources */,
+				B00000000000000000000025 /* MusicCommandViewModel.swift in Sources */,
+				B00000000000000000000026 /* MusicCommandView.swift in Sources */,
+				B0000000000000000000000F /* CommanderViewModel.swift in Sources */,
+				B00000000000000000000010 /* CommanderView.swift in Sources */,
+				B00000000000000000000011 /* AIAssassinsViewModel.swift in Sources */,
+				B00000000000000000000012 /* AIAssassinsView.swift in Sources */,
+				B00000000000000000000013 /* BlackVaultViewModel.swift in Sources */,
+				B00000000000000000000014 /* BlackVaultView.swift in Sources */,
+				B00000000000000000000015 /* OperationsViewModel.swift in Sources */,
+				B00000000000000000000016 /* OperationsView.swift in Sources */,
+				B00000000000000000000017 /* InfrastructureViewModel.swift in Sources */,
+				B00000000000000000000018 /* InfrastructureView.swift in Sources */,
+				B00000000000000000000019 /* FounderModeViewModel.swift in Sources */,
+				B0000000000000000000001A /* FounderModeView.swift in Sources */,
+				B0000000000000000000001F /* AICommanderChatViewModel.swift in Sources */,
+				B00000000000000000000020 /* AICommanderChatView.swift in Sources */,
+				B00000000000000000000021 /* FounderBrandingView.swift in Sources */,
+				B0000000000000000000001B /* SettingsViewModel.swift in Sources */,
+				B0000000000000000000001C /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		P00000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00000000000000000000027 /* DailyCommandCenterViewModelTests.swift in Sources */,
+				B00000000000000000000028 /* MusicCommandViewModelTests.swift in Sources */,
+				B00000000000000000000029 /* MockBackendServicesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D00000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = T00000000000000000000001 /* ARCHAIOS OS */;
+			targetProxy = X00000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C00000000000000000000002 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		C00000000000000000000003 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		C00000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBAPY62Y26;
+				ENABLE_TESTABILITY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "ARCHAIOS OS";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-disable-sandbox";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saintblack.archaiosos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C00000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBAPY62Y26;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "ARCHAIOS OS";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-disable-sandbox";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saintblack.archaiosos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C00000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBAPY62Y26;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.saintblack.archaiosos.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARCHAIOS OS.app/ARCHAIOS OS";
+			};
+			name = Debug;
+		};
+		C00000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBAPY62Y26;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.saintblack.archaiosos.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ARCHAIOS OS.app/ARCHAIOS OS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C00000000000000000000001 /* Build configuration list for PBXProject "ARCHAIOS OS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00000000000000000000002 /* Debug */,
+				C00000000000000000000003 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C00000000000000000000004 /* Build configuration list for PBXNativeTarget "ARCHAIOS OS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00000000000000000000005 /* Debug */,
+				C00000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C00000000000000000000007 /* Build configuration list for PBXNativeTarget "ARCHAIOS OSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00000000000000000000008 /* Debug */,
+				C00000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = P00000000000000000000001 /* Project object */;
+}

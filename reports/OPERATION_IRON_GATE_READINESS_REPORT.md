@@ -1,13 +1,14 @@
 # Operation Iron Gate Readiness Report
 
-Generated: 2026-07-02T12:43:42.413Z
-Operational Readiness Score: 68/100
+Generated: 2026-07-03T01:49:03.158Z
+Operational Readiness Score: 61/100
 Status: blocked
 
 ## Production Blockers
 
 | Area | Finding | Evidence | Required Fix |
 | --- | --- | --- | --- |
+| github | Git worktree is not release-clean | 3 modified/untracked entries. | Classify, commit, archive, or explicitly discard all dirty worktree entries before production deployment. |
 | cloudflare | Cloudflare Worker identity mismatch | HTTP 200; expected service archaios-saas-worker, got archaios-daily-automation. | Deploy the canonical revenue Worker with `npx wrangler deploy --name archaios-saas-worker` and verify /api/health identity. |
 | supabase | Supabase auth health failed | HTTP 0: fetch failed. | Verify Supabase project status and configured project URL. |
 | stripe | Stripe metrics are not connected | STRIPE_SECRET_KEY is not available to Iron Gate. | Run Iron Gate from an approved environment with read-only Stripe access or verify metrics through a controlled backend endpoint. |
@@ -23,7 +24,6 @@ Status: blocked
 
 | Area | Finding | Evidence | Required Fix |
 | --- | --- | --- | --- |
-| github | Git worktree is release-clean | No modified or untracked entries. | No action required. |
 | subsystems | Required runtime files are present | 8 required files found. | No action required. |
 | placeholders | No production-facing placeholder signals found | Scanned production-facing files are clear. | No action required. |
 | security | Client dependency audit passes | npm audit found no moderate-or-higher client vulnerabilities. | No action required. |
@@ -35,13 +35,13 @@ Status: blocked
 
 ### Prevents Production
 
+- [ ] Git worktree is not release-clean: Classify, commit, archive, or explicitly discard all dirty worktree entries before production deployment.
 - [ ] Cloudflare Worker identity mismatch: Deploy the canonical revenue Worker with `npx wrangler deploy --name archaios-saas-worker` and verify /api/health identity.
 - [ ] Supabase auth health failed: Verify Supabase project status and configured project URL.
 - [ ] Stripe metrics are not connected: Run Iron Gate from an approved environment with read-only Stripe access or verify metrics through a controlled backend endpoint.
 
 ### Complete
 
-- [x] Git worktree is release-clean
 - [x] Required runtime files are present
 - [x] No production-facing placeholder signals found
 - [x] Client dependency audit passes

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T12:41:25.688Z",
+  "generatedAt": "2026-07-03T01:48:22.013Z",
   "service": "project-sentinel",
   "title": "Project Sentinel Security Operations Dashboard",
   "doctrine": "Report only actionable findings backed by local evidence. Do not speculate about connector state.",
@@ -112,7 +112,7 @@
       "status": "green",
       "actionableFindings": 0,
       "coverage": {
-        "markdownFiles": 165,
+        "markdownFiles": 170,
         "reportedLimit": 12
       }
     },
