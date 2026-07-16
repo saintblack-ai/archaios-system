@@ -84,12 +84,14 @@ Workflow validates pull requests without deploying. Main pushes and manual dispa
   - Fix: `.github/workflows/worker_heartbeat.yml` no longer runs on `pull_request`; it remains scheduled/manual monitoring and still requires `archaios-core-api` when run.
 
 ### Current PR Checks
-After commit `e2095d5`, PR #17 checks show:
+After commit `46d926b89e1c9bcd9bff761cf97c9d32043c65f0`, PR #17 checks show:
 - `CI - client build / build`: passed
 - `Canonical Runtime CI And Pages Deploy / validate`: passed
 - `Canonical Runtime CI And Pages Deploy / deploy`: skipped on pull request, expected
 - `Vercel`: passed
 - `Vercel Preview Comments`: passed
+
+PR #17 is ready for human review, but merge and production promotion remain blocked until the live public Worker identity mismatch is corrected.
 
 ## Vercel Configuration Status
 `vercel.json` uses:
