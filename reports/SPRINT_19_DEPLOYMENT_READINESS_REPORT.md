@@ -73,6 +73,24 @@ The release candidate intentionally excludes unrelated and protected categories:
 ## GitHub Actions Status
 Workflow validates pull requests without deploying. Main pushes and manual dispatch can still publish GitHub Pages after validation. CI now performs checkout, Node 20 setup, root install, client install, runtime contract validation, root lint, root typecheck, canonical runtime tests, client lint, client tests, client production build, and Worker dry-run. The live Worker heartbeat is intentionally scheduled/manual because the current production Worker host is a deployment-state check, not a PR code validation check.
 
+### Failed PR Runs Inspected
+- `Deploy Vite Client To GitHub Pages` run `29486426860`, job `validate`, failed at step `Verify required variable names`.
+  - Annotation: `Missing required GitHub Actions variable VITE_API_BASE_URL.`
+  - Root cause: both `VITE_API_BASE_URL` and `VITE_BACKEND_URL` were empty in the pull-request environment, and the workflow failed before using the application's canonical safe fallback.
+  - Fix: `.github/workflows/deploy.yml` now resolves `VITE_API_BASE_URL` to `https://archaios-saas-worker.quandrix357.workers.dev` during CI when the repository variable is absent, while warning that the repository variable should be configured.
+- `Worker Heartbeat` run `29486426894`, job `heartbeat`, failed at step `Ping Cloudflare Worker`.
+  - Error: `Unexpected Worker service: archaios-daily-automation`
+  - Root cause: the heartbeat ran on a pull request against the current public production Worker host, whose `/api/health` response identifies the daily automation Worker rather than the canonical runtime Worker.
+  - Fix: `.github/workflows/worker_heartbeat.yml` no longer runs on `pull_request`; it remains scheduled/manual monitoring and still requires `archaios-core-api` when run.
+
+### Current PR Checks
+After commit `e2095d5`, PR #17 checks show:
+- `CI - client build / build`: passed
+- `Canonical Runtime CI And Pages Deploy / validate`: passed
+- `Canonical Runtime CI And Pages Deploy / deploy`: skipped on pull request, expected
+- `Vercel`: passed
+- `Vercel Preview Comments`: passed
+
 ## Vercel Configuration Status
 `vercel.json` uses:
 - Install command: `npm --prefix client ci`
