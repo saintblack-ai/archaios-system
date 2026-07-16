@@ -4,8 +4,8 @@ export const PRICING_TIERS = [
     name: "Free",
     price: 0,
     displayPrice: "$0",
-    summary: "Preview the intelligence system and enter the funnel.",
-    features: ["Limited intelligence mode", "Delayed alerts", "Preview dashboard"],
+    summary: "Limited preview of the ARCHAIOS intelligence system.",
+    features: ["Limited preview dashboard", "Delayed sample signals", "Email capture and upgrade path"],
     gates: ["Teaser briefings", "Email capture", "Upgrade prompts"]
   },
   {
@@ -13,8 +13,8 @@ export const PRICING_TIERS = [
     name: "Pro",
     price: 49,
     displayPrice: "$49/month",
-    summary: "Unlock the full daily intelligence dashboard.",
-    features: ["Full AI dashboard", "Live alerts", "Content generation", "Full system access"],
+    summary: "$49/month full dashboard for daily intelligence, alerts, and execution workflows.",
+    features: ["Full dashboard", "Live alerts", "Content generation", "Full system access"],
     gates: ["Full daily briefing", "Premium categories", "Saved history", "Member tools"]
   },
   {
@@ -22,8 +22,8 @@ export const PRICING_TIERS = [
     name: "Elite",
     price: 99,
     displayPrice: "$99/month",
-    summary: "Operate with priority signals and deeper analysis.",
-    features: ["Priority signals", "High-threat alerts", "Premium intelligence layer"],
+    summary: "$99/month priority intelligence for operators who need earliest signals and deeper analysis.",
+    features: ["Priority intelligence", "High-threat alerts", "Premium intelligence layer"],
     gates: ["Priority intelligence feed", "Elite reports", "Urgency alerts", "Future concierge features"]
   }
 ];

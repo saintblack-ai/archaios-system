@@ -1,48 +1,121 @@
-name: Deploy Vite Client To GitHub Pages
+name: Canonical Runtime CI And Pages Deploy
+
 on:
+  pull_request:
   push:
     branches:
       - main
   workflow_dispatch:
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
 concurrency:
-  group: pages
+  group: canonical-runtime-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+      VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
+        if: ${{ github.event_name != 'pull_request' }}
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: client/package-lock.json
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
+
       - name: Install client dependencies
         working-directory: client
         run: npm ci
-      - name: Build client
+
+      - name: Verify required variable names
+        shell: bash
+        run: |
+          missing=0
+
+          if [ -z "${VITE_API_BASE_URL}" ] && [ -z "${VITE_BACKEND_URL}" ]; then
+            echo "::error::Missing required GitHub Actions variable VITE_API_BASE_URL."
+            missing=1
+          fi
+
+          if [ -z "${ALLOWED_ORIGINS}" ]; then
+            echo "::warning::ALLOWED_ORIGINS is not set; Worker falls back to canonical production and local development origins."
+          fi
+
+          if [ "${missing}" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Runtime contract validation
+        run: npm run check:runtime-contract
+
+      - name: Root lint
+        run: npm run lint
+
+      - name: Root typecheck
+        run: npm run typecheck
+
+      - name: Canonical runtime tests
+        run: npm run test:canonical-runtime
+
+      - name: Client lint
+        working-directory: client
+        run: npm run lint
+
+      - name: Client tests
+        working-directory: client
+        run: npm test
+
+      - name: Client production build
         working-directory: client
         run: npm run build
+
+      - name: Add GitHub Pages SPA fallback
+        if: ${{ github.event_name != 'pull_request' }}
+        run: cp client/dist/index.html client/dist/404.html
+
+      - name: Worker dry-run deployment validation
+        run: npx wrangler deploy --config wrangler.toml --name archaios-saas-worker --dry-run
+
       - name: Upload Pages artifact
+        if: ${{ github.event_name != 'pull_request' }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: client/dist
+
   deploy:
+    if: ${{ github.event_name != 'pull_request' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
+    needs: validate
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

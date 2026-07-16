@@ -1,0 +1,1664 @@
+{
+  "generatedAt": "2026-07-01T22:03:43.485Z",
+  "title": "ARCHAIOS Daily Command Center",
+  "commander": {
+    "agentKey": "commander",
+    "status": "red",
+    "summary": "Commander merged 9 agent reports and 10 executive monitors into today's operating brief.",
+    "morningBriefing": {
+      "headline": "ARCHAIOS Executive Officer Morning Brief",
+      "summary": "XO reviewed 10 command sectors: 8 green, 1 watch, 1 critical.",
+      "actions": [
+        "Verify Stripe test/live price IDs before paid launch.",
+        "Confirm webhook endpoint and required subscription events.",
+        "Review blocked and in-progress tasks before accepting new work.",
+        "Run test-mode checkout and subscription sync before production promotion."
+      ]
+    },
+    "eveningReview": {
+      "summary": "Capture wins, blockers, memory changes, and tomorrow's first action before ending the day.",
+      "prompts": [
+        "What shipped or became clearer today?",
+        "Which blocker needs operator approval?",
+        "What should Commander put first tomorrow morning?",
+        "What memory, source, or decision should be preserved?"
+      ]
+    }
+  },
+  "executiveOfficer": {
+    "generatedAt": "2026-07-01T22:03:43.485Z",
+    "service": "archaios-commander-executive-officer",
+    "version": "2026-07-01",
+    "role": "AI Executive Officer",
+    "doctrine": {
+      "revenuePriority": "Revenue work outranks expansion work when launch gates are safe.",
+      "securityPriority": "Security can block revenue, deployment, and automation.",
+      "deploymentPriority": "Deployments require clean worktree, tests, env verification, and rollback path.",
+      "documentationPriority": "Docs must identify canonical commands and avoid conflicting launch authority."
+    },
+    "monitors": [
+      {
+        "key": "unfinished-work",
+        "label": "Unfinished Work",
+        "status": "red",
+        "priority": 2,
+        "summary": "61 in progress, 0 blocked, 12 unstaged/untracked git entries.",
+        "findings": [
+          "M client/archaios-core/daily/commander.mjs",
+          " M client/archaios-core/interfaces/daily-command-center.json",
+          " M client/package.json",
+          " M client/src/app.css",
+          " M client/src/pages/daily/DailyCommandCenter.jsx"
+        ],
+        "actions": [
+          "Review blocked and in-progress tasks before accepting new work.",
+          "Keep release branches clean before deployment.",
+          "Classify untracked files as commit-ready, work-in-progress, experimental, or disposable."
+        ],
+        "metrics": {
+          "queued": 51,
+          "prioritized": 46,
+          "inProgress": 61,
+          "completed": 51,
+          "blocked": 0,
+          "dirtyGitEntries": 12
+        },
+        "risks": [
+          "Dirty worktree can hide release drift."
+        ]
+      },
+      {
+        "key": "revenue",
+        "label": "Revenue Priority",
+        "status": "green",
+        "priority": 4,
+        "summary": "5 revenue systems tracked; 2 high-readiness paths; projected monthly revenue $1,428.",
+        "findings": [
+          "SaaS tier system (Free / Pro / Elite): Finalize entitlement matrix in client gating logic and map plan labels to UI states.",
+          "Apple Books funnels: Publish 3 funnel variants with source tags and conversion placeholders.",
+          "Intelligence report products: Draft product packaging and map each report class to Free/Pro/Elite visibility.",
+          "Digital bundle products: Define initial 3 bundles and attach upsell messaging by user tier."
+        ],
+        "actions": [
+          "Advance the highest-readiness revenue system first.",
+          "Keep self-serve billing gated until Stripe, Supabase, legal, and support checks pass.",
+          "Replace projections with verified Stripe/Supabase metrics when live data is available."
+        ],
+        "metrics": {
+          "estimatedMonthlyRevenue": 1428,
+          "annualRevenueTarget": 100000,
+          "conversionScore": 41,
+          "trackedSystems": 5,
+          "highReadiness": 2,
+          "blocked": 0
+        },
+        "risks": [
+          "Revenue dashboard still contains projections until live billing metrics are verified."
+        ]
+      },
+      {
+        "key": "security",
+        "label": "Security Priority",
+        "status": "green",
+        "priority": 4,
+        "summary": "7/7 local security control signals present.",
+        "findings": [
+          "jwtAuthentication: present",
+          "rbac: present",
+          "encryptedSecrets: present",
+          "auditLogging: present",
+          "rateLimiting: present",
+          "secureApiGateway: present",
+          "vulnerabilityScanning: present"
+        ],
+        "actions": [
+          "Block production deploys until secrets, billing, and Supabase service-role paths are verified.",
+          "Keep service-role keys server-side only.",
+          "Record approval before any deployment, billing, or destructive operation."
+        ],
+        "metrics": {
+          "implementedControls": 7,
+          "requiredControls": 7,
+          "missingLocalArtifacts": 0
+        },
+        "risks": []
+      },
+      {
+        "key": "deployments",
+        "label": "Deployment Tracking",
+        "status": "green",
+        "priority": 3,
+        "summary": "Deployment evidence: GitHub Pages workflow present, heartbeat present, Vercel linked, Cloudflare config present.",
+        "findings": [
+          "GitHub Pages workflow: present",
+          "Worker heartbeat workflow: present",
+          "Vercel project: ai-assassins-client",
+          "Cloudflare config: client worker config present"
+        ],
+        "actions": [
+          "Choose canonical frontend host before production release.",
+          "Align root and client Cloudflare Worker identities.",
+          "Require tests and build before deployment promotion."
+        ],
+        "metrics": {
+          "deploymentSignals": 4,
+          "vercelLinked": true,
+          "githubPagesWorkflow": true,
+          "cloudflareConfig": true
+        },
+        "risks": [
+          "Two Cloudflare config surfaces can drift."
+        ]
+      },
+      {
+        "key": "github",
+        "label": "GitHub Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "Branch revenue-subscription-constraint; remote https://github.com/saintblack-ai/archaios-system.git; 2 workflow files present.",
+        "findings": [
+          "HEAD: 56d6295 feat: upgrade commander executive officer service",
+          ".github/workflows/deploy.yml",
+          ".github/workflows/worker_heartbeat.yml"
+        ],
+        "actions": [
+          "Push logical commits only after local validation passes.",
+          "Review GitHub Actions status for the pushed commit before deploy.",
+          "Keep release branches free of temp files."
+        ],
+        "metrics": {
+          "workflows": 2,
+          "branch": "revenue-subscription-constraint",
+          "remoteConfigured": true
+        },
+        "risks": [
+          "Current branch is revenue-subscription-constraint, not main."
+        ]
+      },
+      {
+        "key": "supabase",
+        "label": "Supabase Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "9 client Supabase migrations tracked; semantic memory, command center, Archivist, and subscription contracts are present.",
+        "findings": [
+          "Semantic memory migration: present",
+          "Command center migration: present",
+          "Archivist migration: present",
+          "Subscription upsert migration: present"
+        ],
+        "actions": [
+          "Verify migrations are applied to the live Supabase project.",
+          "Confirm RLS policies for profiles, subscriptions, Archivist, and semantic memory.",
+          "Validate service-role key only in server/Worker runtime."
+        ],
+        "metrics": {
+          "migrations": 9,
+          "semanticMemoryReady": true,
+          "commandCenterReady": true,
+          "archivistReady": true,
+          "subscriptionContractReady": true
+        },
+        "risks": [
+          "Local migration presence does not prove live Supabase application."
+        ]
+      },
+      {
+        "key": "stripe",
+        "label": "Stripe Monitor",
+        "status": "amber",
+        "priority": 4,
+        "summary": "Stripe code paths include checkout, include webhook signature checks, and document Pro/Elite prices.",
+        "findings": [
+          "Checkout handler: present",
+          "Webhook signature verification: present",
+          "Pro/Elite env placeholders: present"
+        ],
+        "actions": [
+          "Verify Stripe test/live price IDs before paid launch.",
+          "Confirm webhook endpoint and required subscription events.",
+          "Run test-mode checkout and subscription sync before production promotion."
+        ],
+        "metrics": {
+          "checkoutPathPresent": true,
+          "webhookVerificationPresent": true,
+          "pricePlaceholdersPresent": true
+        },
+        "risks": [
+          "Stripe live readiness cannot be inferred from local code alone."
+        ]
+      },
+      {
+        "key": "cloudflare",
+        "label": "Cloudflare Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "Cloudflare configs detected: root archaios-saas-worker, client archaios-saas-worker.",
+        "findings": [
+          "Root Worker source: worker.js present",
+          "Client Worker source: client/worker/index.js present",
+          "Root wrangler name: archaios-saas-worker",
+          "Client wrangler name: archaios-saas-worker"
+        ],
+        "actions": [
+          "Align Worker identity and health response.",
+          "Document which Worker is canonical for SaaS API, cron, and daily automation.",
+          "Run Wrangler deploy validation before release."
+        ],
+        "metrics": {
+          "rootWorkerPresent": true,
+          "clientWorkerPresent": true,
+          "rootName": "archaios-saas-worker",
+          "clientName": "archaios-saas-worker"
+        },
+        "risks": []
+      },
+      {
+        "key": "documentation",
+        "label": "Documentation Monitor",
+        "status": "green",
+        "priority": 2,
+        "summary": "30 docs and 8 reports tracked; Daily Command Center docs present.",
+        "findings": [
+          "docs/*.md: 30",
+          "reports/*.md: 8",
+          "Daily Command Center doc: present",
+          "Secret inventory: present",
+          "System architecture: present"
+        ],
+        "actions": [
+          "Keep one canonical production release checklist.",
+          "Mark outdated host/deploy docs as archived or superseded.",
+          "Promote Executive Brief outputs into operator records."
+        ],
+        "metrics": {
+          "docsCount": 30,
+          "reportsCount": 8,
+          "commandDoc": true,
+          "secretInventory": true,
+          "systemArchitecture": true
+        },
+        "risks": [
+          "Documentation volume may obscure canonical instructions."
+        ]
+      },
+      {
+        "key": "tests",
+        "label": "Test Monitor",
+        "status": "green",
+        "priority": 3,
+        "summary": "5 Node test files tracked; client build script present; server check script present.",
+        "findings": [
+          "tests/archaios-daily-command.test.mjs",
+          "tests/archaios-runtime-health.test.mjs",
+          "tests/archivist-agent.test.mjs",
+          "tests/project-sentinel.test.mjs",
+          "tests/revenue-readiness.test.mjs"
+        ],
+        "actions": [
+          "Run Node tests before commits.",
+          "Run client build before deploy.",
+          "Add Worker-specific deploy validation beyond Wrangler help output."
+        ],
+        "metrics": {
+          "testFiles": 5,
+          "hasClientBuild": true,
+          "hasServerCheck": true
+        },
+        "risks": [
+          "Current Worker check script does not prove deployment readiness."
+        ]
+      }
+    ],
+    "executiveBrief": {
+      "title": "ARCHAIOS Executive Officer Morning Brief",
+      "status": "red",
+      "summary": "XO reviewed 10 command sectors: 8 green, 1 watch, 1 critical.",
+      "commandIntent": [
+        "Protect revenue path without bypassing legal, Stripe, Supabase, or security gates.",
+        "Clear unfinished work before expanding scope.",
+        "Keep deployment promotion evidence-based and reversible."
+      ],
+      "topPriorities": [
+        {
+          "area": "Revenue",
+          "status": "green",
+          "order": 1,
+          "directive": "Advance the highest-readiness revenue system first."
+        },
+        {
+          "area": "Security",
+          "status": "green",
+          "order": 2,
+          "directive": "Block production deploys until secrets, billing, and Supabase service-role paths are verified."
+        },
+        {
+          "area": "Unfinished Work",
+          "status": "red",
+          "order": 3,
+          "directive": "Review blocked and in-progress tasks before accepting new work."
+        },
+        {
+          "area": "Deployment",
+          "status": "green",
+          "order": 4,
+          "directive": "Choose canonical frontend host before production release."
+        }
+      ],
+      "actionQueue": [
+        {
+          "action": "Verify Stripe test/live price IDs before paid launch.",
+          "source": "stripe",
+          "status": "amber"
+        },
+        {
+          "action": "Confirm webhook endpoint and required subscription events.",
+          "source": "stripe",
+          "status": "amber"
+        },
+        {
+          "action": "Review blocked and in-progress tasks before accepting new work.",
+          "source": "unfinished-work",
+          "status": "red"
+        },
+        {
+          "action": "Run test-mode checkout and subscription sync before production promotion.",
+          "source": "stripe",
+          "status": "amber"
+        },
+        {
+          "action": "Keep release branches clean before deployment.",
+          "source": "unfinished-work",
+          "status": "red"
+        },
+        {
+          "action": "Classify untracked files as commit-ready, work-in-progress, experimental, or disposable.",
+          "source": "unfinished-work",
+          "status": "red"
+        },
+        {
+          "action": "Advance the highest-readiness revenue system first.",
+          "source": "revenue",
+          "status": "green"
+        },
+        {
+          "action": "Block production deploys until secrets, billing, and Supabase service-role paths are verified.",
+          "source": "security",
+          "status": "green"
+        }
+      ],
+      "watchlist": [
+        {
+          "area": "Unfinished Work",
+          "status": "red",
+          "risks": [
+            "Dirty worktree can hide release drift."
+          ]
+        },
+        {
+          "area": "Revenue Priority",
+          "status": "green",
+          "risks": [
+            "Revenue dashboard still contains projections until live billing metrics are verified."
+          ]
+        },
+        {
+          "area": "Deployment Tracking",
+          "status": "green",
+          "risks": [
+            "Two Cloudflare config surfaces can drift."
+          ]
+        },
+        {
+          "area": "GitHub Monitor",
+          "status": "green",
+          "risks": [
+            "Current branch is revenue-subscription-constraint, not main."
+          ]
+        },
+        {
+          "area": "Supabase Monitor",
+          "status": "green",
+          "risks": [
+            "Local migration presence does not prove live Supabase application."
+          ]
+        },
+        {
+          "area": "Stripe Monitor",
+          "status": "amber",
+          "risks": [
+            "Stripe live readiness cannot be inferred from local code alone."
+          ]
+        },
+        {
+          "area": "Documentation Monitor",
+          "status": "green",
+          "risks": [
+            "Documentation volume may obscure canonical instructions."
+          ]
+        },
+        {
+          "area": "Test Monitor",
+          "status": "green",
+          "risks": [
+            "Current Worker check script does not prove deployment readiness."
+          ]
+        }
+      ]
+    }
+  },
+  "executiveBrief": {
+    "title": "ARCHAIOS Executive Officer Morning Brief",
+    "status": "red",
+    "summary": "XO reviewed 10 command sectors: 8 green, 1 watch, 1 critical.",
+    "commandIntent": [
+      "Protect revenue path without bypassing legal, Stripe, Supabase, or security gates.",
+      "Clear unfinished work before expanding scope.",
+      "Keep deployment promotion evidence-based and reversible."
+    ],
+    "topPriorities": [
+      {
+        "area": "Revenue",
+        "status": "green",
+        "order": 1,
+        "directive": "Advance the highest-readiness revenue system first."
+      },
+      {
+        "area": "Security",
+        "status": "green",
+        "order": 2,
+        "directive": "Block production deploys until secrets, billing, and Supabase service-role paths are verified."
+      },
+      {
+        "area": "Unfinished Work",
+        "status": "red",
+        "order": 3,
+        "directive": "Review blocked and in-progress tasks before accepting new work."
+      },
+      {
+        "area": "Deployment",
+        "status": "green",
+        "order": 4,
+        "directive": "Choose canonical frontend host before production release."
+      }
+    ],
+    "actionQueue": [
+      {
+        "action": "Verify Stripe test/live price IDs before paid launch.",
+        "source": "stripe",
+        "status": "amber"
+      },
+      {
+        "action": "Confirm webhook endpoint and required subscription events.",
+        "source": "stripe",
+        "status": "amber"
+      },
+      {
+        "action": "Review blocked and in-progress tasks before accepting new work.",
+        "source": "unfinished-work",
+        "status": "red"
+      },
+      {
+        "action": "Run test-mode checkout and subscription sync before production promotion.",
+        "source": "stripe",
+        "status": "amber"
+      },
+      {
+        "action": "Keep release branches clean before deployment.",
+        "source": "unfinished-work",
+        "status": "red"
+      },
+      {
+        "action": "Classify untracked files as commit-ready, work-in-progress, experimental, or disposable.",
+        "source": "unfinished-work",
+        "status": "red"
+      },
+      {
+        "action": "Advance the highest-readiness revenue system first.",
+        "source": "revenue",
+        "status": "green"
+      },
+      {
+        "action": "Block production deploys until secrets, billing, and Supabase service-role paths are verified.",
+        "source": "security",
+        "status": "green"
+      }
+    ],
+    "watchlist": [
+      {
+        "area": "Unfinished Work",
+        "status": "red",
+        "risks": [
+          "Dirty worktree can hide release drift."
+        ]
+      },
+      {
+        "area": "Revenue Priority",
+        "status": "green",
+        "risks": [
+          "Revenue dashboard still contains projections until live billing metrics are verified."
+        ]
+      },
+      {
+        "area": "Deployment Tracking",
+        "status": "green",
+        "risks": [
+          "Two Cloudflare config surfaces can drift."
+        ]
+      },
+      {
+        "area": "GitHub Monitor",
+        "status": "green",
+        "risks": [
+          "Current branch is revenue-subscription-constraint, not main."
+        ]
+      },
+      {
+        "area": "Supabase Monitor",
+        "status": "green",
+        "risks": [
+          "Local migration presence does not prove live Supabase application."
+        ]
+      },
+      {
+        "area": "Stripe Monitor",
+        "status": "amber",
+        "risks": [
+          "Stripe live readiness cannot be inferred from local code alone."
+        ]
+      },
+      {
+        "area": "Documentation Monitor",
+        "status": "green",
+        "risks": [
+          "Documentation volume may obscure canonical instructions."
+        ]
+      },
+      {
+        "area": "Test Monitor",
+        "status": "green",
+        "risks": [
+          "Current Worker check script does not prove deployment readiness."
+        ]
+      }
+    ]
+  },
+  "agentReports": [
+    {
+      "agentKey": "archivist",
+      "agentName": "archivist",
+      "role": "Permanent memory steward for documents, source records, vault assets, and historical continuity.",
+      "status": "green",
+      "summary": "Knowledge tree has 10/10 required surfaces and 10 markdown records.",
+      "findings": [
+        "Canonical identity and mission documents are available.",
+        "Vault and memory directories are separated from business and research knowledge."
+      ],
+      "actions": [
+        "Index new knowledge files into pgvector chunks.",
+        "Add source provenance and sensitivity metadata during ingestion."
+      ],
+      "metrics": {
+        "markdownFiles": 10,
+        "knowledgeCoverage": "10/10"
+      },
+      "risks": []
+    },
+    {
+      "agentKey": "researcher",
+      "agentName": "researcher",
+      "role": "Research collector and evidence analyst for technical, market, cultural, and strategic questions.",
+      "status": "green",
+      "summary": "Research inbox tracks 8 knowledge clusters.",
+      "findings": [
+        "AI Infrastructure",
+        "SaaS Systems",
+        "Music (Saint Black)",
+        "Books (Apple Books)"
+      ],
+      "actions": [
+        "Promote top research clusters into sourced briefs.",
+        "Mark stale or unsourced claims before reports are published."
+      ],
+      "metrics": {
+        "clusters": 8,
+        "records": 656
+      },
+      "risks": [
+        "Research freshness depends on the latest export ingestion cycle."
+      ]
+    },
+    {
+      "agentKey": "engineer",
+      "agentName": "engineer",
+      "role": "Production software engineer for application code, APIs, tests, deployment contracts, and runtime reliability.",
+      "status": "green",
+      "summary": "Runtime contract validates 10 agents.",
+      "findings": [
+        "Commander runtime can generate deterministic daily interface data.",
+        "Existing test runner uses Node's built-in test framework."
+      ],
+      "actions": [
+        "Surface operatingSnapshot in daily dashboards.",
+        "Keep dashboard data generation independent from live credentials."
+      ],
+      "metrics": {
+        "agents": 10,
+        "blockedSignals": 0
+      },
+      "risks": []
+    },
+    {
+      "agentKey": "writer",
+      "agentName": "writer",
+      "role": "Documentation and narrative agent for reports, manuals, product copy, briefs, and publishing drafts.",
+      "status": "green",
+      "summary": "Documentation surfaces exist for command briefs, revenue plans, operator manuals, and knowledge taxonomy.",
+      "findings": [
+        "Daily briefing should stay concise and decision-oriented.",
+        "Evening review should capture wins, blockers, and tomorrow's first action."
+      ],
+      "actions": [
+        "Convert Commander brief into a reusable operator note.",
+        "Keep public copy separate from private command notes."
+      ],
+      "metrics": {
+        "recentCompletedTaskRecords": 20
+      },
+      "risks": [
+        "Documentation volume can outpace the canonical source of truth."
+      ]
+    },
+    {
+      "agentKey": "strategist",
+      "agentName": "strategist",
+      "role": "Operating strategist for priorities, roadmaps, business positioning, and execution sequencing.",
+      "status": "green",
+      "summary": "5 revenue systems are tracked; 2 are high readiness.",
+      "findings": [
+        "SaaS tier system (Free / Pro / Elite): Finalize entitlement matrix in client gating logic and map plan labels to UI states.",
+        "Apple Books funnels: Publish 3 funnel variants with source tags and conversion placeholders.",
+        "Intelligence report products: Draft product packaging and map each report class to Free/Pro/Elite visibility."
+      ],
+      "actions": [
+        "Prioritize one revenue system and one knowledge system per day.",
+        "Keep production deploys behind readiness gates."
+      ],
+      "metrics": {
+        "trackedRevenueSystems": 5,
+        "highReadiness": 2
+      },
+      "risks": [
+        "Too many active initiatives can dilute daily execution."
+      ]
+    },
+    {
+      "agentKey": "analyst",
+      "agentName": "analyst",
+      "role": "Metrics and intelligence analyst for API usage, memory growth, project analytics, revenue, and system health.",
+      "status": "amber",
+      "summary": "Projected monthly revenue is $1,428 against a $100,000 annual target.",
+      "findings": [
+        "Conversion score: 41.",
+        "Traffic target: 12,000 monthly visits."
+      ],
+      "actions": [
+        "Track daily content output, clicks, checkout starts, and completed subscriptions.",
+        "Replace projections with verified Supabase and Stripe metrics when credentials are active."
+      ],
+      "metrics": {
+        "estimatedMonthlyRevenue": 1428,
+        "annualRevenueTarget": 100000,
+        "conversionScore": 41
+      },
+      "risks": [
+        "Current financial dashboard includes projection data, not verified revenue."
+      ]
+    },
+    {
+      "agentKey": "security",
+      "agentName": "security",
+      "role": "Cybersecurity, compliance, and safety gate for secrets, RBAC, audit logs, rate limits, and deployment risk.",
+      "status": "green",
+      "summary": "7/7 security controls have local implementation signals.",
+      "findings": [
+        "jwtAuthentication: present",
+        "rbac: present",
+        "encryptedSecrets: present",
+        "auditLogging: present",
+        "rateLimiting: present",
+        "secureApiGateway: present",
+        "vulnerabilityScanning: present"
+      ],
+      "actions": [
+        "Keep paid checkout blocked for signed-out users.",
+        "Require explicit approval for deploy, secret, billing, and destructive actions."
+      ],
+      "metrics": {
+        "implementedControls": 7,
+        "requiredControls": 7
+      },
+      "risks": []
+    },
+    {
+      "agentKey": "automation",
+      "agentName": "automation",
+      "role": "Workflow operator for ingestion, summarization, code generation, file organization, tests, scans, and git preparation.",
+      "status": "green",
+      "summary": "Task queues show 51 queued, 61 in progress, and 0 blocked records.",
+      "findings": [],
+      "actions": [
+        "Prepare scheduled tasks as draft records before execution.",
+        "Run tests before commit or deploy tasks are promoted."
+      ],
+      "metrics": {
+        "queue": 51,
+        "prioritized": 46,
+        "inProgress": 61,
+        "completed": 51,
+        "blocked": 0
+      },
+      "risks": []
+    },
+    {
+      "agentKey": "vision",
+      "agentName": "vision",
+      "role": "Visual intelligence and product experience agent for images, UI evidence, brand assets, and media catalogs.",
+      "status": "green",
+      "summary": "3 book assets are tracked for visual and campaign review.",
+      "findings": [
+        "The Art of Holy War: Authority-building spiritual warfare posts",
+        "Echoes of Eden: Mystery-led literary discovery",
+        "The Pleiadian Project: A Cosmic Research Guide: Research-guide discovery and keyword expansion"
+      ],
+      "actions": [
+        "Attach cover, product, and campaign asset metadata to each tracked book and music project.",
+        "Run screenshot review after Daily Command Center UI changes."
+      ],
+      "metrics": {
+        "trackedBooks": 3
+      },
+      "risks": [
+        "Music catalog and visual asset inventory need canonical metadata."
+      ]
+    }
+  ],
+  "dashboards": {
+    "activeProjects": [
+      {
+        "id": "saas-tier-system",
+        "name": "SaaS tier system (Free / Pro / Elite)",
+        "status": "high",
+        "nextAction": "Finalize entitlement matrix in client gating logic and map plan labels to UI states.",
+        "owner": "revenue-agent"
+      },
+      {
+        "id": "apple-books-funnels",
+        "name": "Apple Books funnels",
+        "status": "high",
+        "nextAction": "Publish 3 funnel variants with source tags and conversion placeholders.",
+        "owner": "content-agent"
+      },
+      {
+        "id": "intelligence-report-products",
+        "name": "Intelligence report products",
+        "status": "medium",
+        "nextAction": "Draft product packaging and map each report class to Free/Pro/Elite visibility.",
+        "owner": "product-agent"
+      },
+      {
+        "id": "digital-bundle-products",
+        "name": "Digital bundle products",
+        "status": "medium",
+        "nextAction": "Define initial 3 bundles and attach upsell messaging by user tier.",
+        "owner": "revenue-agent"
+      },
+      {
+        "id": "saint-black-music-funnels",
+        "name": "Saint Black music funnels",
+        "status": "medium",
+        "nextAction": "Create 14-day campaign sequence with CTA path variants and tracking tags.",
+        "owner": "content-agent"
+      }
+    ],
+    "revenueProgress": {
+      "annualTarget": 100000,
+      "estimatedMonthlyRevenue": 1428,
+      "conversionScore": 41,
+      "readinessSystems": 5,
+      "note": "Projection model only. This estimates trajectory from content volume, consistency, CTR, landing engagement, and conversion assumptions. It is not guaranteed sales."
+    },
+    "books": [
+      {
+        "id": "holy-war",
+        "title": "The Art of Holy War",
+        "status": "active",
+        "campaignFocus": "Authority-building spiritual warfare posts",
+        "targetContribution": 40000
+      },
+      {
+        "id": "echoes-eden",
+        "title": "Echoes of Eden",
+        "status": "active",
+        "campaignFocus": "Mystery-led literary discovery",
+        "targetContribution": 30000
+      },
+      {
+        "id": "pleiadian-project",
+        "title": "The Pleiadian Project: A Cosmic Research Guide",
+        "status": "active",
+        "campaignFocus": "Research-guide discovery and keyword expansion",
+        "targetContribution": 30000
+      }
+    ],
+    "music": {
+      "status": "metadata-needed",
+      "nextAction": "Create canonical Saint Black music catalog with releases, assets, links, and campaign status."
+    },
+    "knowledgeGrowth": {
+      "totals": {
+        "files": 25,
+        "conversations": 631,
+        "records": 656
+      },
+      "clusters": [
+        {
+          "id": "ai-infrastructure",
+          "label": "AI Infrastructure",
+          "count": 81
+        },
+        {
+          "id": "saas-systems",
+          "label": "SaaS Systems",
+          "count": 218
+        },
+        {
+          "id": "music-saint-black",
+          "label": "Music (Saint Black)",
+          "count": 111
+        },
+        {
+          "id": "books-apple-books",
+          "label": "Books (Apple Books)",
+          "count": 29
+        },
+        {
+          "id": "game-development",
+          "label": "Game Development",
+          "count": 45
+        },
+        {
+          "id": "crypto-finance",
+          "label": "Crypto / Finance",
+          "count": 26
+        }
+      ]
+    },
+    "agentHealth": {
+      "green": 8,
+      "amber": 1,
+      "red": 0,
+      "reports": [
+        {
+          "agentKey": "archivist",
+          "status": "green",
+          "summary": "Knowledge tree has 10/10 required surfaces and 10 markdown records."
+        },
+        {
+          "agentKey": "researcher",
+          "status": "green",
+          "summary": "Research inbox tracks 8 knowledge clusters."
+        },
+        {
+          "agentKey": "engineer",
+          "status": "green",
+          "summary": "Runtime contract validates 10 agents."
+        },
+        {
+          "agentKey": "writer",
+          "status": "green",
+          "summary": "Documentation surfaces exist for command briefs, revenue plans, operator manuals, and knowledge taxonomy."
+        },
+        {
+          "agentKey": "strategist",
+          "status": "green",
+          "summary": "5 revenue systems are tracked; 2 are high readiness."
+        },
+        {
+          "agentKey": "analyst",
+          "status": "amber",
+          "summary": "Projected monthly revenue is $1,428 against a $100,000 annual target."
+        },
+        {
+          "agentKey": "security",
+          "status": "green",
+          "summary": "7/7 security controls have local implementation signals."
+        },
+        {
+          "agentKey": "automation",
+          "status": "green",
+          "summary": "Task queues show 51 queued, 61 in progress, and 0 blocked records."
+        },
+        {
+          "agentKey": "vision",
+          "status": "green",
+          "summary": "3 book assets are tracked for visual and campaign review."
+        }
+      ]
+    },
+    "deploymentStatus": {
+      "frontendHost": "https://saintblack-ai.github.io/ai-assassins-client/",
+      "backendHost": "https://archaios-saas-worker.quandrix357.workers.dev",
+      "github": {
+        "workflows": [
+          {
+            "name": "Frontend deploy",
+            "path": ".github/workflows/deploy.yml",
+            "present": true
+          },
+          {
+            "name": "Worker heartbeat",
+            "path": ".github/workflows/worker_heartbeat.yml",
+            "present": true
+          }
+        ],
+        "nextAction": "Review deploy workflow status before production frontend release."
+      },
+      "localHealthSummary": "ARCHAIOS Operator Mode is a read-first internal dashboard. Live deployment, credentials, billing mutation, and external posting remain blocked until explicit approval."
+    },
+    "memoryUsage": {
+      "timeline": [
+        {
+          "timestamp": "2026-07-01T22:03:44.243Z",
+          "type": "knowledge-growth",
+          "title": "Knowledge index baseline",
+          "detail": "656 indexed records across 631 conversations."
+        },
+        {
+          "timestamp": "2026-04-17T19:42:33.403Z",
+          "type": "task-completed",
+          "title": "content-agent",
+          "detail": "Generate fresh content queue candidates from updated category files."
+        },
+        {
+          "timestamp": "2026-04-17T19:42:33.311Z",
+          "type": "task-completed",
+          "title": "infra-agent",
+          "detail": "Validate route availability and worker health after knowledge refresh."
+        },
+        {
+          "timestamp": "2026-04-17T19:42:33.341Z",
+          "type": "task-completed",
+          "title": "product-agent",
+          "detail": "Review knowledge/project indexes and propose dashboard integration updates."
+        },
+        {
+          "timestamp": "2026-04-17T19:42:33.433Z",
+          "type": "task-completed",
+          "title": "research-agent",
+          "detail": "Re-cluster conversations into AI/SaaS, books, music, game/OS, crypto, spiritual, and automation research domains."
+        },
+        {
+          "timestamp": "2026-04-17T19:42:33.372Z",
+          "type": "task-completed",
+          "title": "revenue-agent",
+          "detail": "Re-evaluate monetization docs and Stripe prep artifacts from latest export insights."
+        }
+      ],
+      "semanticMemory": {
+        "provider": "supabase-pgvector",
+        "migration": "client/supabase/sql/2026-06-28_archaios_semantic_memory.sql",
+        "embeddingModel": "text-embedding-3-small",
+        "dimensions": 1536,
+        "tables": [
+          "archaios_memory_documents",
+          "archaios_memory_chunks",
+          "archaios_conversation_turns"
+        ],
+        "retrievalPipeline": [
+          "ingest document or conversation",
+          "normalize metadata and sensitivity",
+          "chunk text",
+          "generate embedding",
+          "store pgvector row",
+          "retrieve by vector similarity plus owner, source, and sensitivity filters",
+          "summarize stale high-volume memory"
+        ],
+        "status": "schema-ready"
+      }
+    },
+    "longTermGoals": [
+      "Make ARCHAIOS the daily operating surface for creator execution.",
+      "Convert knowledge and products into reliable recurring revenue.",
+      "Preserve Blackburn legacy assets with searchable, secure memory.",
+      "Keep autonomous workflows modular, testable, and approval-gated."
+    ],
+    "financialDashboard": {
+      "estimatedMonthlyRevenue": 1428,
+      "annualRevenueTarget": 100000,
+      "averageBookRoyalty": 4.2,
+      "systems": [
+        {
+          "id": "saas-tier-system",
+          "name": "SaaS tier system (Free / Pro / Elite)",
+          "readinessState": "high",
+          "nextLocalAction": "Finalize entitlement matrix in client gating logic and map plan labels to UI states."
+        },
+        {
+          "id": "apple-books-funnels",
+          "name": "Apple Books funnels",
+          "readinessState": "high",
+          "nextLocalAction": "Publish 3 funnel variants with source tags and conversion placeholders."
+        },
+        {
+          "id": "intelligence-report-products",
+          "name": "Intelligence report products",
+          "readinessState": "medium",
+          "nextLocalAction": "Draft product packaging and map each report class to Free/Pro/Elite visibility."
+        },
+        {
+          "id": "digital-bundle-products",
+          "name": "Digital bundle products",
+          "readinessState": "medium",
+          "nextLocalAction": "Define initial 3 bundles and attach upsell messaging by user tier."
+        },
+        {
+          "id": "saint-black-music-funnels",
+          "name": "Saint Black music funnels",
+          "readinessState": "medium",
+          "nextLocalAction": "Create 14-day campaign sequence with CTA path variants and tracking tags."
+        }
+      ]
+    },
+    "aiConversationHistory": {
+      "records": 631,
+      "source": "/Users/quandrixblackburn/Library/Mobile Documents/com~apple~CloudDocs/QX Technology 2019/client/ARCHAIOS_INFRASTRUCTURE/inbox/chatgpt_export_2026-04-16",
+      "nextAction": "Ingest future conversation exports into archaios_conversation_turns and summarize into memory."
+    },
+    "taskQueue": {
+      "counts": {
+        "queue": 51,
+        "prioritized": 46,
+        "inProgress": 61,
+        "completed": 51,
+        "blocked": 0
+      },
+      "samples": {
+        "queue": [
+          {
+            "id": "2026-04-17T19-42-33-277Z-content-agent-generate-fresh-content-queue-candidates-",
+            "cycleId": "2026-04-17T19-42-33-277Z",
+            "createdAt": "2026-04-17T19:42:33.372Z",
+            "priority": "medium",
+            "agent": "content-agent",
+            "task": "Generate fresh content queue candidates from updated category files.",
+            "source": "tasks/agent-task-queue.json",
+            "status": "intake"
+          },
+          {
+            "id": "2026-04-17T19-42-33-277Z-infra-agent-validate-route-availability-and-worker-h",
+            "cycleId": "2026-04-17T19-42-33-277Z",
+            "createdAt": "2026-04-17T19:42:33.280Z",
+            "priority": "high",
+            "agent": "infra-agent",
+            "task": "Validate route availability and worker health after knowledge refresh.",
+            "source": "tasks/agent-task-queue.json",
+            "status": "intake"
+          },
+          {
+            "id": "2026-04-17T19-42-33-277Z-product-agent-review-knowledge-project-indexes-and-pro",
+            "cycleId": "2026-04-17T19-42-33-277Z",
+            "createdAt": "2026-04-17T19:42:33.311Z",
+            "priority": "high",
+            "agent": "product-agent",
+            "task": "Review knowledge/project indexes and propose dashboard integration updates.",
+            "source": "tasks/agent-task-queue.json",
+            "status": "intake"
+          },
+          {
+            "id": "2026-04-17T19-42-33-277Z-research-agent-re-cluster-conversations-into-ai-saas-bo",
+            "cycleId": "2026-04-17T19-42-33-277Z",
+            "createdAt": "2026-04-17T19:42:33.403Z",
+            "priority": "high",
+            "agent": "research-agent",
+            "task": "Re-cluster conversations into AI/SaaS, books, music, game/OS, crypto, spiritual, and automation research domains.",
+            "source": "tasks/agent-task-queue.json",
+            "status": "intake"
+          },
+          {
+            "id": "2026-04-17T19-42-33-277Z-revenue-agent-re-evaluate-monetization-docs-and-stripe",
+            "cycleId": "2026-04-17T19-42-33-277Z",
+            "createdAt": "2026-04-17T19:42:33.341Z",
+            "priority": "medium",
+            "agent": "revenue-agent",
+            "task": "Re-evaluate monetization docs and Stripe prep artifacts from latest export insights.",
+            "source": "tasks/agent-task-queue.json",
+            "status": "intake"
+          }
+        ],
+        "prioritized": [
+          {
+            "taskId": "top-exec-01",
+            "system": "SaaS tier system",
+            "primaryAgent": "revenue-agent",
+            "supportAgent": "product-agent",
+            "readiness": "high",
+            "priority": "high",
+            "status": "queued",
+            "deliverable": "Free/Pro/Elite entitlement matrix and upgrade gating spec",
+            "createdAt": "2026-04-17T18:45:00Z"
+          },
+          {
+            "taskId": "top-exec-02",
+            "system": "Apple Books funnels",
+            "primaryAgent": "content-agent",
+            "supportAgent": "revenue-agent",
+            "readiness": "high",
+            "priority": "high",
+            "status": "queued",
+            "deliverable": "Book campaign + CTA routing pack with conversion placeholders",
+            "createdAt": "2026-04-17T18:45:00Z"
+          },
+          {
+            "taskId": "top-exec-03",
+            "system": "Intelligence report products",
+            "primaryAgent": "product-agent",
+            "supportAgent": "revenue-agent",
+            "readiness": "medium",
+            "priority": "high",
+            "status": "queued",
+            "deliverable": "Productized report SKU model and tier access workflow",
+            "createdAt": "2026-04-17T18:45:00Z"
+          },
+          {
+            "taskId": "top-exec-04",
+            "system": "Digital bundle products",
+            "primaryAgent": "revenue-agent",
+            "supportAgent": "content-agent",
+            "readiness": "medium",
+            "priority": "high",
+            "status": "queued",
+            "deliverable": "Bundle catalog, tier alignment, and upsell sequencing",
+            "createdAt": "2026-04-17T18:45:00Z"
+          },
+          {
+            "taskId": "top-exec-05",
+            "system": "Saint Black music funnels",
+            "primaryAgent": "content-agent",
+            "supportAgent": "revenue-agent",
+            "readiness": "medium",
+            "priority": "high",
+            "status": "queued",
+            "deliverable": "Music release campaign cadence and conversion handoff path",
+            "createdAt": "2026-04-17T18:45:00Z"
+          }
+        ],
+        "inProgress": [
+          {
+            "taskId": "saas-launch-01",
+            "workstream": "pricing-monetization",
+            "primaryAgent": "revenue-agent",
+            "supportAgent": "product-agent",
+            "status": "in_progress",
+            "currentTask": "Lock launch pricing posture and monetization trigger map.",
+            "updatedAt": "2026-04-17T19:25:00Z"
+          },
+          {
+            "taskId": "saas-launch-02",
+            "workstream": "feature-gating",
+            "primaryAgent": "product-agent",
+            "supportAgent": "revenue-agent",
+            "status": "in_progress",
+            "currentTask": "Map entitlement and lock-state behavior for Free/Pro/Elite.",
+            "updatedAt": "2026-04-17T19:25:00Z"
+          },
+          {
+            "taskId": "saas-launch-03",
+            "workstream": "checkout-access-flow",
+            "primaryAgent": "revenue-agent",
+            "supportAgent": "product-agent",
+            "status": "in_progress",
+            "currentTask": "Prepare test-only checkout and upgrade/downgrade subscription flow docs.",
+            "updatedAt": "2026-04-17T19:25:00Z"
+          },
+          {
+            "taskId": "saas-launch-04",
+            "workstream": "funnel-copy",
+            "primaryAgent": "content-agent",
+            "supportAgent": "revenue-agent",
+            "status": "in_progress",
+            "currentTask": "Finalize conversion copy set for landing/pricing/in-app/email.",
+            "updatedAt": "2026-04-17T19:25:00Z"
+          },
+          {
+            "taskId": "saas-launch-05",
+            "workstream": "launch-readiness",
+            "primaryAgent": "product-agent",
+            "supportAgent": "revenue-agent",
+            "status": "in_progress",
+            "currentTask": "Assemble launch gate and pending dependency checklist for authorized go-live.",
+            "updatedAt": "2026-04-17T19:25:00Z"
+          }
+        ],
+        "blocked": []
+      }
+    },
+    "researchInbox": {
+      "clusters": [
+        {
+          "id": "ai-infrastructure",
+          "label": "AI Infrastructure",
+          "count": 81
+        },
+        {
+          "id": "saas-systems",
+          "label": "SaaS Systems",
+          "count": 218
+        },
+        {
+          "id": "music-saint-black",
+          "label": "Music (Saint Black)",
+          "count": 111
+        },
+        {
+          "id": "books-apple-books",
+          "label": "Books (Apple Books)",
+          "count": 29
+        },
+        {
+          "id": "game-development",
+          "label": "Game Development",
+          "count": 45
+        },
+        {
+          "id": "crypto-finance",
+          "label": "Crypto / Finance",
+          "count": 26
+        },
+        {
+          "id": "spiritual-research",
+          "label": "Spiritual / Research",
+          "count": 83
+        },
+        {
+          "id": "automation-systems",
+          "label": "Automation Systems",
+          "count": 63
+        }
+      ],
+      "nextAction": "Turn the highest-value cluster into a sourced research brief."
+    },
+    "projectStatus": [
+      {
+        "id": "saas-tier-system",
+        "name": "SaaS tier system (Free / Pro / Elite)",
+        "status": "high",
+        "nextAction": "Finalize entitlement matrix in client gating logic and map plan labels to UI states.",
+        "owner": "revenue-agent"
+      },
+      {
+        "id": "apple-books-funnels",
+        "name": "Apple Books funnels",
+        "status": "high",
+        "nextAction": "Publish 3 funnel variants with source tags and conversion placeholders.",
+        "owner": "content-agent"
+      },
+      {
+        "id": "intelligence-report-products",
+        "name": "Intelligence report products",
+        "status": "medium",
+        "nextAction": "Draft product packaging and map each report class to Free/Pro/Elite visibility.",
+        "owner": "product-agent"
+      },
+      {
+        "id": "digital-bundle-products",
+        "name": "Digital bundle products",
+        "status": "medium",
+        "nextAction": "Define initial 3 bundles and attach upsell messaging by user tier.",
+        "owner": "revenue-agent"
+      },
+      {
+        "id": "saint-black-music-funnels",
+        "name": "Saint Black music funnels",
+        "status": "medium",
+        "nextAction": "Create 14-day campaign sequence with CTA path variants and tracking tags.",
+        "owner": "content-agent"
+      }
+    ]
+  },
+  "securityOperations": {
+    "generatedAt": "2026-07-01T22:03:43.485Z",
+    "service": "project-sentinel",
+    "title": "Project Sentinel Security Operations Dashboard",
+    "doctrine": "Report only actionable findings backed by local evidence. Do not speculate about connector state.",
+    "status": "amber",
+    "summary": "2 actionable finding(s): 0 critical, 0 high, 1 medium, 1 low.",
+    "sectors": [
+      {
+        "key": "github",
+        "label": "GitHub",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "remoteConfigured": true,
+          "deployWorkflow": true,
+          "workerHeartbeatWorkflow": true
+        }
+      },
+      {
+        "key": "dependencies",
+        "label": "Dependencies",
+        "status": "amber",
+        "actionableFindings": 1,
+        "coverage": {
+          "packageManifests": 3,
+          "lockfiles": 3,
+          "auditScript": false
+        }
+      },
+      {
+        "key": "secrets",
+        "label": "Secrets",
+        "status": "amber",
+        "actionableFindings": 1,
+        "coverage": {
+          "searchMode": "ripgrep-redacted-plus-export-quarantine",
+          "reportedLimit": 25,
+          "scanTargets": 15,
+          "rawExportInboxPresent": true,
+          "maxContinuousExportBytes": 26214400,
+          "patterns": 5
+        }
+      },
+      {
+        "key": "authentication",
+        "label": "Authentication",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "signedOutCheckoutBlocked": true,
+          "workerAuth": true,
+          "protectedContent": true
+        }
+      },
+      {
+        "key": "cloudflare",
+        "label": "Cloudflare",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "rootName": "archaios-saas-worker",
+          "clientName": "archaios-saas-worker",
+          "hasHealthEndpoint": true
+        }
+      },
+      {
+        "key": "supabase",
+        "label": "Supabase",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "migrationCount": 9,
+          "requiredMigrationsPresent": 4
+        }
+      },
+      {
+        "key": "stripe",
+        "label": "Stripe",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "hasCheckout": true,
+          "hasWebhookVerification": true,
+          "requiredEvents": 5,
+          "missingEvents": [],
+          "hasProElitePlaceholders": true
+        }
+      },
+      {
+        "key": "api-keys",
+        "label": "API Keys",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "scannedBrowserFiles": 49,
+          "forbiddenNames": 6
+        }
+      },
+      {
+        "key": "certificates",
+        "label": "Certificates",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "certificateFiles": 0
+        }
+      },
+      {
+        "key": "broken-links",
+        "label": "Broken Links",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "markdownFiles": 162,
+          "reportedLimit": 12
+        }
+      },
+      {
+        "key": "deployments",
+        "label": "Deployments",
+        "status": "green",
+        "actionableFindings": 0,
+        "coverage": {
+          "clientBuild": true,
+          "workerCheck": true,
+          "canonicalHeartbeat": true,
+          "deployWorkflowBuildStep": true
+        }
+      }
+    ],
+    "findings": [
+      {
+        "id": "secrets-raw-export-inbox-requires-quarantine-scan",
+        "sector": "secrets",
+        "severity": "medium",
+        "title": "Raw export inbox requires quarantine scan",
+        "evidence": "client/ARCHAIOS_INFRASTRUCTURE/inbox exists.",
+        "action": "Run an offline redaction/secret scan before promoting raw exports into production knowledge or semantic memory.",
+        "owner": "security",
+        "blockedBy": [
+          "production-deploy"
+        ]
+      },
+      {
+        "id": "dependencies-dependency-audit-script-missing",
+        "sector": "dependencies",
+        "severity": "low",
+        "title": "Dependency audit script missing",
+        "evidence": "No npm audit/security script is defined in root or client package.json.",
+        "action": "Add a non-mutating dependency audit command and include it in the pre-release checklist.",
+        "owner": "security",
+        "blockedBy": []
+      }
+    ],
+    "metrics": {
+      "sectors": 11,
+      "cleanSectors": 9,
+      "actionableFindings": 2,
+      "critical": 0,
+      "high": 0,
+      "medium": 1,
+      "low": 1
+    },
+    "responsePlan": [
+      {
+        "order": 1,
+        "findingId": "secrets-raw-export-inbox-requires-quarantine-scan",
+        "severity": "medium",
+        "owner": "security",
+        "action": "Run an offline redaction/secret scan before promoting raw exports into production knowledge or semantic memory."
+      },
+      {
+        "order": 2,
+        "findingId": "dependencies-dependency-audit-script-missing",
+        "severity": "low",
+        "owner": "security",
+        "action": "Add a non-mutating dependency audit command and include it in the pre-release checklist."
+      }
+    ]
+  },
+  "scheduledTasks": [
+    {
+      "id": "daily-morning-brief",
+      "cadence": "daily",
+      "localTime": "07:00",
+      "owner": "commander",
+      "status": "prepared",
+      "action": "Generate morning briefing from structured agent reports.",
+      "requiresApproval": false,
+      "dependencies": [
+        "archivist",
+        "researcher",
+        "engineer",
+        "writer",
+        "strategist",
+        "analyst",
+        "security",
+        "automation",
+        "vision"
+      ]
+    },
+    {
+      "id": "daily-evening-review",
+      "cadence": "daily",
+      "localTime": "20:30",
+      "owner": "commander",
+      "status": "prepared",
+      "action": "Summarize completed work, blockers, memory additions, and tomorrow's first action.",
+      "requiresApproval": false,
+      "dependencies": [
+        "archivist",
+        "researcher",
+        "engineer",
+        "writer",
+        "strategist",
+        "analyst",
+        "security",
+        "automation",
+        "vision"
+      ]
+    },
+    {
+      "id": "weekly-security-readiness",
+      "cadence": "weekly",
+      "localTime": "09:00",
+      "owner": "security",
+      "status": "prepared",
+      "action": "Review secrets, auth gates, deployment workflows, and dependency risk.",
+      "requiresApproval": false,
+      "dependencies": [
+        "security"
+      ]
+    },
+    {
+      "id": "predeploy-release-gate",
+      "cadence": "manual",
+      "localTime": null,
+      "owner": "automation",
+      "status": "approval-required",
+      "action": "Run tests and deployment readiness checks before Cloudflare or GitHub Pages release.",
+      "requiresApproval": true,
+      "dependencies": [
+        "automation"
+      ]
+    }
+  ],
+  "operatingSnapshot": {
+    "generatedAt": "2026-07-01T22:03:43.488Z",
+    "system": "ARCHAIOS OMEGA",
+    "health": "healthy",
+    "blockedSignals": [],
+    "agentNetwork": {
+      "ok": true,
+      "totalAgents": 10,
+      "requiredAgents": 10,
+      "missing": [],
+      "duplicates": [],
+      "incomplete": []
+    },
+    "taskQueues": {
+      "queue": 51,
+      "prioritized": 46,
+      "inProgress": 61,
+      "completed": 51,
+      "blocked": 0
+    },
+    "knowledge": {
+      "root": "knowledge",
+      "required": 10,
+      "present": 10,
+      "ready": true,
+      "coverage": [
+        {
+          "path": "knowledge/identity.md",
+          "present": true
+        },
+        {
+          "path": "knowledge/mission.md",
+          "present": true
+        },
+        {
+          "path": "knowledge/projects",
+          "present": true
+        },
+        {
+          "path": "knowledge/research",
+          "present": true
+        },
+        {
+          "path": "knowledge/books",
+          "present": true
+        },
+        {
+          "path": "knowledge/music",
+          "present": true
+        },
+        {
+          "path": "knowledge/business",
+          "present": true
+        },
+        {
+          "path": "knowledge/vault",
+          "present": true
+        },
+        {
+          "path": "knowledge/memory",
+          "present": true
+        },
+        {
+          "path": "knowledge/logs",
+          "present": true
+        }
+      ]
+    },
+    "security": {
+      "controls": 7,
+      "implemented": 7,
+      "ready": true,
+      "signals": {
+        "jwtAuthentication": true,
+        "rbac": true,
+        "encryptedSecrets": true,
+        "auditLogging": true,
+        "rateLimiting": true,
+        "secureApiGateway": true,
+        "vulnerabilityScanning": true
+      }
+    },
+    "nextActions": [
+      "Connect agent-network manifest to live Supabase agent registry.",
+      "Index knowledge documents into pgvector with encrypted metadata where required.",
+      "Add signed audit events for agent actions that mutate runtime state."
+    ]
+  }
+}

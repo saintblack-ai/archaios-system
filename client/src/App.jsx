@@ -30,7 +30,10 @@ import {
 import "./app.css";
 
 const BookGrowthCommand = lazy(() => import("./pages/bookGrowth/BookGrowthCommand"));
+const ArchaiosCommandCenter = lazy(() => import("./pages/archaios/ArchaiosCommandCenter"));
+const DailyCommandCenter = lazy(() => import("./pages/daily/DailyCommandCenter"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
+const MissionControl = lazy(() => import("./pages/mission/MissionControl"));
 const OperatorMode = lazy(() => import("./pages/operator/OperatorMode"));
 const CommandLinks = lazy(() => import("./pages/revenue/CommandLinks"));
 const PricingPage = lazy(() => import("./pages/revenue/PricingPage"));
@@ -58,6 +61,7 @@ const SIGNUP_COOLDOWN_SECONDS = 15;
 const RESEND_COOLDOWN_SECONDS = 60;
 const BACKEND_HEALTHCHECK_URL = getBackendHealthcheckUrl();
 const CHECKOUT_SYNC_DELAYS_MS = [0, 1500, 2500, 4000, 6000, 9000];
+const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Paid checkout stays launch-gated until legal, tax, policy, and Stripe verification are complete.";
 
 function firstDefined(...values) {
   return values.find((value) => value !== undefined && value !== null);
@@ -716,9 +720,9 @@ function ConversionBanner({
     <section className="conversion-banner">
       <div className="conversion-copy">
         <p className="eyebrow">Premium Access</p>
-        <h2>AI System Generating Signals, Content, and Opportunities — Daily</h2>
+        <h2>AI system generating signals, content, and opportunities daily</h2>
         <p>
-          Upgrade to unlock full intelligence and real-time access.
+          Free is a limited preview. Pro is $49/month for the full dashboard. Elite is $99/month for priority intelligence.
         </p>
         <div className="urgency-stack">
           <div className="urgency-pill">Real-time signals locked</div>
@@ -741,10 +745,10 @@ function ConversionBanner({
       </div>
       <div className="conversion-actions">
         <button className="primary-button" type="button" onClick={onUnlockPro}>
-          Upgrade to Pro ($49)
+          Upgrade to Pro ($49/month)
         </button>
         <button className="ghost-button" type="button" onClick={onGoElite}>
-          Go Elite ($99)
+          Go Elite ($99/month)
         </button>
         <button className="ghost-button" type="button" onClick={onGetAccess}>
           Get Intelligence Access
@@ -760,8 +764,8 @@ function LeadCapturePanel({ email, status, onEmailChange, onSubmit, analytics })
     <section className="panel">
       <SectionHeader
         eyebrow="Lead Capture"
-        title="Get 3 free intelligence signals daily"
-        body="Join the free list and receive a daily sample of the signal stack while premium alerts remain reserved for paid operators."
+        title="Join the limited preview list"
+        body="Join the free list and receive sample signals while the full dashboard and priority intelligence remain reserved for Pro and Elite."
       />
       <form className="lead-form" onSubmit={onSubmit}>
         <input
@@ -2317,8 +2321,9 @@ function LegacyApp() {
           <p>
             ARCHAIOS now supports Supabase auth, subscription gating, Stripe billing,
             per-user alert history, and a paid `/api/alerts` flow that limits free
-            users while unlocking full and priority access for Pro and Elite.
+            users while unlocking the Pro full dashboard and Elite priority intelligence.
           </p>
+          <p className="panel-note">{BUSINESS_ONBOARDING_NOTE}</p>
           <div className="hero-actions">
             <button
               className={`primary-button ${isFreeTier ? "button-locked" : ""}`}
@@ -2607,6 +2612,30 @@ export default function App() {
     return (
       <Suspense fallback={<main className="app-shell"><div className="panel">Loading dashboard...</div></main>}>
         <DashboardPage />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/archaios")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Archaios Command Center...</div></main>}>
+        <ArchaiosCommandCenter />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/daily")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Daily Command Center...</div></main>}>
+        <DailyCommandCenter />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/mission-control")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Mission Control...</div></main>}>
+        <MissionControl />
       </Suspense>
     );
   }
