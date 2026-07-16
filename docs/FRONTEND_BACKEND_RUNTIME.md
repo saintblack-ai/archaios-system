@@ -49,6 +49,7 @@ npx wrangler deploy --config wrangler.toml --name archaios-saas-worker --dry-run
 ## Deployment Targets
 
 - Frontend: deploy `client/dist` through the existing GitHub Pages workflow.
+- Vercel preview frontend: repository root project using `npm --prefix client ci`, `npm --prefix client run build`, and `client/dist`.
 - Backend: deploy `worker.js` with `npx wrangler deploy --config wrangler.toml --name archaios-saas-worker`.
 - Pull requests run validation only. Do not deploy from pull requests.
 

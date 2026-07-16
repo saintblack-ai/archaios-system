@@ -1,7 +1,7 @@
 import { getApiErrorMessage } from "../../../shared/api-contracts.js";
-import { PRODUCTION_API_URL } from "../../../shared/production-config.js";
 
 const DEFAULT_TIMEOUT_MS = 12000;
+const DEFAULT_API_BASE_URL = "https://archaios-saas-worker.quandrix357.workers.dev";
 const RETRYABLE_STATUSES = new Set([408, 429, 500, 502, 503, 504]);
 
 function trimTrailingSlash(value) {
@@ -10,7 +10,7 @@ function trimTrailingSlash(value) {
 
 function resolveApiBaseUrl() {
   const configured = trimTrailingSlash(import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_BACKEND_URL);
-  return configured || PRODUCTION_API_URL;
+  return configured || DEFAULT_API_BASE_URL;
 }
 
 export const API_BASE_URL = resolveApiBaseUrl();
