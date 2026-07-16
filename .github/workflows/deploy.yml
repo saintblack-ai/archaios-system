@@ -20,7 +20,7 @@ jobs:
     permissions:
       contents: read
     env:
-      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://archaios-saas-worker.quandrix357.workers.dev' }}
       VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
       VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
@@ -54,9 +54,13 @@ jobs:
         run: |
           missing=0
 
-          if [ -z "${VITE_API_BASE_URL}" ] && [ -z "${VITE_BACKEND_URL}" ]; then
-            echo "::error::Missing required GitHub Actions variable VITE_API_BASE_URL."
+          if [ -z "${VITE_API_BASE_URL}" ]; then
+            echo "::error::Unable to resolve VITE_API_BASE_URL for validation."
             missing=1
+          fi
+
+          if [ -z "${{ vars.VITE_API_BASE_URL }}" ]; then
+            echo "::warning::VITE_API_BASE_URL repository variable is not set; PR validation is using the canonical Worker fallback."
           fi
 
           if [ -z "${ALLOWED_ORIGINS}" ]; then

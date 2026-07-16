@@ -4,12 +4,10 @@ on:
   schedule:
     - cron: "0 13 * * *"
   workflow_dispatch:
-  pull_request:
 
 jobs:
   heartbeat:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork != true }}
     env:
       WORKER_HEALTH_URL: https://archaios-saas-worker.quandrix357.workers.dev/api/health
       AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}

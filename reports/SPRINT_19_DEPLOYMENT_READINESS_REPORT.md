@@ -65,11 +65,13 @@ The release candidate intentionally excludes unrelated and protected categories:
 - Added the subscription upsert migration contract required by revenue readiness tests.
 - Added the missing root typecheck step to CI.
 - Reduced CI permissions so Pages write/id-token permissions exist only on the deploy job.
+- Made PR validation use the canonical Worker fallback when repository variables are unset, while warning that `VITE_API_BASE_URL` should be configured.
+- Kept the live Worker heartbeat on scheduled/manual runs only so pull requests are not blocked by current production deployment state.
 - Strengthened the Worker smoke verifier to check health, version, status, pricing, SITREP, CORS, JSON 404 behavior, degraded subscription behavior, and secret-like field leakage.
 - Resolved `npm audit --audit-level=moderate` findings with a targeted `postcss` override and lockfile refresh.
 
 ## GitHub Actions Status
-Workflow validates pull requests without deploying. Main pushes and manual dispatch can still publish GitHub Pages after validation. CI now performs checkout, Node 20 setup, root install, client install, runtime contract validation, root lint, root typecheck, canonical runtime tests, client lint, client tests, client production build, and Worker dry-run.
+Workflow validates pull requests without deploying. Main pushes and manual dispatch can still publish GitHub Pages after validation. CI now performs checkout, Node 20 setup, root install, client install, runtime contract validation, root lint, root typecheck, canonical runtime tests, client lint, client tests, client production build, and Worker dry-run. The live Worker heartbeat is intentionally scheduled/manual because the current production Worker host is a deployment-state check, not a PR code validation check.
 
 ## Vercel Configuration Status
 `vercel.json` uses:
