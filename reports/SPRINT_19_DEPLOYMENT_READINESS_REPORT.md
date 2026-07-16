@@ -4,7 +4,7 @@
 - Audit date: 2026-07-16
 - Release-candidate branch: `codex/sprint-19-runtime-release-candidate`
 - Base commit: `f1b7c1382eb10b9121edf605a6c657fddbc4a3a9`
-- Release-candidate commit: `dfc910d`
+- Release-candidate runtime commit: `aaae07e`
 - Source PR reviewed: PR #16 / `origin/codex/connect-canonical-runtime`
 
 ## Architecture Status
