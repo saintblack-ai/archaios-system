@@ -20,6 +20,8 @@ export const WORKER_CANONICAL_API_ROUTES = Object.freeze([
   { method: "GET", path: "/api/health" },
   { method: "GET", path: "/api/version" },
   { method: "GET", path: "/api/status" },
+  { method: "GET", path: "/api/agents/health" },
+  { method: "GET", path: "/api/agents/status" },
   { method: "GET", path: "/api/pricing" },
   { method: "GET", path: "/api/admin/dashboard" },
   { method: "GET", path: "/api/alerts" },

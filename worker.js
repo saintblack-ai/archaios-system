@@ -244,6 +244,10 @@ export default {
         return respond(json(getStatusPayload(env)));
       }
 
+      if (request.method === "GET" && pathname === "/api/agents/health") {
+        return respond(json(buildAgentReadinessPayload(env)));
+      }
+
       if (pathname.startsWith("/api/sitrep") && request.method === "GET") {
         return respond(handleSitrepReadRequest(pathname, url, env));
       }
@@ -515,10 +519,9 @@ export default {
       }
 
       if (request.method === "GET" && pathname === "/api/agents/status") {
-        assertCoreEnv(env);
-        await syncAgentRegistry(env);
         return respond(json({
           ok: true,
+          ...buildAgentReadinessPayload(env),
           agents: await getAgentStatuses(env)
         }));
       }
@@ -1695,6 +1698,15 @@ function deriveOptimizationProfile(metrics, currentProfile, recommendation) {
 }
 
 async function getAgentStatuses(env) {
+  if (!hasSupabaseServiceConfig(env)) {
+    return AGENTS.map((agent) => ({
+      name: agent.name,
+      schedule: agent.schedule,
+      status: "ready_degraded",
+      last_run: null
+    }));
+  }
+
   const registry = await safeSupabaseSelect(
     env,
     "agents?select=name,schedule,status,last_run&order=name.asc"
@@ -3026,6 +3038,32 @@ export function getHealthPayload(env = {}) {
   };
 }
 
+function buildAgentReadinessPayload(env = {}) {
+  return {
+    service: WORKER_SERVICE_NAME,
+    mode: hasSupabaseServiceConfig(env) ? "agent_runtime_ready" : "agent_runtime_degraded",
+    runtime: {
+      commander: "ready",
+      missionRunner: "ready",
+      toolRegistry: "ready",
+      memoryRetrieval: hasSupabaseServiceConfig(env) ? "configured" : "degraded_until_supabase_activation",
+      planningLayer: "deterministic",
+      verificationLayer: "ready",
+      executionLogs: hasSupabaseServiceConfig(env) ? "configured" : "degraded_until_supabase_activation",
+      humanApprovalGate: "required_for_mutations",
+      dailySitrepGenerator: "degraded_public_demo",
+      agentHealthMonitor: "ready"
+    },
+    guardrails: [
+      "manual_post_routes_require_authorization_when_AUTH_TOKEN_is_set",
+      "no_destructive_autonomous_actions",
+      "supabase_writes_require_activation",
+      "stripe_checkout_requires_activation"
+    ],
+    dependencies: getHealthPayload(env).dependencies
+  };
+}
+
 function getWorkerVersion(env = {}) {
   return String(env.WORKER_RELEASE || DEFAULT_WORKER_RELEASE);
 }
@@ -3052,7 +3090,8 @@ function getStatusPayload(env = {}) {
       "architecture_status",
       "public_demonstration_data",
       "frontend_navigation",
-      "health_version_status"
+      "health_version_status",
+      "agent_health_monitor"
     ],
     unavailableUntilActivation: [
       "user_authentication",

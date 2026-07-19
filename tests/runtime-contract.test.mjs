@@ -89,6 +89,39 @@ test("Worker exposes health, version, status, and request id headers", async () 
   assert.equal((await status.json()).mode, "degraded_public");
 });
 
+test("Worker exposes degraded-safe agent readiness without activated infrastructure", async () => {
+  const health = await worker.fetch(new Request("https://worker.example/api/agents/health"), {}, {});
+  assert.equal(health.status, 200);
+  const healthPayload = await health.json();
+  assert.equal(healthPayload.service, "archaios-core-api");
+  assert.equal(healthPayload.mode, "agent_runtime_degraded");
+  assert.equal(healthPayload.runtime.humanApprovalGate, "required_for_mutations");
+  assert.equal(healthPayload.runtime.agentHealthMonitor, "ready");
+
+  const status = await worker.fetch(new Request("https://worker.example/api/agents/status"), {}, {});
+  assert.equal(status.status, 200);
+  const statusPayload = await status.json();
+  assert.equal(statusPayload.ok, true);
+  assert.equal(statusPayload.mode, "agent_runtime_degraded");
+  assert.ok(Array.isArray(statusPayload.agents));
+  assert.ok(statusPayload.agents.length > 0);
+  assert.equal(statusPayload.agents[0].status, "ready_degraded");
+});
+
+test("frontend build contains iPhone PWA install metadata", async () => {
+  const index = await readFile(path.join(repoRoot, "client", "index.html"), "utf8");
+  const manifest = await readFile(path.join(repoRoot, "client", "public", "manifest.json"), "utf8");
+  const serviceWorker = await readFile(path.join(repoRoot, "client", "public", "service-worker.js"), "utf8");
+  const main = await readFile(path.join(repoRoot, "client", "src", "main.jsx"), "utf8");
+
+  assert.match(index, /apple-mobile-web-app-capable/);
+  assert.match(index, /apple-touch-icon/);
+  assert.match(index, /viewport-fit=cover/);
+  assert.equal(JSON.parse(manifest).display, "standalone");
+  assert.match(serviceWorker, /CACHE_NAME/);
+  assert.match(main, /serviceWorker/);
+});
+
 test("Worker serves read-only SITREP routes without claiming live intelligence", async () => {
   const latest = await worker.fetch(new Request("https://worker.example/api/sitrep/latest"), {}, {});
   assert.equal(latest.status, 200);
