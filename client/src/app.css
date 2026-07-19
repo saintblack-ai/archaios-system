@@ -586,6 +586,14 @@ button {
   margin-bottom: 16px;
 }
 
+.update-ready-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 .auth-toggle {
   display: flex;
   gap: 12px;

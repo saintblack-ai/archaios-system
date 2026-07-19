@@ -62,6 +62,7 @@ const RESEND_COOLDOWN_SECONDS = 60;
 const BACKEND_HEALTHCHECK_URL = getBackendHealthcheckUrl();
 const CHECKOUT_SYNC_DELAYS_MS = [0, 1500, 2500, 4000, 6000, 9000];
 const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Paid checkout stays launch-gated until legal, tax, policy, and Stripe verification are complete.";
+const APP_BUILD_ID = import.meta.env.VITE_APP_BUILD_ID || "2026-07-19-operation-black-vault";
 
 function firstDefined(...values) {
   return values.find((value) => value !== undefined && value !== null);
@@ -1520,6 +1521,7 @@ function LegacyApp() {
   const [billingPortalBusy, setBillingPortalBusy] = useState(false);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [activeDate, setActiveDate] = useState(() => loadSystemState().calendar[0].date);
+  const [serviceWorkerUpdate, setServiceWorkerUpdate] = useState(null);
   const notifiedRef = useRef(new Set());
   const leadCaptureRef = useRef(null);
   const checkoutRetryRef = useRef(false);
@@ -1527,6 +1529,33 @@ function LegacyApp() {
   const isFreeTier = !effectiveSubscription.paid;
   const pricingTiers = platformDashboard.pricing?.length ? platformDashboard.pricing : PRICING_TIERS;
   const showAuthPanel = !session || authState === AUTH_STATES.passwordRecovery;
+
+  useEffect(() => {
+    const handleUpdateReady = (event) => {
+      setServiceWorkerUpdate(event.detail?.registration || null);
+    };
+
+    window.addEventListener("archaios-update-ready", handleUpdateReady);
+    return () => window.removeEventListener("archaios-update-ready", handleUpdateReady);
+  }, []);
+
+  const handleInstallUpdate = () => {
+    const waiting = serviceWorkerUpdate?.waiting;
+    if (!waiting) {
+      window.location.reload();
+      return;
+    }
+
+    let refreshing = false;
+    navigator.serviceWorker?.addEventListener("controllerchange", () => {
+      if (refreshing) {
+        return;
+      }
+      refreshing = true;
+      window.location.reload();
+    });
+    waiting.postMessage({ type: "ARCHAIOS_SKIP_WAITING" });
+  };
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(system));
@@ -2314,6 +2343,14 @@ function LegacyApp() {
           </a>
         </div>
       ) : null}
+      {serviceWorkerUpdate ? (
+        <div className="panel-note update-ready-banner">
+          New ARCHAIOS build ready. Current build: {APP_BUILD_ID}.{" "}
+          <button className="ghost-button" type="button" onClick={handleInstallUpdate}>
+            Refresh App
+          </button>
+        </div>
+      ) : null}
       <section className="hero-panel">
         <div className="hero-copy">
           <p className="eyebrow">{THEME} Monetized Intelligence Platform</p>
@@ -2353,6 +2390,7 @@ function LegacyApp() {
           <div className="status-row">
             <StatusIndicator status={currentStatus} label={currentStatus === "live" ? "Live" : "Offline"} />
             <AlertBadge level={intelligence.systemLevel} />
+            <div className="status-chip">Build: {APP_BUILD_ID}</div>
             <div className="status-chip">Tier: {effectiveSubscription.tier}</div>
             <div className="status-chip">Last sync: {formatTime(intelligence.generatedAt)}</div>
             {intelligence.isRefreshing ? <div className="status-chip">Refreshing live feeds...</div> : null}

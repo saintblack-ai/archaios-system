@@ -3027,6 +3027,7 @@ export function getHealthPayload(env = {}) {
   return {
     ok: true,
     service: WORKER_SERVICE_NAME,
+    status: "healthy",
     runtime: "cloudflare-worker",
     version,
     release: version,

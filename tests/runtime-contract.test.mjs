@@ -77,6 +77,7 @@ test("Worker exposes health, version, status, and request id headers", async () 
   const healthPayload = await health.json();
   assert.equal(healthPayload.ok, true);
   assert.equal(healthPayload.service, "archaios-core-api");
+  assert.equal(healthPayload.status, "healthy");
   assert.equal(healthPayload.runtime, "cloudflare-worker");
   assert.equal(healthPayload.dependencies.supabase, "inactive");
 
@@ -113,13 +114,19 @@ test("frontend build contains iPhone PWA install metadata", async () => {
   const manifest = await readFile(path.join(repoRoot, "client", "public", "manifest.json"), "utf8");
   const serviceWorker = await readFile(path.join(repoRoot, "client", "public", "service-worker.js"), "utf8");
   const main = await readFile(path.join(repoRoot, "client", "src", "main.jsx"), "utf8");
+  const app = await readFile(path.join(repoRoot, "client", "src", "App.jsx"), "utf8");
 
   assert.match(index, /apple-mobile-web-app-capable/);
   assert.match(index, /apple-touch-icon/);
   assert.match(index, /viewport-fit=cover/);
   assert.equal(JSON.parse(manifest).display, "standalone");
-  assert.match(serviceWorker, /CACHE_NAME/);
+  assert.match(serviceWorker, /2026-07-19-operation-black-vault/);
+  assert.match(serviceWorker, /ARCHAIOS_SKIP_WAITING/);
+  assert.match(serviceWorker, /url\.pathname\.startsWith\("\/api\/"\)/);
+  assert.match(serviceWorker, /AUTH_QUERY_KEYS/);
   assert.match(main, /serviceWorker/);
+  assert.match(main, /archaios-update-ready/);
+  assert.match(app, /APP_BUILD_ID/);
 });
 
 test("Worker serves read-only SITREP routes without claiming live intelligence", async () => {

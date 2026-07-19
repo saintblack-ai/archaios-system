@@ -18,7 +18,10 @@ ARCHAIOS currently uses a Vite React frontend, shared API contracts, and a Cloud
 ## Current Blocker
 The repository declares `archaios-saas-worker` as the canonical Worker deployment target, but the live public hostname currently returns `service: archaios-daily-automation`. The canonical runtime expects `service: archaios-core-api`.
 
+## Routing Root Cause
+The cron/daily automation Worker config in `client/wrangler.jsonc` was using the canonical Worker name `archaios-saas-worker`. That config has been corrected to `archaios-daily-automation` so future daily automation deployments do not overwrite the core API target.
+
 ## Readiness
 - Architecture status: locally coherent, production routing blocked.
 - Production readiness: 92%.
-- Agent readiness: 76%.
+- Agent readiness: 78%.

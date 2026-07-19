@@ -10,11 +10,14 @@
 - `viewport-fit=cover` for notched iPhones.
 - Safe-area padding added to primary shells.
 - Supabase auth now explicitly enables PKCE and session persistence through browser local storage.
+- Visible build identifier: `2026-07-19-operation-black-vault`.
+- Controlled app refresh banner when a new service worker is waiting.
 
 ## Verified Locally
 - Vite build includes manifest, icon, offline page, and service worker.
 - GitHub Pages-style build succeeds with project-path routing.
 - Runtime tests assert PWA metadata and service worker registration.
+- Service worker uses a versioned cache, removes obsolete caches on activation, bypasses API/auth requests, and uses network-first navigation.
 
 ## iPhone Checklist
 - Safari compatibility: ready for static app shell.

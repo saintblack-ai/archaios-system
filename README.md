@@ -21,6 +21,7 @@ A unified infrastructure for an AI-powered SaaS platform + content ecosystem:
 - Stripe: gated and inactive until explicit activation
 - Supabase: gated and inactive unless configured with public browser env and activated Worker bindings
 - Production blocker: the public canonical Worker hostname currently returns `archaios-daily-automation`; ARCHAIOS expects `archaios-core-api`
+- Root cause found: `client/wrangler.jsonc` was a daily automation Worker config using the canonical API Worker name. It now uses `archaios-daily-automation`.
 
 ## Current Verification
 Run the local verification matrix before promotion:
@@ -35,3 +36,12 @@ npm run deploy:backend:dry-run
 ```
 
 See `Architecture.md`, `Deployment.md`, `Agent.md`, and `Mobile.md` for the current operational status.
+
+## Production routing discipline
+Deploy the canonical API only from the repository root:
+
+```bash
+npm run deploy:backend
+```
+
+Do not deploy from `client/` for the canonical API; that config belongs to daily automation.
