@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ARCHAIOS">
+  <rect width="512" height="512" rx="96" fill="#05020a"/>
+  <path d="M96 376 256 72l160 304h-62l-31-62H189l-31 62H96Z" fill="#f5d77b"/>
+  <path d="M217 258h78l-39-82-39 82Z" fill="#05020a"/>
+  <path d="M132 414h248" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
+</svg>

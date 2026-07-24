@@ -30,11 +30,15 @@ import {
 import "./app.css";
 
 const BookGrowthCommand = lazy(() => import("./pages/bookGrowth/BookGrowthCommand"));
+const ArchaiosCommandCenter = lazy(() => import("./pages/archaios/ArchaiosCommandCenter"));
+const DailyCommandCenter = lazy(() => import("./pages/daily/DailyCommandCenter"));
 const DashboardPage = lazy(() => import("./pages/Dashboard"));
+const MissionControl = lazy(() => import("./pages/mission/MissionControl"));
 const OperatorMode = lazy(() => import("./pages/operator/OperatorMode"));
 const CommandLinks = lazy(() => import("./pages/revenue/CommandLinks"));
 const PricingPage = lazy(() => import("./pages/revenue/PricingPage"));
 const PublicLanding = lazy(() => import("./pages/revenue/PublicLanding"));
+const LegacyForge = lazy(() => import("./pages/legacy/LegacyForge"));
 
 const BRAND = "Saint Black";
 const THEME = "ARCHAIOS";
@@ -58,6 +62,8 @@ const SIGNUP_COOLDOWN_SECONDS = 15;
 const RESEND_COOLDOWN_SECONDS = 60;
 const BACKEND_HEALTHCHECK_URL = getBackendHealthcheckUrl();
 const CHECKOUT_SYNC_DELAYS_MS = [0, 1500, 2500, 4000, 6000, 9000];
+const BUSINESS_ONBOARDING_NOTE = "Coming soon / Business onboarding in progress. Paid checkout stays launch-gated until legal, tax, policy, and Stripe verification are complete.";
+const APP_BUILD_ID = import.meta.env.VITE_APP_BUILD_ID || "2026-07-19-operation-black-vault";
 
 function firstDefined(...values) {
   return values.find((value) => value !== undefined && value !== null);
@@ -716,9 +722,9 @@ function ConversionBanner({
     <section className="conversion-banner">
       <div className="conversion-copy">
         <p className="eyebrow">Premium Access</p>
-        <h2>AI System Generating Signals, Content, and Opportunities — Daily</h2>
+        <h2>AI system generating signals, content, and opportunities daily</h2>
         <p>
-          Upgrade to unlock full intelligence and real-time access.
+          Free is a limited preview. Pro is $49/month for the full dashboard. Elite is $99/month for priority intelligence.
         </p>
         <div className="urgency-stack">
           <div className="urgency-pill">Real-time signals locked</div>
@@ -741,10 +747,10 @@ function ConversionBanner({
       </div>
       <div className="conversion-actions">
         <button className="primary-button" type="button" onClick={onUnlockPro}>
-          Upgrade to Pro ($49)
+          Upgrade to Pro ($49/month)
         </button>
         <button className="ghost-button" type="button" onClick={onGoElite}>
-          Go Elite ($99)
+          Go Elite ($99/month)
         </button>
         <button className="ghost-button" type="button" onClick={onGetAccess}>
           Get Intelligence Access
@@ -760,8 +766,8 @@ function LeadCapturePanel({ email, status, onEmailChange, onSubmit, analytics })
     <section className="panel">
       <SectionHeader
         eyebrow="Lead Capture"
-        title="Get 3 free intelligence signals daily"
-        body="Join the free list and receive a daily sample of the signal stack while premium alerts remain reserved for paid operators."
+        title="Join the limited preview list"
+        body="Join the free list and receive sample signals while the full dashboard and priority intelligence remain reserved for Pro and Elite."
       />
       <form className="lead-form" onSubmit={onSubmit}>
         <input
@@ -1516,6 +1522,7 @@ function LegacyApp() {
   const [billingPortalBusy, setBillingPortalBusy] = useState(false);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [activeDate, setActiveDate] = useState(() => loadSystemState().calendar[0].date);
+  const [serviceWorkerUpdate, setServiceWorkerUpdate] = useState(null);
   const notifiedRef = useRef(new Set());
   const leadCaptureRef = useRef(null);
   const checkoutRetryRef = useRef(false);
@@ -1523,6 +1530,33 @@ function LegacyApp() {
   const isFreeTier = !effectiveSubscription.paid;
   const pricingTiers = platformDashboard.pricing?.length ? platformDashboard.pricing : PRICING_TIERS;
   const showAuthPanel = !session || authState === AUTH_STATES.passwordRecovery;
+
+  useEffect(() => {
+    const handleUpdateReady = (event) => {
+      setServiceWorkerUpdate(event.detail?.registration || null);
+    };
+
+    window.addEventListener("archaios-update-ready", handleUpdateReady);
+    return () => window.removeEventListener("archaios-update-ready", handleUpdateReady);
+  }, []);
+
+  const handleInstallUpdate = () => {
+    const waiting = serviceWorkerUpdate?.waiting;
+    if (!waiting) {
+      window.location.reload();
+      return;
+    }
+
+    let refreshing = false;
+    navigator.serviceWorker?.addEventListener("controllerchange", () => {
+      if (refreshing) {
+        return;
+      }
+      refreshing = true;
+      window.location.reload();
+    });
+    waiting.postMessage({ type: "ARCHAIOS_SKIP_WAITING" });
+  };
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(system));
@@ -2310,6 +2344,14 @@ function LegacyApp() {
           </a>
         </div>
       ) : null}
+      {serviceWorkerUpdate ? (
+        <div className="panel-note update-ready-banner">
+          New ARCHAIOS build ready. Current build: {APP_BUILD_ID}.{" "}
+          <button className="ghost-button" type="button" onClick={handleInstallUpdate}>
+            Refresh App
+          </button>
+        </div>
+      ) : null}
       <section className="hero-panel">
         <div className="hero-copy">
           <p className="eyebrow">{THEME} Monetized Intelligence Platform</p>
@@ -2317,8 +2359,9 @@ function LegacyApp() {
           <p>
             ARCHAIOS now supports Supabase auth, subscription gating, Stripe billing,
             per-user alert history, and a paid `/api/alerts` flow that limits free
-            users while unlocking full and priority access for Pro and Elite.
+            users while unlocking the Pro full dashboard and Elite priority intelligence.
           </p>
+          <p className="panel-note">{BUSINESS_ONBOARDING_NOTE}</p>
           <div className="hero-actions">
             <button
               className={`primary-button ${isFreeTier ? "button-locked" : ""}`}
@@ -2348,6 +2391,7 @@ function LegacyApp() {
           <div className="status-row">
             <StatusIndicator status={currentStatus} label={currentStatus === "live" ? "Live" : "Offline"} />
             <AlertBadge level={intelligence.systemLevel} />
+            <div className="status-chip">Build: {APP_BUILD_ID}</div>
             <div className="status-chip">Tier: {effectiveSubscription.tier}</div>
             <div className="status-chip">Last sync: {formatTime(intelligence.generatedAt)}</div>
             {intelligence.isRefreshing ? <div className="status-chip">Refreshing live feeds...</div> : null}
@@ -2607,6 +2651,38 @@ export default function App() {
     return (
       <Suspense fallback={<main className="app-shell"><div className="panel">Loading dashboard...</div></main>}>
         <DashboardPage />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/archaios")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Archaios Command Center...</div></main>}>
+        <ArchaiosCommandCenter />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/legacy-forge")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Legacy Forge...</div></main>}>
+        <LegacyForge />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/daily")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Daily Command Center...</div></main>}>
+        <DailyCommandCenter />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/mission-control")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Mission Control...</div></main>}>
+        <MissionControl />
       </Suspense>
     );
   }

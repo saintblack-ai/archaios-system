@@ -1,0 +1,48 @@
+{
+  "name": "ARCHAIOS OS Founder Edition",
+  "short_name": "ARCHAIOS",
+  "description": "Founder Edition executive command workspace for missions, intelligence, agents, and daily operations.",
+  "id": ".",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "background_color": "#05020a",
+  "theme_color": "#05020a",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    {
+      "src": "icons/archaios-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mission Center",
+      "short_name": "Mission",
+      "url": "mission-control",
+      "description": "Open ARCHAIOS Mission Control."
+    },
+    {
+      "name": "Daily Briefing",
+      "short_name": "Daily",
+      "url": "daily",
+      "description": "Open the daily command briefing."
+    },
+    {
+      "name": "Command Center",
+      "short_name": "Command",
+      "url": "archaios",
+      "description": "Open the ARCHAIOS command center."
+    }
+  ]
+}

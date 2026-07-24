@@ -5,11 +5,11 @@ import { startStripeCheckout } from "../agents/stripeAgent";
 import { PRICING_TIERS } from "../lib/pricing";
 import {
   createBillingPortalSession,
+  fetchAdminDashboard,
+  fetchBackendHealth,
   fetchPlatformDashboard,
   fetchSubscription,
-  getApiBaseUrl,
   getBackendConnectionSummary,
-  getBackendHealthcheckUrl,
   getCurrentSession,
   subscribeToAuthChanges
 } from "../lib/platform";
@@ -24,6 +24,7 @@ import { MOCK_PLATFORM_DASHBOARD, setMockMode, shouldUseMockData } from "../lib/
 
 const ADMIN_EMAIL = String(import.meta.env.VITE_ADMIN_EMAIL || "").trim().toLowerCase();
 const DASHBOARD_PATH = `${import.meta.env.BASE_URL || "/"}dashboard`.replace(/\/{2,}/g, "/");
+const BUSINESS_ONBOARDING_NOTE = "Business verification is in progress. Paid checkout requires legal, tax, policy, and Stripe verification before paid promotion.";
 const SIGNAL_PREVIEW_ITEMS = [
   {
     title: "Macro volatility pulse",
@@ -114,15 +115,15 @@ function resolveAudienceLabel(access) {
 
 function getUpgradePrompt(accountExperience) {
   if (accountExperience.mode === "guest") {
-    return "Early user advantage starts at sign-in. Free stays limited access with delayed signals.";
+    return "Sign in to keep upgrade intent ready. Free remains a limited preview with delayed sample signals.";
   }
   if (accountExperience.mode === "signed-in-free") {
-    return "Signals are delayed on Free. Upgrade to unlock live execution layer speed and revenue-grade timing.";
+    return "Free is a limited preview. Upgrade to Pro for the $49/month full dashboard or Elite for $99/month priority intelligence.";
   }
   if (accountExperience.mode === "pro") {
-    return "Pro is active. Move to Elite for first-access signal advantage and faster decision cycles.";
+    return "Pro is active: the $49/month full dashboard is unlocked. Move to Elite for priority intelligence.";
   }
-  return "Elite is active. You are in the priority lane with exclusivity on signal timing and depth.";
+  return "Elite is active: the $99/month priority intelligence lane is unlocked.";
 }
 
 function getTierStateSummary(accountExperience) {
@@ -130,12 +131,12 @@ function getTierStateSummary(accountExperience) {
     return "Guest: limited access preview only. Upgrade flow is blocked until sign-in.";
   }
   if (accountExperience.mode === "signed-in-free") {
-    return "Signed-In Free: delayed signals and restricted execution. Upgrade to unlock live execution layer.";
+    return "Signed-In Free: limited preview, delayed signals, and restricted execution.";
   }
   if (accountExperience.mode === "pro") {
-    return "Pro: live execution layer is active for speed, monetization focus, and daily advantage.";
+    return "Pro: $49/month full dashboard is active for intelligence, alerts, and execution workflows.";
   }
-  return "Elite: exclusive priority signal lane with maximum speed, advantage, and command visibility.";
+  return "Elite: $99/month priority intelligence is active with deeper reports and high-urgency review.";
 }
 
 function getLockedStateMessage(access, accountExperience) {
@@ -173,7 +174,7 @@ function PricingCard({ plan, currentPlan, active, checkoutBusy, session, onCheck
         {plan.id === "pro" ? <span className="status-chip status-chip-live">Most Popular</span> : null}
       </div>
       <h3>{plan.displayPrice}</h3>
-      <p>{plan.id === "free" ? "Limited access preview with delayed signals." : "Outcome lane: faster execution, stronger conversion timing, and decision advantage."}</p>
+      <p>{plan.id === "free" ? "Free = limited preview with delayed sample signals." : plan.summary}</p>
       <ul className="saint-dashboard-list">
         {plan.features.map((feature) => (
           <li key={feature}>{feature}</li>
@@ -197,7 +198,7 @@ function PricingCard({ plan, currentPlan, active, checkoutBusy, session, onCheck
               ? "Starting..."
               : plan.id === "pro"
                 ? "Unlock faster execution and revenue timing"
-                : "Claim exclusive priority signal advantage"}
+                : "Claim priority intelligence"}
       </button>
     </article>
   );
@@ -256,14 +257,15 @@ function DashboardLayout({
           <p className="eyebrow">Saint Black Command Dashboard</p>
           <h1>Monetization, access control, and AI features in one command surface.</h1>
           <p>
-            Early user advantage starts here: Free is limited access with delayed signals, Pro unlocks live execution, Elite unlocks exclusive priority speed.
+            Free is a limited preview. Pro is the $49/month full dashboard. Elite is the $99/month priority intelligence lane.
           </p>
+          <p className="saint-dashboard-note">{BUSINESS_ONBOARDING_NOTE}</p>
           <div className="saint-dashboard-actions">
             <button className="primary-button" type="button" onClick={() => onCheckout("pro")} disabled={checkoutBusy || !session}>
-              {checkoutBusy ? "Starting..." : "Unlock faster execution for $49/mo"}
+              {checkoutBusy ? "Starting..." : "Open Pro full dashboard for $49/month"}
             </button>
             <button className="ghost-button" type="button" onClick={() => onCheckout("elite")} disabled={checkoutBusy || !session}>
-              Claim exclusive priority lane for $99/mo
+              Claim Elite priority intelligence for $99/month
             </button>
             <a className="ghost-button saint-link-button" href={`${import.meta.env.BASE_URL || "/"}pricing`}>
               Pricing Page
@@ -370,10 +372,10 @@ function DashboardLayout({
           </ul>
           <div className="saint-dashboard-inline-actions">
             <button className="primary-button" type="button" onClick={() => onCheckout("pro")} disabled={checkoutBusy || !session || hasPlanAccess(access.plan, "pro")}>
-              Unlock faster execution for $49/mo
+              Open Pro full dashboard for $49/month
             </button>
             <button className="ghost-button" type="button" onClick={() => onCheckout("elite")} disabled={checkoutBusy || !session || access.plan === "elite"}>
-              Claim exclusive priority lane for $99/mo
+              Claim Elite priority intelligence for $99/month
             </button>
             <button className="ghost-button" type="button" onClick={onManageBilling} disabled={billingBusy || !session || !access.canManageBilling}>
               {billingBusy ? "Opening..." : "Manage billing"}
@@ -422,9 +424,9 @@ function DashboardLayout({
           <p>{getTierStateSummary(accountExperience)}</p>
           <ul className="saint-dashboard-list">
             <li>Guest: preview shell only, sign-in required for checkout.</li>
-            <li>Signed-In Free: limited access, delayed signals, and restricted execution.</li>
-            <li>Pro: live execution layer with faster signal-to-action speed.</li>
-            <li>Elite: exclusive priority lane for first-access signal advantage.</li>
+            <li>Signed-In Free: limited preview, delayed sample signals, and restricted execution.</li>
+            <li>Pro: $49/month full dashboard with daily intelligence, alerts, and execution workflows.</li>
+            <li>Elite: $99/month priority intelligence with deeper reports and high-urgency signal review.</li>
           </ul>
         </article>
 
@@ -434,7 +436,7 @@ function DashboardLayout({
             <span className="status-chip">{access.canAccessEliteSignals ? "All lanes open" : "Unlocked vs limited"}</span>
           </div>
           <h2>Unlocked and limited signal lanes</h2>
-          <p>Free stays delayed. Pro unlocks live execution speed. Elite unlocks priority signal lanes for earliest action.</p>
+          <p>Free stays limited. Pro unlocks the full dashboard. Elite unlocks priority intelligence.</p>
           <div className="saint-signal-split">
             <div className="saint-signal-column saint-signal-column-open">
               <p className="eyebrow">Unlocked now</p>
@@ -503,18 +505,18 @@ function DashboardLayout({
           <div className="saint-upgrade-impact-grid">
             <article className="saint-impact-card saint-impact-card-pro">
               <p className="eyebrow">Pro advantage</p>
-              <h3>$49/mo: speed and conversion timing</h3>
+              <h3>$49/month: full dashboard</h3>
               <ul className="saint-dashboard-list">
-                <li>Live execution layer for faster response to daily signals.</li>
+                <li>Full dashboard access for daily intelligence and alert review.</li>
                 <li>Reduced delay between signal and action windows.</li>
                 <li>Higher conversion readiness than Free delayed mode.</li>
               </ul>
             </article>
             <article className="saint-impact-card saint-impact-card-elite">
               <p className="eyebrow">Elite advantage</p>
-              <h3>$99/mo: priority signal exclusivity</h3>
+              <h3>$99/month: priority intelligence</h3>
               <ul className="saint-dashboard-list">
-                <li>Priority signal queue with earliest actionable context.</li>
+                <li>Priority intelligence queue with earliest actionable context.</li>
                 <li>High-urgency escalation feed unlocked for faster pivots.</li>
                 <li>Maximum decision-speed advantage over delayed Free access.</li>
               </ul>
@@ -527,7 +529,7 @@ function DashboardLayout({
         <div className="saint-dashboard-section-heading">
           <p className="eyebrow">Pricing</p>
           <h2>Free, Pro, and Elite</h2>
-          <p>Free is limited access. Pro buys speed and execution. Elite secures early user advantage and exclusive signal timing.</p>
+          <p>Free is a limited preview. Pro is $49/month full dashboard. Elite is $99/month priority intelligence.</p>
         </div>
         <div className="saint-pricing-grid">
           {pricing.map((plan) => (
@@ -552,9 +554,9 @@ function DashboardLayout({
           </div>
           <h2>Why Free feels restricted by design</h2>
           <ul className="saint-dashboard-list">
-            <li>Free: limited access, delayed signals, restricted execution layer.</li>
-            <li>Pro: live execution layer for speed, timing, and monetization momentum.</li>
-            <li>Elite: exclusive priority lane with first-access signal advantage.</li>
+            <li>Free: limited preview, delayed sample signals, restricted execution layer.</li>
+            <li>Pro: $49/month full dashboard for intelligence, alerts, and execution workflows.</li>
+            <li>Elite: $99/month priority intelligence with deeper reports and high-urgency signal review.</li>
           </ul>
         </article>
       </section>
@@ -703,7 +705,7 @@ function AdminLayout({ session, adminData, loading, error, adminConfigured, auth
         <section className="saint-dashboard-hero">
           <div className="saint-dashboard-copy">
             <p className="eyebrow">Hidden Admin Route</p>
-            <h1>Admin email is not configured.</h1>
+            <h1>Admin email requires configuration.</h1>
             <p>Set `VITE_ADMIN_EMAIL` in the frontend and `ADMIN_EMAIL` in the worker to activate the protected admin route.</p>
           </div>
         </section>
@@ -830,9 +832,7 @@ export default function DashboardPage({ adminMode = false }) {
     setError("");
 
     try {
-      const healthResult = await fetch(getBackendHealthcheckUrl())
-        .then((response) => response.json())
-        .catch(() => ({ ok: false }));
+      const healthResult = await fetchBackendHealth().catch(() => ({ ok: false }));
       setHealth({ ok: Boolean(healthResult?.ok) });
       const dashboardPayload = await fetchPlatformDashboard(session?.access_token || null).catch(() => null);
       const resolvedDashboard = mockEnabled ? MOCK_PLATFORM_DASHBOARD : dashboardPayload;
@@ -855,17 +855,7 @@ export default function DashboardPage({ adminMode = false }) {
       }
 
       if (adminMode && authorizedAdmin) {
-        const adminPayload = await fetch(`${getApiBaseUrl()}/api/admin/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${session.access_token}`
-          }
-        }).then(async (response) => {
-          const payload = await response.json().catch(() => null);
-          if (!response.ok) {
-            throw new Error(payload?.error || `admin_request_failed_${response.status}`);
-          }
-          return payload;
-        });
+        const adminPayload = await fetchAdminDashboard(session.access_token);
         setAdminData(adminPayload);
       } else {
         setAdminData(null);
