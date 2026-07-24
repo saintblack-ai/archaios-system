@@ -38,6 +38,7 @@ const OperatorMode = lazy(() => import("./pages/operator/OperatorMode"));
 const CommandLinks = lazy(() => import("./pages/revenue/CommandLinks"));
 const PricingPage = lazy(() => import("./pages/revenue/PricingPage"));
 const PublicLanding = lazy(() => import("./pages/revenue/PublicLanding"));
+const LegacyForge = lazy(() => import("./pages/legacy/LegacyForge"));
 
 const BRAND = "Saint Black";
 const THEME = "ARCHAIOS";
@@ -2658,6 +2659,14 @@ export default function App() {
     return (
       <Suspense fallback={<main className="app-shell"><div className="panel">Loading Archaios Command Center...</div></main>}>
         <ArchaiosCommandCenter />
+      </Suspense>
+    );
+  }
+
+  if (pathname.endsWith("/legacy-forge")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Loading Legacy Forge...</div></main>}>
+        <LegacyForge />
       </Suspense>
     );
   }

@@ -6,6 +6,7 @@ const DEFAULT_ITEMS = [
   { label: "Mission Control", path: "mission-control" },
   { label: "Daily", path: "daily" },
   { label: "Archaios", path: "archaios" },
+  { label: "Legacy Forge", path: "legacy-forge" },
   { label: "Operator", path: "operator" },
   { label: "Book Growth", path: "book-growth" }
 ];
