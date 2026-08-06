@@ -20,11 +20,11 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://archaios-saas-worker.quandrix357.workers.dev' }}
       VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
       VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-      ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
+      ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS || 'https://archaios-system.vercel.app,https://saintblack-ai.github.io' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
