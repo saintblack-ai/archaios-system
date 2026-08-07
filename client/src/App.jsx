@@ -38,6 +38,7 @@ const OperatorMode = lazy(() => import("./pages/operator/OperatorMode"));
 const CommandLinks = lazy(() => import("./pages/revenue/CommandLinks"));
 const PricingPage = lazy(() => import("./pages/revenue/PricingPage"));
 const PublicLanding = lazy(() => import("./pages/revenue/PublicLanding"));
+const LightTemple = lazy(() => import("./pages/light/LightTemple"));
 
 const BRAND = "Saint Black";
 const THEME = "ARCHAIOS";
@@ -2599,6 +2600,14 @@ function LegacyApp() {
 
 export default function App() {
   const pathname = typeof window !== "undefined" ? window.location.pathname : "/";
+
+  if (pathname.endsWith("/light-temple")) {
+    return (
+      <Suspense fallback={<main className="app-shell"><div className="panel">Illuminating the Light Temple...</div></main>}>
+        <LightTemple />
+      </Suspense>
+    );
+  }
 
   if (pathname.endsWith("/links")) {
     return (
