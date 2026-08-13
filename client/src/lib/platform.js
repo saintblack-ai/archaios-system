@@ -9,11 +9,7 @@ export function getApiBaseUrl() {
 export function getBackendConnectionSummary() {
   const configured = String(import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/, "");
   const isProd = Boolean(import.meta.env.PROD);
-  const source = configured
-    ? "env-configured"
-    : isProd
-      ? "cloudflare-default"
-      : "cloudflare-default-dev";
+  const source = configured ? "env-configured" : "same-origin-development";
 
   return {
     mode: isProd ? "production" : "development",

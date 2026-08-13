@@ -28,6 +28,7 @@ jobs:
     env:
       VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
       VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
       VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
 
@@ -61,8 +62,8 @@ jobs:
             missing=1
           fi
 
-          if [ -z "${VITE_BACKEND_URL}" ]; then
-            echo "::error::Missing required GitHub Actions variable VITE_BACKEND_URL."
+          if [ -z "${VITE_API_BASE_URL}" ] && [ -z "${VITE_BACKEND_URL}" ]; then
+            echo "::error::Missing required GitHub Actions variable VITE_API_BASE_URL (or compatibility alias VITE_BACKEND_URL)."
             missing=1
           fi
 
