@@ -2,10 +2,11 @@
 
 Set these for the frontend build:
 
-- `VITE_BACKEND_URL`
+- `VITE_API_BASE_URL`
   - Example: `https://archaios-saas-worker.quandrix357.workers.dev`
   - Used for `/api/health`, `/api/platform/dashboard`, checkout, and billing calls.
-  - Required for production builds. Do not ship production frontend builds with a localhost backend.
+  - Required for production builds. `VITE_BACKEND_URL` remains supported as a compatibility alias.
+  - Set this as a GitHub Actions repository variable for the GitHub Pages workflow. Do not ship production frontend builds with a localhost backend.
 
 - `VITE_SUPABASE_URL`
   - Your Supabase project URL.

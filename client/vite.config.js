@@ -1,13 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+
+const clientRoot = path.dirname(fileURLToPath(import.meta.url));
 
 function getRepositoryNameFromPackageJson() {
   try {
-    const currentDir = path.dirname(fileURLToPath(import.meta.url));
-    const packageJsonPath = path.join(currentDir, "package.json");
+    const packageJsonPath = path.join(clientRoot, "package.json");
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
     const repository = packageJson.repository;
 
@@ -47,12 +48,21 @@ function getPagesBase() {
   return `/${repoName}/`;
 }
 
-export default defineConfig({
-  base: getPagesBase(),
-  plugins: [react()],
-  server: {
-    fs: {
-      allow: [path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")]
-    }
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, clientRoot, "");
+  const apiBaseUrl = String(env.VITE_API_BASE_URL || env.VITE_BACKEND_URL || "").trim();
+
+  if (command === "build" && !apiBaseUrl) {
+    throw new Error("Missing frontend API configuration. Set VITE_API_BASE_URL (or VITE_BACKEND_URL) before building for production.");
   }
+
+  return {
+    base: getPagesBase(),
+    plugins: [react()],
+    server: {
+      fs: {
+        allow: [path.resolve(clientRoot, "..")]
+      }
+    }
+  };
 });
