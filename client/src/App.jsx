@@ -1080,7 +1080,7 @@ function UpgradeModal({ open, pricing, tier, onClose, onCheckout, session, authS
               <h3>{plan.displayPrice}</h3>
               <strong>{plan.features[0]}</strong>
               <p>{plan.features.slice(1).join(" · ")}</p>
-              <button className="primary-button" type="button" onClick={() => onCheckout(plan.id)} disabled={!session}>
+              <button className="primary-button" type="button" onClick={() => onCheckout(plan.id)}>
                 {session ? `Upgrade to ${plan.name}` : authState === AUTH_STATES.confirmationNeeded ? "Confirm email to upgrade" : "Sign in to upgrade"}
               </button>
             </article>
@@ -1319,7 +1319,7 @@ function SubscriptionPanel({ pricing, tier, subscription, onCheckout, session, a
                 {getSubscriptionStatusLabel(account.status)}
               </button>
             ) : (
-              <button className="ghost-button" type="button" onClick={() => onCheckout(plan.id)} disabled={!session}>
+              <button className="ghost-button" type="button" onClick={() => onCheckout(plan.id)}>
                 {session ? `Upgrade to ${plan.name}` : authState === AUTH_STATES.confirmationNeeded ? "Confirm email to upgrade" : "Sign in to upgrade"}
               </button>
             )}
@@ -2008,13 +2008,26 @@ function LegacyApp() {
         authState
       });
       if (!session?.access_token) {
-        setPendingCheckoutTier(requestedTier);
-        setAuthMode("signin");
-        throw new Error(
+        const nextNotice =
           authState === AUTH_STATES.confirmationNeeded
             ? "Confirm your email, then sign in to continue to checkout."
-            : "Sign in to continue to checkout."
-        );
+            : "Sign in or create an account to continue to checkout.";
+
+        setPendingCheckoutTier(requestedTier);
+        setAuthMode("signin");
+        setIsUpgradeModalOpen(false);
+        setAuthNotice(nextNotice);
+
+        if (typeof document !== "undefined") {
+          window.setTimeout(() => {
+            document.querySelector(".auth-choice-grid")?.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+          }, 0);
+        }
+
+        return;
       }
 
       await trackRevenueEvent("checkout_start", {
